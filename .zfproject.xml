@@ -26,6 +26,9 @@
         <modelFile modelName="Product"/>
         <modelFile modelName="Sale"/>
         <modelFile modelName="Category"/>
+        <modelFile modelName="Coupon"/>
+        <modelFile modelName="Rate"/>
+        <modelFile modelName="Comment"/>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>
       <servicesDirectory enabled="false"/>
