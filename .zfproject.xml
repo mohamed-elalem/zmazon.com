@@ -29,6 +29,8 @@
         <modelFile modelName="Coupon"/>
         <modelFile modelName="Rate"/>
         <modelFile modelName="Comment"/>
+        <modelFile modelName="ShoppingCart"/>
+        <modelFile modelName="WishList"/>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>
       <servicesDirectory enabled="false"/>
