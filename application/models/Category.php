@@ -1,6 +1,6 @@
 <?php
 
-class Application_Model_Category
+class Application_Model_Category extends Zend_Db_Table_Abstract
 {
 
 
