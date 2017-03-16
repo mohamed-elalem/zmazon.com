@@ -9,7 +9,7 @@ class Application_Model_Category extends Zend_Db_Table_Abstract
     }
     
     public function edit($id, $data) {
-        $this->update($date, 'id = '.$id);
+        $this->update($data, 'id = '.$id);
     }
     
     public function remove($id) {

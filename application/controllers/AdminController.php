@@ -51,6 +51,18 @@ class AdminController extends Zend_Controller_Action
     {
         $categories = $this->category->retrieveAll();
         $this->view->categories = $categories;
+        
+        $updateCategoryForm = new Application_Form_UpdateCategory();
+        
+        $request = $this->getRequest();
+        
+        if($request->isPost() && $updateCategoryForm->isValid($request->getParams())) {
+            $id = $request->getParam("id");
+            $this->category->edit($id, array("name" => $request->getParam("category")));
+            $this->redirect("/admin/manage-categories");
+        }
+        
+        $this->view->updateCategoryForm = $updateCategoryForm;
     }
 
     public function sendCouponAction()
@@ -77,6 +89,10 @@ class AdminController extends Zend_Controller_Action
         $this->user->editRecord($id, array('privilege' => $newPrivilege));
         $this->redirect("/admin/manage-users");
     }
+    
+    /**
+     * Beware this is remove user action typo mistake
+     */
 
     public function removeAction()
     {
@@ -85,8 +101,25 @@ class AdminController extends Zend_Controller_Action
         $this->redirect("/admin/manage-users");
     }
 
+    public function updateCategoryAction()
+    {
+        
+    }
+
+    public function deleteCategoryAction()
+    {
+        $request = $this->getRequest();
+        $id = $request->getParam("id");
+        $this->category->remove($id);
+        $this->redirect("/admin/manage-categories");
+    }
+
 
 }
+
+
+
+
 
 
 

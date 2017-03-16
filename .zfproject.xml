@@ -19,6 +19,8 @@
           <actionMethod actionName="changeStatus"/>
           <actionMethod actionName="changePrivilege"/>
           <actionMethod actionName="remove"/>
+          <actionMethod actionName="updateCategory"/>
+          <actionMethod actionName="deleteCategory"/>
         </controllerFile>
         <controllerFile controllerName="CustomerUser">
           <actionMethod actionName="index"/>
@@ -108,6 +110,12 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="CustomerUser">
             <viewScriptFile forActionName="addToCart"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="updateCategory"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="deleteCategory"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
