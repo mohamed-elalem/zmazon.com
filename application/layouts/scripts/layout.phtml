@@ -1,1 +1,31 @@
+
+
+<?php
+	$auth = Zend_Auth::getInstance();
+	$identity = $auth->getIdentity();
+	if (!empty($identity)) {
+	
+	?>
+	<a href="<?php echo $this->baseUrl()
+	?>/User/logout"> Logout </a>
+<?php
+
+
+   }
+
+
+	?>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <?php echo $this->layout()->content; ?>
