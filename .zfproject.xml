@@ -21,6 +21,7 @@
           <actionMethod actionName="changePrivilege"/>
           <actionMethod actionName="remove"/>
         </controllerFile>
+<<<<<<< HEAD
         <controllerFile controllerName="CustomerUser">
           <actionMethod actionName="index"/>
           <actionMethod actionName="putRate"/>
@@ -32,6 +33,16 @@
       <formsDirectory>
         <formFile formName="Rating"/>
         <formFile formName="Comment"/>
+=======
+        <controllerFile controllerName="ShopUser">
+          <actionMethod actionName="index"/>
+          <actionMethod actionName="listAllProducts"/>
+          <actionMethod actionName="listProductDetails"/>
+        </controllerFile>
+      </controllersDirectory>
+      <formsDirectory enabled="false">
+        <formFile formName="UpdateCategory"/>
+>>>>>>> 15bf2170e128afbb2719d75b1bb82752ef9d84a8
       </formsDirectory>
       <layoutsDirectory>
         <layoutScriptsDirectory>
@@ -63,6 +74,7 @@
             <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
 <<<<<<< HEAD
+<<<<<<< HEAD
           <viewControllerScriptsDirectory forControllerName="CustomerUser">
             <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
@@ -81,6 +93,17 @@
           <viewControllerScriptsDirectory forControllerName="Index">
             <viewScriptFile forActionName="calculateTotal"/>
 =======
+=======
+          <viewControllerScriptsDirectory forControllerName="ShopUser">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="ShopUser">
+            <viewScriptFile forActionName="listAllProducts"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="ShopUser">
+            <viewScriptFile forActionName="listProductDetails"/>
+          </viewControllerScriptsDirectory>
+>>>>>>> 15bf2170e128afbb2719d75b1bb82752ef9d84a8
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="manageUsers"/>
           </viewControllerScriptsDirectory>
