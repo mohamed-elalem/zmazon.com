@@ -14,6 +14,12 @@
         <controllerFile controllerName="Error"/>
         <controllerFile controllerName="Admin">
           <actionMethod actionName="index"/>
+          <actionMethod actionName="manageUsers"/>
+          <actionMethod actionName="manageCategories"/>
+          <actionMethod actionName="sendCoupon"/>
+          <actionMethod actionName="changeStatus"/>
+          <actionMethod actionName="changePrivilege"/>
+          <actionMethod actionName="remove"/>
         </controllerFile>
         <controllerFile controllerName="CustomerUser">
           <actionMethod actionName="index"/>
@@ -56,6 +62,7 @@
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
+<<<<<<< HEAD
           <viewControllerScriptsDirectory forControllerName="CustomerUser">
             <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
@@ -73,6 +80,25 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Index">
             <viewScriptFile forActionName="calculateTotal"/>
+=======
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="manageUsers"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="manageCategories"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="sendCoupon"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="changeStatus"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="changePrivilege"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="remove"/>
+>>>>>>> 97e0590e3a2fbe45c846ac39aa8785be2ce419b0
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
