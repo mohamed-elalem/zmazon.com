@@ -49,7 +49,8 @@ class AdminController extends Zend_Controller_Action
 
     public function manageCategoriesAction()
     {
-        // action body
+        $categories = $this->category->retrieveAll();
+        $this->view->categories = $categories;
     }
 
     public function sendCouponAction()
