@@ -108,7 +108,7 @@ public function homeAction()
     					print_r('authentiacte');
 
 //session steps 
-					    $sessionDataObj=$adapter->getResultRowObject(['email','password','userName']);
+					    $sessionDataObj=$adapter->getResultRowObject(['id','email','password','userName']);
 					    $auth=Zend_Auth::getInstance();
 					    $storage=$auth->getStorage();
 					    $storage->write($sessionDataObj);
