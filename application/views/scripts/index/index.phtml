@@ -1,4 +1,5 @@
-<?php echo count($this->user['cart_products']); ?>
+<?php echo count($this->user->cart_products); ?>
+
 <div class="product-list">
     <?php foreach ($this->all_products as $product) { ?>
         <div class="col-md-4">
@@ -6,13 +7,16 @@
             <p class="product-name"> <?= $product['name'] ?> </p>
             <p class="product-desc"> <?= $product['description'] ?>  </p>
             <?php 
-            if (!empty($this->user) )
-             { ?>
+            if (!($this->user->isEmpty() ))
+             { 
+                $this->user = $this->user->read();
+                ?>
+               
             
-                <a class="btn btn-primary add-to-wishlist" data-product_id = <?= $product['id'] ?> data-user_id = <?= $this->user['id'] ?> href ="add-to-wish-list" > Add to wish list </a>
-                <a class="btn btn-danger remove-from-wishlist" data-product_id = <?= $product['id'] ?> data-user_id = <?= $this->user['id']?> href ="remove-from-wish-list"> Remove From wish list </a>
+                <a class="btn btn-primary add-to-wishlist" data-product_id = <?= $product['id'] ?> data-user_id = <?= $this->user->id ?> href ="add-to-wish-list" > Add to wish list </a>
+                <a class="btn btn-danger remove-from-wishlist" data-product_id = <?= $product['id'] ?> data-user_id = <?= $this->user->id ?> href ="remove-from-wish-list"> Remove From wish list </a>
                             
-                  <a class="btn btn-primary add-to-cart" data-product_id = <?= $product['id'] ?> data-user_id = <?= $this->user['id']?> href="customer-user/add-to-cart/uid/<?=$this->user['id']?>/pid/<?= $product['id']?>/"> Add to cart</a>
+                  <a class="btn btn-primary add-to-cart" data-product_id = <?= $product['id'] ?> data-user_id = <?= $this->user->id ?> href="customer-user/add-to-cart/uid/<?=$this->user->id ?>/pid/<?= $product['id']?>/"> Add to cart</a>
              <?php
                 
               } 
