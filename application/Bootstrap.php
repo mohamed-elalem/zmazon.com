@@ -13,5 +13,17 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	Zend_Db_Table::setDefaultAdapter($dbAdapter);
     }
     
+    protected function _initSMTP() {
+        $config = array(
+            'ssl' => 'tls',
+            'port' => 587,
+            'auth' => 'login',
+            'username' => 'faintingdetection@gmail.com',
+            'password' => 'Tizen2016'
+        );
+        $transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
+        Zend_Mail::setDefaultTransport($transport);
+    }
+    
 }
 

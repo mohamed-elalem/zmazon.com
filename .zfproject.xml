@@ -21,6 +21,7 @@
           <actionMethod actionName="remove"/>
           <actionMethod actionName="updateCategory"/>
           <actionMethod actionName="deleteCategory"/>
+          <actionMethod actionName="deleteCoupon"/>
         </controllerFile>
         <controllerFile controllerName="ShopUser">
           <actionMethod actionName="index"/>
@@ -30,6 +31,7 @@
       </controllersDirectory>
       <formsDirectory enabled="false">
         <formFile formName="UpdateCategory"/>
+        <formFile formName="NewCoupon"/>
       </formsDirectory>
       <layoutsDirectory>
         <layoutScriptsDirectory>
@@ -92,6 +94,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="deleteCategory"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="deleteCoupon"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
