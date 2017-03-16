@@ -12,39 +12,26 @@ class CustomerUserController extends Zend_Controller_Action
     {
         // action body
     }
-    /*
-     * Author : Magdy
-     */
 
     public function putRateAction()
     {
         // action body
     }
-    /*
-     * Author : Magdy
-     */
+
     public function addToWishListAction()
     {
         // action body
     }
-    /*
-     * Author : Magdy
-     */
-    public function addToShoppingCartAction()
-    {
-        // action body
-    }
-    /*
-     * Author: Magdy
-     */
 
-    public function commentAction()
+    public function addToCartAction()
     {
         // action body
     }
 
 
 }
+
+
 
 
 
