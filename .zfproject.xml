@@ -26,7 +26,9 @@
           <actionMethod actionName="listProductDetails"/>
         </controllerFile>
       </controllersDirectory>
-      <formsDirectory enabled="false"/>
+      <formsDirectory enabled="false">
+        <formFile formName="UpdateCategory"/>
+      </formsDirectory>
       <layoutsDirectory>
         <layoutScriptsDirectory>
           <layoutScriptFile layoutName="layout"/>
@@ -56,7 +58,6 @@
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
-<<<<<<< HEAD
           <viewControllerScriptsDirectory forControllerName="ShopUser">
             <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
@@ -65,7 +66,7 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="ShopUser">
             <viewScriptFile forActionName="listProductDetails"/>
-=======
+          </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="manageUsers"/>
           </viewControllerScriptsDirectory>
@@ -83,7 +84,6 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="remove"/>
->>>>>>> 97e0590e3a2fbe45c846ac39aa8785be2ce419b0
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
