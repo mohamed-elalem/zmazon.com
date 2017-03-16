@@ -20,6 +20,11 @@
           <actionMethod actionName="changePrivilege"/>
           <actionMethod actionName="remove"/>
         </controllerFile>
+        <controllerFile controllerName="ShopUser">
+          <actionMethod actionName="index"/>
+          <actionMethod actionName="listAllProducts"/>
+          <actionMethod actionName="listProductDetails"/>
+        </controllerFile>
       </controllersDirectory>
       <formsDirectory enabled="false"/>
       <layoutsDirectory>
@@ -51,6 +56,16 @@
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
+<<<<<<< HEAD
+          <viewControllerScriptsDirectory forControllerName="ShopUser">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="ShopUser">
+            <viewScriptFile forActionName="listAllProducts"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="ShopUser">
+            <viewScriptFile forActionName="listProductDetails"/>
+=======
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="manageUsers"/>
           </viewControllerScriptsDirectory>
@@ -68,6 +83,7 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="remove"/>
+>>>>>>> 97e0590e3a2fbe45c846ac39aa8785be2ce419b0
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

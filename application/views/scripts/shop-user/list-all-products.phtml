@@ -1,0 +1,21 @@
+<br /><br />
+<div id="view-content">
+	<p>View script for controller <b>ShopUser</b> and script/action name <b>listAllProducts</b></p>
+
+</div>
+
+<table class="table table-bordered">
+<?php
+	foreach($this->products as $key => $value)
+	{
+			echo "<tr class='danger'><td>".$value['id']."</td>".
+			"<td >".$value['name']."</td>".
+			"<td>".$value['description']."</td>".
+			"<td> <a class='btn btn-info' href='list-product-details/productId/".$value['id']."'role='button'>Details </a> </td>".
+			"<td> <a class='btn btn-danger' href='delete-product/productId/".$value['id']."'role='button'>Delete </a> </td>".
+			"<td> <a class='btn btn-danger' href='edit-product/productId/".$value['id']."'role='button'>Edit </a> </td></tr>";
+	}
+
+ ?>
+
+</table>
