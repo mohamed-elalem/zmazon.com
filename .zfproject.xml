@@ -22,6 +22,7 @@
           <actionMethod actionName="updateCategory"/>
           <actionMethod actionName="deleteCategory"/>
           <actionMethod actionName="deleteCoupon"/>
+          <actionMethod actionName="listOrders"/>
         </controllerFile>
         <controllerFile controllerName="CustomerUser">
           <actionMethod actionName="index"/>
@@ -122,6 +123,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="deleteCoupon"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="listOrders"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

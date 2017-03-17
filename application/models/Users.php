@@ -12,7 +12,8 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         $sql =  $this->select()
                 ->from(array('u' => 'users'))
                 ->joinLeft(array('c' => 'coupon'), "u.id = c.userId", array('c.id as coupon_id', 'c.discount as discount'))
-                ->setIntegrityCheck(false);
+                ->setIntegrityCheck(false)
+                ->order('id');
         $data = $sql->query();
         $result = $data->fetchAll();
         return $result;
