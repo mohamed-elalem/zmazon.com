@@ -9,7 +9,6 @@
       <controllersDirectory>
         <controllerFile controllerName="Index">
           <actionMethod actionName="index"/>
-          <actionMethod actionName="productDetails"/>
         </controllerFile>
         <controllerFile controllerName="Error"/>
         <controllerFile controllerName="Admin">
@@ -24,7 +23,6 @@
           <actionMethod actionName="deleteCategory"/>
           <actionMethod actionName="deleteCoupon"/>
           <actionMethod actionName="listOrders"/>
-          <actionMethod actionName="orderDetails"/>
         </controllerFile>
         <controllerFile controllerName="CustomerUser">
           <actionMethod actionName="index"/>
@@ -127,19 +125,13 @@
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="deleteCoupon"/>
           </viewControllerScriptsDirectory>
+<<<<<<< HEAD
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="listOrders"/>
-          </viewControllerScriptsDirectory>
+=======
           <viewControllerScriptsDirectory forControllerName="CustomerUser">
             <viewScriptFile forActionName="removeFromWishList"/>
-          </viewControllerScriptsDirectory>
-<<<<<<< HEAD
-          <viewControllerScriptsDirectory forControllerName="Index">
-            <viewScriptFile forActionName="productDetails"/>
-=======
-          <viewControllerScriptsDirectory forControllerName="Admin">
-            <viewScriptFile forActionName="orderDetails"/>
->>>>>>> 4d59920d0da103c6dd80cda971c91ac0cad3e8e9
+>>>>>>> f36a13ccb93b3eba308f84b34afb0a99a58eb80b
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

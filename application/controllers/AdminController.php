@@ -9,10 +9,12 @@ class AdminController extends Zend_Controller_Action
 
     private $category = null;
 
+    private $shoppingCart = null;
+
     private $db = null;
 
     private $privileges = null;
-    
+
     private $transport = null;
 
     public function init()
@@ -28,6 +30,7 @@ class AdminController extends Zend_Controller_Action
         $this->user = new Application_Model_Users();
         $this->coupon = new Application_Model_Coupon();
         $this->category = new Application_Model_Category();
+        $this->shoppingCart = new Application_Model_ShoppingCart();
         $this->db = Zend_Db_Table::getDefaultAdapter();
         $metadata = $this->db->describeTable("users");
         $config = array(
@@ -56,6 +59,11 @@ class AdminController extends Zend_Controller_Action
     {
         $userList = $this->user->retrieveAllUsersWithCoupons();
         $this->view->userList = $userList;
+        
+        $paginator = Zend_Paginator::factory($userList);
+        $paginator->setItemCountPerPage(5);
+        $paginator->setCurrentPageNumber(1);
+        $this->view->paginator = $paginator;
         
         $newCouponForm = new Application_Form_NewCoupon();
         
@@ -163,8 +171,23 @@ class AdminController extends Zend_Controller_Action
         $this->redirect("/admin/manage-users");
     }
 
+    public function listOrdersAction()
+    {
+        $orders = $this->shoppingCart->selectUsersOrders();
+        $this->view->orders = $orders;
+    }
+
+    public function orderDetailsAction()
+    {
+        // action body
+    }
+
 
 }
+
+
+
+
 
 
 
