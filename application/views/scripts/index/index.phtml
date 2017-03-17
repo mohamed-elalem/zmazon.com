@@ -29,7 +29,6 @@
     <script>
         $(document).ready(function(){
            $(document).on('click', ".add-to-wishlist", function(e) {
-               e.preventDefault ? e.preventDefault() : e.returnValue = false;
                 $.ajax({
                     url: "/customer-user/add-to-wish-list",
                     type: "GET",
@@ -44,7 +43,6 @@
            
             });
            $(document).on('click', ".remove-from-wishlist", function(e) {
-               e.preventDefault ? e.preventDefault() : e.returnValue = false;
                $.ajax({
                     url: "/customer-user/remove-from-wish-list",
                     type: "GET",
