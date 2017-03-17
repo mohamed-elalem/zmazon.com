@@ -8,7 +8,7 @@ class AdminController extends Zend_Controller_Action
     private $coupon = null;
 
     private $category = null;
-    
+
     private $shoppingCart = null;
 
     private $db = null;
@@ -16,8 +16,6 @@ class AdminController extends Zend_Controller_Action
     private $privileges = null;
 
     private $transport = null;
-    
-    
 
     public function init()
     {
@@ -179,8 +177,15 @@ class AdminController extends Zend_Controller_Action
         $this->view->orders = $orders;
     }
 
+    public function orderDetailsAction()
+    {
+        // action body
+    }
+
 
 }
+
+
 
 
 
