@@ -179,7 +179,10 @@ class AdminController extends Zend_Controller_Action
 
     public function orderDetailsAction()
     {
-        // action body
+        $id = $this->getParam("id");
+        $order = $this->shoppingCart->selectSpecificOrder($id);
+        
+        $this->view->cart = $order;
     }
 
 

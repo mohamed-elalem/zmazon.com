@@ -1,4 +1,55 @@
-<br /><br />
-<div id="view-content">
-	<p>View script for controller <b>Admin</b> and script/action name <b>orderDetails</b></p>
-</div>
+<table class="table table-responsive table-hover">
+    <tr>
+        <th class="text-center">Category name</th>
+        <th class="text-center">Product name</th>
+        <th class="text-center">Unit price</th>
+        <th class="text-center">Discount</th>
+        <th class="text-center">Price after discount</th>
+        <th class="text-center">Quantity</th>
+        <th class='text-center'>Avaliable quantity</th>
+        <th class="text-center">Total product price</th>
+        <th class='text-center'>Total product price after discount</th> 
+    </tr>
+    <?php
+        $totalQuantity = 0;
+        $totalPrice = 0.0;
+        $totalPriceAfterDiscount = 0.0;
+        
+        foreach($this->cart as $product) {
+            $discount = (double) $product['price'] * (double) (is_null($product['discount']) ? 0 : $product['discount']) / 100.0;
+            $priceAfterDiscount = (double) $product['price'] - $discount;
+            $totalPrice += (double) $product['price'];
+            $totalPriceAfterDiscount += $priceAfterDiscount;
+            $totalQuantity += (int) $product['quantity'];
+            $totalProductPrice = (double) $product['price'] * $product['quantity'];
+            $totalProductPriceAfterDiscount = $priceAfterDiscount * (double) $product['quantity'];
+            echo "<tr>";
+            echo "<td class='text-center'>".$product['category_name']."</td>";
+            echo "<td class='text-center'>".$product['product_name']."</td>";
+            echo "<td class='text-center'>".$product['price']."</td>";
+            echo "<td class='text-center'>".$discount." <i class='text-danger fa fa-arrow-down'></i></td>";
+            echo "<td class='text-center'>".$priceAfterDiscount."</td>";
+            echo "<td class='text-center'>".$product['quantity']."</td>";
+            echo "<td class='text-center'>".$product['product_quantity']."</td>";
+            echo "<td class='text-center'>".$totalProductPrice."</td>";
+            echo "<td class='text-center'>".$totalPriceAfterDiscount."</td>";
+            echo "</tr>";
+        }
+    ?>
+</table>
+<table class='table table-hover table-responsive'>
+    <?php
+        echo "<tr>";
+        echo "<th>Total order quantity</th>";
+        echo "<td>".$totalQuantity."</td>";
+        echo "</tr>";
+        echo "<tr>";
+        echo "<th>Total order price</th>";
+        echo "<td>".$totalPrice."</td>";
+        echo "</tr>";
+        echo "<tr>";
+        echo "<th>Total order price after discount</th>";
+        echo "<td>".$totalPriceAfterDiscount."</td>";
+        echo "</tr>";
+    ?>
+</table>

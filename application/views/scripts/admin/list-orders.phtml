@@ -6,7 +6,7 @@
     <?php
         foreach($this->orders as $order) {
             echo "<tr>";
-            echo "<td class='text-center'>".$order['userName']."<a class='pull-right text-info' href='/admin/user-order/id/".$order['userId']."/'><i class='fa fa-info-circle'></i></a></td>";
+            echo "<td class='text-center'>".$order['userName']."<a class='pull-right text-info' href='/admin/order-details/id/".$order['userId']."/'><i class='fa fa-info-circle'></i></a></td>";
             echo "<td class='text-center'>".$order['orders']."</td>";
             echo "</tr>";
         }
