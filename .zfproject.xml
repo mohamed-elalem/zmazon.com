@@ -41,6 +41,7 @@
         <formFile formName="Rating"/>
         <formFile formName="Comment"/>
         <formFile formName="UpdateCategory"/>
+        <formFile formName="ProductForm"/>
         <formFile formName="NewCoupon"/>
       </formsDirectory>
       <layoutsDirectory>

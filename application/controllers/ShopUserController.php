@@ -26,6 +26,20 @@ class ShopUserController extends Zend_Controller_Action
         $product= $productModel->productDetails($productId);
         $this->view->product = $product[0];
     }
+    public function deleteProductAction()
+    {
+        $productModel =new Application_Model_Product();
+        $productId =$this->_request->getParam("productId");
+        $productModel->deleteProduct($productId);
+        $this->redirect("/shop-user/list-all-products");
+    }
+    public function editProductAction()
+    {
+        $productModel =new Application_Model_Product();
+        $productId =$this->_request->getParam("productId");
+        
+        
+    }
 
 
 }
