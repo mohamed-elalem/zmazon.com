@@ -1,7 +1,7 @@
 <?php
     echo "<table class='table table-responsive table-hover'>";
     
-    echo "<tr><th class='text-center'>Username</th><th class='text-center'>Email</th><th class='text-center'>Status</th><th class='text-center'>Privilages</th><th class='text-center'>Terminate user</th></tr>";
+    echo "<tr><th class='text-center'>Username</th><th class='text-center'>Email</th><th class='text-center'>Status</th><th class='text-center'>Privilages</th><th class='text-center'>Terminate user</th><th class='text-center'>Coupon</th></tr>";
     foreach($this->userList as $record) {
        echo "<tr>";
        echo "<td class='text-center'>".$record['userName']."</td>";
@@ -9,6 +9,65 @@
        echo "<td class='text-center'><a id='".$record['id']."' href='/admin/change-status/id/".$record['id']."/status/".$record['status']."/' ><i class='".($record['status'] == '1' ? "text-success fa fa-dot-circle-o" : "text-danger fa fa-ban")."' aria-hidden='true'></i></a></td>";
        echo "<td class='text-center'><a id='".$record['id']."' href='/admin/change-privilege/id/".$record['id']."/privilege/".$record['privilege']."/' ><i style='font-size: 24px;'class='".($record['privilege'] == 'admin' ? 'text-warning fa fa-user-secret' : ($record['privilege'] == 'shopUser' ? 'text-lg text-primary fa fa-shopping-bag' : 'text-success fa fa-user-circle-o'))."'></i></a></td>";
        echo "<td class='text-center'><a id='".$record['id']."' href='/admin/remove/id/".$record['id']."/'><i class='text-danger fa fa-times'></i></a></td>";
+       echo "<td class='text-center'>";
+       if($record['privilege'] == 'customerUser') {
+           if(is_null($record['coupon_id'])) {
+       echo<<<EOL
+                    <button type="button" class="text-success btn-transparent" data-toggle="modal" data-target="#user
+EOL;
+                echo $record['id'];
+                echo<<<EOL
+">
+                        <i class="fa fa-arrow-up"></i>
+                    </button>
+                    <div class="text-left modal fade" id="user
+EOL;
+                echo $record['id'];
+                echo<<<EOL
+" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <form method='post' action='/admin/manage-users/uid/
+EOL;
+                echo $record['id'];
+                echo<<<EOL
+'>
+                                <div class="modal-header">
+                                    <button type="button" class="btn-transparent close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Coupon information for user  
+EOL;
+                echo $record['userName'];
+                echo <<<EOL
+                
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+EOL;
+                echo "<div class='form-group'";
+                echo $this->newCouponForm->discount;
+                echo "</div>";
+                
+                echo <<<EOL
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+EOL;
+                //echo $this->updateCategoryForm->update;
+                echo<<<EOL
+                                    <button type="submit" name="submit" id="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+EOL;
+           }
+           else {
+               echo "<a class='text-danger' href='/admin/delete-coupon/id/".$record['coupon_id']."/email/".$record['email']."/'>".$record['discount']."% <i class='fa fa-arrow-down'></i></a>";
+           }
+       }
+       echo "</td>";    
+       
        echo "</tr>";
     }
     echo "</table>";

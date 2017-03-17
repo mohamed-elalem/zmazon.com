@@ -12,6 +12,8 @@ class AdminController extends Zend_Controller_Action
     private $db = null;
 
     private $privileges = null;
+    
+    private $transport = null;
 
     public function init()
     {
@@ -28,6 +30,15 @@ class AdminController extends Zend_Controller_Action
         $this->category = new Application_Model_Category();
         $this->db = Zend_Db_Table::getDefaultAdapter();
         $metadata = $this->db->describeTable("users");
+        $config = array(
+            'ssl' => 'tls',
+            'port' => 587,
+            'auth' => 'login',
+            'username' => 'faintingdetection@gmail.com',
+            'password' => 'Tizen2016'
+        );
+        $this->transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
+        Zend_Mail::setDefaultTransport($this->transport);
         //$cols = array_keys($metadata);
         
         // Sending required variables to admin views
@@ -43,14 +54,58 @@ class AdminController extends Zend_Controller_Action
 
     public function manageUsersAction()
     {
-        $userList = $this->user->retrieveAllUsers();
+        $userList = $this->user->retrieveAllUsersWithCoupons();
         $this->view->userList = $userList;
+        
+        $newCouponForm = new Application_Form_NewCoupon();
+        
+        $request = $this->getRequest();
+        
+        if($request->isPost() && $newCouponForm->isValid($request->getParams())) {
+            $domain = "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+            $len = strlen($domain);
+            $code = '';
+            for($i = 0; $i < 45; $i++) {
+                $code .= $domain[random_int(0, $len - 1)];
+            }
+            $uid = $request->getParam("uid");
+            $discount = $request->getParam("discount");
+            $reciever = $request->getParam("email");
+            $this->coupon->newCoupon($discount, $uid, $code);
+            
+            $mail = new Zend_Mail();
+            
+            $mail_body = "You've been promoted with a coupon that gives you discount on an order you select.<br>";
+            $mail_body .= "coupon: ".$code."<br>";
+            $mail_body .= "Please note that this coupon is one time use only.";
+            $mail->setBodyHtml($mail_body);
+            $mail->setFrom('faintingdetection@gmail.com');
+            $mail->addTo($email, "site_admin");
+            $mail->setSubject("Coupon promotion");
+            $mail->send($this->transport);
+            
+            $this->redirect("/admin/manage-users");
+        }
+        
+        $this->view->newCouponForm = $newCouponForm;
     }
 
     public function manageCategoriesAction()
     {
         $categories = $this->category->retrieveAll();
         $this->view->categories = $categories;
+        
+        $updateCategoryForm = new Application_Form_UpdateCategory();
+        
+        $request = $this->getRequest();
+        
+        if($request->isPost() && $updateCategoryForm->isValid($request->getParams())) {
+            $id = $request->getParam("id");
+            $this->category->edit($id, array("name" => $request->getParam("category")));
+            $this->redirect("/admin/manage-categories");
+        }
+        
+        $this->view->updateCategoryForm = $updateCategoryForm;
     }
 
     public function sendCouponAction()
@@ -78,6 +133,9 @@ class AdminController extends Zend_Controller_Action
         $this->redirect("/admin/manage-users");
     }
 
+    /**
+     * Beware this is remove user action typo mistake
+     */
     public function removeAction()
     {
         $id = (int) $this->getParam("id");
@@ -85,8 +143,34 @@ class AdminController extends Zend_Controller_Action
         $this->redirect("/admin/manage-users");
     }
 
+    public function updateCategoryAction()
+    {
+        
+    }
+
+    public function deleteCategoryAction()
+    {
+        $request = $this->getRequest();
+        $id = $request->getParam("id");
+        $this->category->remove($id);
+        $this->redirect("/admin/manage-categories");
+    }
+
+    public function deleteCouponAction()
+    {
+        $id = $this->getParam("id");
+        $this->coupon->deleteCoupon($id);
+        $this->redirect("/admin/manage-users");
+    }
+
 
 }
+
+
+
+
+
+
 
 
 

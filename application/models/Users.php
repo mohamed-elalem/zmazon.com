@@ -8,6 +8,16 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         return $this->fetchAll();
     }
     
+    public function retrieveAllUsersWithCoupons() {
+        $sql =  $this->select()
+                ->from(array('u' => 'users'))
+                ->joinLeft(array('c' => 'coupon'), "u.id = c.userId", array('c.id as coupon_id', 'c.discount as discount'))
+                ->setIntegrityCheck(false);
+        $data = $sql->query();
+        $result = $data->fetchAll();
+        return $result;
+    }
+    
     public function editRecord($id, $data) {
         $this->update($data, "id = ".$id);
     }
