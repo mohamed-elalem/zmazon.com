@@ -1,5 +1,10 @@
-<?php echo count($this->user->cart_products); ?>
-
+<?php  
+$user = $this->user->read();
+if (!($this->user->isEmpty() )) {
+    echo $this->shoppingCart->quantity;
+    
+}   
+?>
 <div class="product-list">
     <?php foreach ($this->all_products as $product) { ?>
         <div class="col-md-4">
@@ -9,24 +14,29 @@
             <?php 
             if (!($this->user->isEmpty() ))
              { 
-                $this->user = $this->user->read();
                
-                if ( $this->wishList-> is_exists($this->user->id, $product['id']) ){ ?>
-                     <a class="btn btn-danger remove-from-wishlist" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $this->user->id ?>" > Remove From wish list </a>
+                if ( $this->wishList-> is_exists($user->id, $product['id']) ){ ?>
+                     <a class="btn btn-danger remove-from-wishlist" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" > Remove From wish list </a>
                      
                 <?php 
                 
                 }
                 else { ?>
             
-                <a class="btn btn-primary add-to-wishlist" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $this->user->id ?>" > Add to wish list </a>
+                <a class="btn btn-primary add-to-wishlist" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" > Add to wish list </a>
                 <?php 
                 }
+                if ($this->shoppingCart->is_exists($user->id, $product['id']) ){ 
                 ?>
                             
-                  <a class="btn btn-primary add-to-cart" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $this->user->id ?>" > Add to cart</a>
+                  <a class="btn btn-primary update-cart" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" > Add to cart</a>
              <?php
-                
+                }
+                else{ ?>
+                  
+                <a class="btn btn-primary add-to-cart" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" > Add to cart</a>
+             <?php
+                }
               } 
              ?>
             
@@ -43,61 +53,3 @@
     </div>
      
  <?php } ?>
-    <script>
-        $(document).ready(function(){
-           $(document).on('click', ".add-to-wishlist", function(e) {
-                $.ajax({
-                    url: "/customer-user/add-to-wish-list",
-                    type: "GET",
-                    dataType:'json',
-                    context: this,
-                    data: {product_id: $(this).attr("data-product_id"), user_id : $(this).attr("data-user_id")},
-                    success: function(){
-                        console.log(1);
-                        $(this).text('Remove wish list').removeClass('add-to-wishlist btn-primary').addClass('remove-from-wishlist btn-danger');
-                        $('.x-cart-notification').addClass('bring-forward appear loading');
-                        setTimeout(function(){
-                            $('.x-cart-notification').addClass('added');
-                        }, 1400)
-                        setTimeout(function(){
-                            $('.x-cart-notification').removeClass('bring-forward appear loading added');
-                        }, 2800)
-                        
-
-                    },
-                    error:function (xhr, ajaxOptions, thrownError){
-                        console.log(xhr);
-                        console.log(ajaxOptions);
-                        console.log(thrownError);
-                     }
-
-                    
-                
-           
-            });
-           $(document).on('click', ".remove-from-wishlist", function(e) {
-               $.ajax({
-                    url: "customer-user/remove-from-wish-list",
-                    type: "POST",
-                    dataType:'json',
-                    context: this,
-                    data: {'product_id': $(this).attr("data-product_id"), 'user_id': $(this).attr("data-user_id")},
-                    success: function(json){
-                        $(this).text('add to wish list').addClass('add-to-wishlist btn-primary').removeClass('remove-from-wishlist btn-danger');
-
-                    },
-                    error:function (xhr, ajaxOptions, thrownError){
-                        console.log(xhr);
-                        console.log(ajaxOptions);
-                        console.log(thrownError);
-                     }
-                        
-
-                });
-
-                 
-            });
-        });
-    });
-    
-    </script>
