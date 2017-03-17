@@ -9,6 +9,7 @@
       <controllersDirectory>
         <controllerFile controllerName="Index">
           <actionMethod actionName="index"/>
+          <actionMethod actionName="productDetails"/>
         </controllerFile>
         <controllerFile controllerName="Error"/>
         <controllerFile controllerName="Admin">
@@ -132,8 +133,13 @@
           <viewControllerScriptsDirectory forControllerName="CustomerUser">
             <viewScriptFile forActionName="removeFromWishList"/>
           </viewControllerScriptsDirectory>
+<<<<<<< HEAD
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="productDetails"/>
+=======
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="orderDetails"/>
+>>>>>>> 4d59920d0da103c6dd80cda971c91ac0cad3e8e9
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
