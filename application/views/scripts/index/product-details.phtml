@@ -1,4 +1,3 @@
-<br /><br />
-<div id="view-content">
-	<p>View script for controller <b>Index</b> and script/action name <b>productDetails</b></p>
-</div>
+<?php foreach ($this->element->getMultiOptions() as $label => $value) : ?>
+<label><?php echo $label; ?></label><input type="radio" value="<?php echo $value; ?>" name="<?php echo $this->element->getName(); ?>" />
+<?php endforeach; ?>

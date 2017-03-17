@@ -5,20 +5,21 @@ class IndexController extends Zend_Controller_Action
 
     public function init()
     {
-        /* Initialize action controller here */
+        $this->product = new Application_Model_Product();
+        $this->wishList = new Application_Model_WishList();
+        $this->shoppingCart = new Application_Model_ShoppingCart();
+
     }
 
     public function indexAction()
     {
-        $product = new Application_Model_Product();
-        $all_products = $product-> listAllProducts();
+        
+        $all_products = $this->product-> listAllProducts();
         $this->view->all_products = $all_products;
         $auth=Zend_Auth::getInstance();
         $this->view->user = $auth->getStorage();
-        $wishList = new Application_Model_WishList();
-        $this->view->wishList = $wishList;
-        $shoppingCart = new Application_Model_ShoppingCart();
-        $this->view->shoppingCart = $shoppingCart;
+        $this->view->wishList = $this->wishList;
+        $this->view->shoppingCart = $this->shoppingCart;
 
     }
 
