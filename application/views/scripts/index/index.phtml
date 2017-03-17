@@ -11,6 +11,7 @@ if (!($this->user->isEmpty() )) {
             <img src="<?= $product['photo'] ?>" class="product-image">
             <p class="product-name"> <?= $product['name'] ?> </p>
             <p class="product-desc"> <?= $product['description'] ?>  </p>
+            <a href ="/index/product-details/product_id/<?= $product['id'] ?>"> Product details </a>
             <?php 
             if (!($this->user->isEmpty() ))
              { 
