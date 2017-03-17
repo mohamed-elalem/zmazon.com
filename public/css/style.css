@@ -16,3 +16,109 @@ and open the template in the editor.
     overflow: hidden;
     outline:none;
 }
+/*
+* Adding style to shopping cart 
+    Author : Magdy
+*/
+.x-cart-notification {
+    display: block;
+    position: fixed;
+    overflow: hidden;
+    top: 50%;
+    left: 50%;
+    width: 8em;
+    height: 8em;
+    margin: -4em 0 0 -4em;
+    font-size: 28px;
+    line-height: 1;
+    text-align: center;
+    z-index: -99999;
+    border-radius: 100em;
+    opacity: 0;
+    -webkit-transform: scale(1.25);
+    -ms-transform: scale(1.25);
+    transform: scale(1.25);
+    -webkit-transition: opacity 0.65s cubic-bezier(0.23, 1, 0.32, 1),-webkit-transform 0.65s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: opacity 0.65s cubic-bezier(0.23, 1, 0.32, 1),transform 0.65s cubic-bezier(0.23, 1, 0.32, 1)
+}
+
+.x-cart-notification:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000;
+    opacity: 0.85;
+    -webkit-transition: background-color 0.65s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: background-color 0.65s cubic-bezier(0.23, 1, 0.32, 1)
+}
+
+.x-cart-notification.bring-forward {
+    z-index: 99999
+}
+
+.x-cart-notification.appear {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1)
+}
+
+.x-cart-notification.loading .x-cart-notification-icon.loading {
+    -webkit-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    transform: translate(0, 0)
+}
+
+.x-cart-notification.added:before {
+    background-color: #46a546
+}
+
+.x-cart-notification.added .x-cart-notification-icon.loading {
+    opacity: 0;
+    -webkit-transform: translate(0, 0) scale(0.5) rotate(180deg);
+    -ms-transform: translate(0, 0) scale(0.5) rotate(180deg);
+    transform: translate(0, 0) scale(0.5) rotate(180deg)
+}
+
+.x-cart-notification.added .x-cart-notification-icon.added {
+    opacity: 1;
+    -webkit-transform: scale(1.25) rotate(0);
+    -ms-transform: scale(1.25) rotate(0);
+    transform: scale(1.25) rotate(0)
+}
+
+.x-cart-notification-icon {
+    width: 100%;
+    height: 100%;
+    line-height: 7.85em;
+    -webkit-transition: all 0.65s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: all 0.65s cubic-bezier(0.23, 1, 0.32, 1)
+}
+
+.x-cart-notification-icon>i {
+    font-size: 3.85em;
+    margin-top: 50px;
+}
+
+.x-cart-notification-icon.loading {
+    color: rgba(255,255,255,0.35);
+    opacity: 1;
+    -webkit-transform: translate(0, -100%);
+    -ms-transform: translate(0, -100%);
+    transform: translate(0, -100%)
+}
+
+.x-cart-notification-icon.added {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #fff;
+    opacity: 0;
+    -webkit-transform: scale(0.5) rotate(-180deg);
+    -ms-transform: scale(0.5) rotate(-180deg);
+    transform: scale(0.5) rotate(-180deg)
+}

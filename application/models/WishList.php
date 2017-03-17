@@ -12,7 +12,10 @@ class Application_Model_WishList extends Zend_Db_Table_Abstract
         
     }
     public function is_exists($user_id , $product_id){
-        if ( !empty ($this->find($user_id, $product_id) ) ) {
+        $where = array();
+        $where[] = "userId = $user_id ";
+        $where[] = "productId = $product_id";
+        if ( !empty ($this->fetchAll($where)->id)){
             return true; 
         }
         else {

@@ -32,6 +32,15 @@
             
               
          </div>
+    </div>
+    <div class="x-cart-notification">
+        <div class="x-cart-notification-icon loading">
+            <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+        </div>
+        <div class="x-cart-notification-icon added">
+            <i class="fa fa-check" aria-hidden="true"></i>
+        </div>
+    </div>
      
  <?php } ?>
     <script>
@@ -46,6 +55,14 @@
                     success: function(){
                         console.log(1);
                         $(this).text('Remove wish list').removeClass('add-to-wishlist btn-primary').addClass('remove-from-wishlist btn-danger');
+                        $('.x-cart-notification').addClass('bring-forward appear loading');
+                        setTimeout(function(){
+                            $('.x-cart-notification').addClass('added');
+                        }, 1400)
+                        setTimeout(function(){
+                            $('.x-cart-notification').removeClass('bring-forward appear loading added');
+                        }, 2800)
+                        
 
                     },
                     error:function (xhr, ajaxOptions, thrownError){
@@ -59,15 +76,14 @@
            
             });
            $(document).on('click', ".remove-from-wishlist", function(e) {
-               var currentItem = this
                $.ajax({
                     url: "customer-user/remove-from-wish-list",
                     type: "POST",
-                    dataType:'jsonp',
+                    dataType:'json',
                     context: this,
                     data: {'product_id': $(this).attr("data-product_id"), 'user_id': $(this).attr("data-user_id")},
                     success: function(json){
-                        $(currentItem).text('add to wish list').addClass('add-to-wishlist btn-primary').removeClass('remove-from-wishlist btn-danger');
+                        $(this).text('add to wish list').addClass('add-to-wishlist btn-primary').removeClass('remove-from-wishlist btn-danger');
 
                     },
                     error:function (xhr, ajaxOptions, thrownError){
