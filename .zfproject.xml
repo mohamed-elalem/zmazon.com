@@ -28,6 +28,7 @@
       </controllersDirectory>
       <formsDirectory enabled="false">
         <formFile formName="UpdateCategory"/>
+        <formFile formName="ProductForm"/>
       </formsDirectory>
       <layoutsDirectory>
         <layoutScriptsDirectory>
