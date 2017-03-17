@@ -15,7 +15,7 @@
                     data: {product_id: $(this).attr("data-product_id"), user_id : $(this).attr("data-user_id")},
                     success: function(){
                         console.log(1);
-                        $(this).text('Remove wish list').removeClass('add-to-wishlist btn-primary').addClass('remove-from-wishlist btn-danger');                     
+                        $(this).text('Remove from wish list').removeClass('add-to-wishlist btn-primary').addClass('remove-from-wishlist btn-danger');                     
 
                     },
                     error:function (xhr, ajaxOptions, thrownError){

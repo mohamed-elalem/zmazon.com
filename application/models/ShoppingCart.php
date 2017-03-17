@@ -28,10 +28,11 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
         return $result;
     }
      public function is_exists($user_id , $product_id){
-        $where = array();
-        $where[] = "userId = $user_id ";
-        $where[] = "productId = $product_id";
-        if ( !empty ($this->fetchAll($where)->id)){
+        $where= "userId = $user_id & productId = $product_id";
+        $select = $this->select();
+        $select->where($where);
+        $rows = $this->fetchAll($select);
+        if ( !empty ($rows['id'])){
             return true; 
         }
         else {
