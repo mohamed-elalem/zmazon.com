@@ -10,11 +10,19 @@
             if (!($this->user->isEmpty() ))
              { 
                 $this->user = $this->user->read();
-                ?>
                
+                if ( $this->wishList-> is_exists($this->user->id, $product['id']) ){ ?>
+                     <a class="btn btn-danger remove-from-wishlist" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $this->user->id ?>" > Remove From wish list </a>
+                     
+                <?php 
+                
+                }
+                else { ?>
             
                 <a class="btn btn-primary add-to-wishlist" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $this->user->id ?>" > Add to wish list </a>
-                <a class="btn btn-danger remove-from-wishlist" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $this->user->id ?>" > Remove From wish list </a>
+                <?php 
+                }
+                ?>
                             
                   <a class="btn btn-primary add-to-cart" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $this->user->id ?>" > Add to cart</a>
              <?php
@@ -33,28 +41,47 @@
                     url: "/customer-user/add-to-wish-list",
                     type: "GET",
                     dataType:'json',
+                    context: this,
                     data: {product_id: $(this).attr("data-product_id"), user_id : $(this).attr("data-user_id")},
-                    success: function(data){
-                        $(this).text('Remove from wish list').removeClass('add-to-wishlist btn-primary').addClass('remove-from-wishlist btn-danger');
-                        
-                    }
-                });
+                    success: function(){
+                        console.log(1);
+                        $(this).text('Remove wish list').removeClass('add-to-wishlist btn-primary').addClass('remove-from-wishlist btn-danger');
 
+                    },
+                    error:function (xhr, ajaxOptions, thrownError){
+                        console.log(xhr);
+                        console.log(ajaxOptions);
+                        console.log(thrownError);
+                     }
+
+                    
+                
            
             });
            $(document).on('click', ".remove-from-wishlist", function(e) {
+               var currentItem = this
                $.ajax({
-                    url: "/customer-user/remove-from-wish-list",
-                    type: "GET",
-                    dataType:'json',
-                    data: {product_id: $(this).attr("data-product_id"), user_id : $(this).attr("data-user_id")},
-                    success: function(data){
-                        $(this).text('add to wish list').addClass('add-to-wishlist btn-primary').removeClass('remove-from-wishlist btn-danger');
+                    url: "customer-user/remove-from-wish-list",
+                    type: "POST",
+                    dataType:'jsonp',
+                    context: this,
+                    data: {'product_id': $(this).attr("data-product_id"), 'user_id': $(this).attr("data-user_id")},
+                    success: function(json){
+                        $(currentItem).text('add to wish list').addClass('add-to-wishlist btn-primary').removeClass('remove-from-wishlist btn-danger');
+
+                    },
+                    error:function (xhr, ajaxOptions, thrownError){
+                        console.log(xhr);
+                        console.log(ajaxOptions);
+                        console.log(thrownError);
+                     }
                         
-                    }
+
                 });
 
                  
             });
         });
+    });
+    
     </script>

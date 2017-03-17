@@ -29,6 +29,7 @@
           <actionMethod actionName="addToWishList"/>
           <actionMethod actionName="addToShoppingCart"/>
           <actionMethod actionName="addToCart"/>
+          <actionMethod actionName="removeFromWishList"/>
         </controllerFile>
         <controllerFile controllerName="ShopUser">
           <actionMethod actionName="index"/>
@@ -121,6 +122,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="deleteCoupon"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="CustomerUser">
+            <viewScriptFile forActionName="removeFromWishList"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
