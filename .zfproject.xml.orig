@@ -125,10 +125,13 @@
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="deleteCoupon"/>
           </viewControllerScriptsDirectory>
+<<<<<<< HEAD
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="listOrders"/>
+=======
           <viewControllerScriptsDirectory forControllerName="CustomerUser">
             <viewScriptFile forActionName="removeFromWishList"/>
+>>>>>>> f36a13ccb93b3eba308f84b34afb0a99a58eb80b
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

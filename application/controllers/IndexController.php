@@ -15,6 +15,8 @@ class IndexController extends Zend_Controller_Action
         $this->view->all_products = $all_products;
         $auth=Zend_Auth::getInstance();
         $this->view->user = $auth->getStorage();
+        $wishList = new Application_Model_WishList();
+        $this->view->wishList = $wishList;
 
     }
 
