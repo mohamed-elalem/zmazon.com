@@ -8,11 +8,11 @@
         echo "<td class='text-center'>".$record['email']."</td>";
         echo "<td class='text-center'>";
         if($record['privilege'] != "admin")
-           echo "<a id='".$record['id']."' href='/admin/change-status/id/".$record['id']."/status/".$record['status']."/' ><i class='".($record['status'] == '1' ? "text-success fa fa-dot-circle-o" : "text-danger fa fa-ban")."' aria-hidden='true'></i></a>";
+           echo "<a id='".$record['id']."' type='status' href='/admin/change-status/id/".$record['id']."/status/".$record['status']."/' ><i class='".($record['status'] == '1' ? "text-success fa fa-dot-circle-o" : "text-danger fa fa-ban")."' aria-hidden='true'></i></a>";
         echo "</td>";
         echo "<td class='text-center'>";
         if($record['privilege'] != "admin")
-            echo "<a id='".$record['id']."' href='/admin/change-privilege/id/".$record['id']."/privilege/".$record['privilege']."/' ><i style='font-size: 24px;'class='".($record['privilege'] == 'admin' ? 'text-warning fa fa-user-secret' : ($record['privilege'] == 'shopUser' ? 'text-lg text-primary fa fa-shopping-bag' : 'text-success fa fa-user-circle-o'))."'></i></a></td>";
+            echo "<a id='".$record['id']."' type='privilege' url='/admin/change-privilege/id/".$record['id']."/privilege/".$record['privilege']."/' ><i style='font-size: 24px;'class='".($record['privilege'] == 'admin' ? 'text-warning fa fa-user-secret' : ($record['privilege'] == 'shopUser' ? 'text-lg text-primary fa fa-shopping-bag' : 'text-success fa fa-user-circle-o'))."'></i></a></td>";
         echo "</td>";
         echo "<td class='text-center'>";
         if($record['privilege'] != 'admin')
@@ -68,7 +68,10 @@ EOL;
                                 </div>
                             </form>
                             </div>
-                        </div>
+                        </div>create event sweep_offer
+on schedule every 24 hour
+do 
+delete from sale where current_date() > endDate;
                     </div>
 EOL;
            }
@@ -82,3 +85,10 @@ EOL;
     }
     echo "</table>";
 ?>
+
+<script>
+    $('a').click(function(e) {
+       e.preventDefault();
+       console.log(this.type);
+    });
+</script>

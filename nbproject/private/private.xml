@@ -23,8 +23,10 @@
             <file>file:/srv/http/zmazon.com/application/views/scripts/error/error.phtml</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/admin/manage-users.phtml</file>
             <file>file:/srv/http/zmazon.com/application/controllers/UserController.php</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/index/product-details.phtml</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/shop-user/list-all-products.phtml</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/customer-user/add-to-cart.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/controllers/ShopUserController.php</file>
             <file>file:/srv/http/zmazon.com/application/configs/application.ini</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/admin/index.phtml</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/admin/list-orders.phtml</file>

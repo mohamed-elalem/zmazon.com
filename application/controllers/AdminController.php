@@ -35,7 +35,7 @@ class AdminController extends Zend_Controller_Action
         $metadata = $this->db->describeTable("users");
         $config = array(
             'ssl' => 'tls',
-            'port' => 587,
+            'port' => 587   ,
             'auth' => 'login',
             'username' => 'faintingdetection@gmail.com',
             'password' => 'Tizen2016'
