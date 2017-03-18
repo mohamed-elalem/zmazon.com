@@ -14,7 +14,6 @@
         $totalQuantity = 0;
         $totalPrice = 0.0;
         $totalPriceAfterDiscount = 0.0;
-        
         foreach($this->cart as $product) {
             $discount = (double) $product['price'] * (double) (is_null($product['discount']) ? 0 : $product['discount']) / 100.0;
             $priceAfterDiscount = (double) $product['price'] - $discount;
@@ -37,19 +36,28 @@
         }
     ?>
 </table>
-<table class='table table-hover table-responsive'>
-    <?php
-        echo "<tr>";
-        echo "<th>Total order quantity</th>";
-        echo "<td>".$totalQuantity."</td>";
-        echo "</tr>";
-        echo "<tr>";
-        echo "<th>Total order price</th>";
-        echo "<td>".$totalPrice."</td>";
-        echo "</tr>";
-        echo "<tr>";
-        echo "<th>Total order price after discount</th>";
-        echo "<td>".$totalPriceAfterDiscount."</td>";
-        echo "</tr>";
-    ?>
-</table>
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            
+        </div>
+        <div class="col-md-3">
+            <table class='table table-hover table-responsive'>
+                <?php
+                    echo "<tr>";
+                    echo "<th>Total order quantity</th>";
+                    echo "<td>".$totalQuantity."</td>";
+                    echo "</tr>";
+                    echo "<tr>";
+                    echo "<th>Total order price</th>";
+                    echo "<td>".$totalPrice."</td>";
+                    echo "</tr>";
+                    echo "<tr>";
+                    echo "<th>Total order price after discount</th>";
+                    echo "<td>".$totalPriceAfterDiscount."</td>";
+                    echo "</tr>";
+                ?>
+            </table>
+        </div>
+    </div>
+</div>
