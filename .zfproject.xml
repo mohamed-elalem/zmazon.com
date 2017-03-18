@@ -33,6 +33,8 @@
           <actionMethod actionName="addToShoppingCart"/>
           <actionMethod actionName="addToCart"/>
           <actionMethod actionName="removeFromWishList"/>
+          <actionMethod actionName="updateCart"/>
+          <actionMethod actionName="removeFromCart"/>
         </controllerFile>
         <controllerFile controllerName="ShopUser">
           <actionMethod actionName="index"/>
@@ -138,6 +140,12 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="orderDetails"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="CustomerUser">
+            <viewScriptFile forActionName="updateCart"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="CustomerUser">
+            <viewScriptFile forActionName="removeFromCart"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

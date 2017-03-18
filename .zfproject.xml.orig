@@ -9,6 +9,7 @@
       <controllersDirectory>
         <controllerFile controllerName="Index">
           <actionMethod actionName="index"/>
+          <actionMethod actionName="productDetails"/>
         </controllerFile>
         <controllerFile controllerName="Error"/>
         <controllerFile controllerName="Admin">
@@ -23,6 +24,7 @@
           <actionMethod actionName="deleteCategory"/>
           <actionMethod actionName="deleteCoupon"/>
           <actionMethod actionName="listOrders"/>
+          <actionMethod actionName="orderDetails"/>
         </controllerFile>
         <controllerFile controllerName="CustomerUser">
           <actionMethod actionName="index"/>
@@ -31,6 +33,8 @@
           <actionMethod actionName="addToShoppingCart"/>
           <actionMethod actionName="addToCart"/>
           <actionMethod actionName="removeFromWishList"/>
+          <actionMethod actionName="updateCart"/>
+          <actionMethod actionName="removeFromCart"/>
         </controllerFile>
         <controllerFile controllerName="ShopUser">
           <actionMethod actionName="index"/>
@@ -125,13 +129,26 @@
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="deleteCoupon"/>
           </viewControllerScriptsDirectory>
-<<<<<<< HEAD
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="listOrders"/>
-=======
+          </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="CustomerUser">
             <viewScriptFile forActionName="removeFromWishList"/>
->>>>>>> f36a13ccb93b3eba308f84b34afb0a99a58eb80b
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="productDetails"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="orderDetails"/>
+<<<<<<< HEAD
+=======
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="CustomerUser">
+            <viewScriptFile forActionName="updateCart"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="CustomerUser">
+            <viewScriptFile forActionName="removeFromCart"/>
+>>>>>>> e82e4fff42c41471a289ee2413a6493665bcfb46
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
