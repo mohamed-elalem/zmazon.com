@@ -12,6 +12,7 @@ class CustomerUserController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->wishList = new Application_Model_WishList();
         $this-> shoppingCart = new Application_Model_ShoppingCart();
+        $this->rating = new Application_Model_Rate();
     }
 
     public function indexAction()
@@ -21,14 +22,16 @@ class CustomerUserController extends Zend_Controller_Action
 
     public function putRateAction()
     {
-        // action body
+        $user_id  = $this->_request->getParam('user_id');
+        $product_id  = $this->_request->getParam('product_id');
+        $rating = $this->_request->getParam('rating');
+        $this->rating->addRate($user_id, $product_id, $rating);
+        // The next line is for returning json object response to ajax
+        echo '{"success":"done"}';
     }
 
     public function addToWishListAction()
-    {
-        
-
-        
+    {        
         $user_id  = $this->_request->getParam('user_id');
         $product_id  = $this->_request->getParam('product_id');
         $this->wishList->add($user_id, $product_id);

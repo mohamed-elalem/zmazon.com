@@ -14,7 +14,7 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
     }
     public function productDetails($id)
     {
-        return $this->find($id)->toArray();
+        return $this->find($id)->toArray()[0];
     }
     public function addProduct($productData)
     {
