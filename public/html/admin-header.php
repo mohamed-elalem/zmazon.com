@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Admin</a>
+      <a class="navbar-brand" href="/admin">Admin Panel</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -16,7 +16,7 @@
         <ul class="nav navbar-nav">
             <li><a href="/admin/manage-users/">Manage Users</a></li>
             <li><a href="/admin/manage-categories/">Manage Categories</a></li>
-            <li><a href="/admin/send-coupon">Send coupon</a></li>
+            <li><a href="/admin/list-orders">View orders</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="/admin/logout">Logout</a></li>

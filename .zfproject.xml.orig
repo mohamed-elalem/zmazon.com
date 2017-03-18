@@ -40,11 +40,6 @@
           <actionMethod actionName="index"/>
           <actionMethod actionName="listAllProducts"/>
           <actionMethod actionName="listProductDetails"/>
-          <actionMethod actionName="editProduct"/>
-          <actionMethod actionName="addProduct"/>
-          <actionMethod actionName="listCurrentSale"/>
-          <actionMethod actionName="addSale"/>
-          <actionMethod actionName="editSale"/>
         </controllerFile>
       </controllersDirectory>
       <formsDirectory>
@@ -53,7 +48,6 @@
         <formFile formName="UpdateCategory"/>
         <formFile formName="ProductForm"/>
         <formFile formName="NewCoupon"/>
-        <formFile formName="SaleForm"/>
       </formsDirectory>
       <layoutsDirectory>
         <layoutScriptsDirectory>
@@ -135,21 +129,6 @@
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="deleteCoupon"/>
           </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="ShopUser">
-            <viewScriptFile forActionName="editProduct"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="ShopUser">
-            <viewScriptFile forActionName="addProduct"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="ShopUser">
-            <viewScriptFile forActionName="listCurrentSale"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="ShopUser">
-            <viewScriptFile forActionName="addSale"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="ShopUser">
-            <viewScriptFile forActionName="editSale"/>
-          </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="listOrders"/>
           </viewControllerScriptsDirectory>
@@ -161,12 +140,15 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="orderDetails"/>
+<<<<<<< HEAD
+=======
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="CustomerUser">
             <viewScriptFile forActionName="updateCart"/>
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="CustomerUser">
             <viewScriptFile forActionName="removeFromCart"/>
+>>>>>>> e82e4fff42c41471a289ee2413a6493665bcfb46
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

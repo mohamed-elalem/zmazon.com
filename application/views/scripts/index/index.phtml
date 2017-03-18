@@ -1,60 +1,56 @@
-<?php echo count($this->user->cart_products); ?>
-
+<?php  
+$user = $this->user->read();
+if (!($this->user->isEmpty() )) {
+    echo $this->shoppingCart->quantity;
+    
+}   
+?>
 <div class="product-list">
     <?php foreach ($this->all_products as $product) { ?>
         <div class="col-md-4">
             <img src="<?= $product['photo'] ?>" class="product-image">
             <p class="product-name"> <?= $product['name'] ?> </p>
             <p class="product-desc"> <?= $product['description'] ?>  </p>
+            <a href ="/index/product-details/product_id/<?= $product['id'] ?>"> Product details </a>
             <?php 
             if (!($this->user->isEmpty() ))
              { 
-                $this->user = $this->user->read();
-                ?>
                
-            
-                <a class="btn btn-primary add-to-wishlist" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $this->user->id ?>" > Add to wish list </a>
-                <a class="btn btn-danger remove-from-wishlist" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $this->user->id ?>" > Remove From wish list </a>
-                            
-                  <a class="btn btn-primary add-to-cart" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $this->user->id ?>" > Add to cart</a>
-             <?php
+                if ( $this->wishList-> is_exists($user->id, $product['id']) ){ ?>
+                     <a class="btn btn-danger remove-from-wishlist" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" > Remove From wish list </a>
+                     
+                <?php 
                 
+                }
+                else { ?>
+            
+                <a class="btn btn-primary add-to-wishlist" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" > Add to wish list </a>
+                <?php 
+                }
+                if ($this->shoppingCart->is_exists($user->id, $product['id']) ){ 
+                ?>
+                            
+                  <a class="btn btn-primary update-cart" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" > Add to cart</a>
+             <?php
+                }
+                else{ ?>
+                  
+                <a class="btn btn-primary add-to-cart" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" > Add to cart</a>
+             <?php
+                }
               } 
              ?>
             
               
          </div>
+    </div>
+    <div class="x-cart-notification">
+        <div class="x-cart-notification-icon loading">
+            <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+        </div>
+        <div class="x-cart-notification-icon added">
+            <i class="fa fa-check" aria-hidden="true"></i>
+        </div>
+    </div>
      
  <?php } ?>
-    <script>
-        $(document).ready(function(){
-           $(document).on('click', ".add-to-wishlist", function(e) {
-                $.ajax({
-                    url: "/customer-user/add-to-wish-list",
-                    type: "GET",
-                    dataType:'json',
-                    data: {product_id: $(this).attr("data-product_id"), user_id : $(this).attr("data-user_id")},
-                    success: function(data){
-                        $(this).text('Remove from wish list').removeClass('add-to-wishlist btn-primary').addClass('remove-from-wishlist btn-danger');
-                        
-                    }
-                });
-
-           
-            });
-           $(document).on('click', ".remove-from-wishlist", function(e) {
-               $.ajax({
-                    url: "/customer-user/remove-from-wish-list",
-                    type: "GET",
-                    dataType:'json',
-                    data: {product_id: $(this).attr("data-product_id"), user_id : $(this).attr("data-user_id")},
-                    success: function(data){
-                        $(this).text('add to wish list').addClass('add-to-wishlist btn-primary').removeClass('remove-from-wishlist btn-danger');
-                        
-                    }
-                });
-
-                 
-            });
-        });
-    </script>

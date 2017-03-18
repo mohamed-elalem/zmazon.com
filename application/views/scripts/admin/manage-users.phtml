@@ -3,12 +3,22 @@
     
     echo "<tr><th class='text-center'>Username</th><th class='text-center'>Email</th><th class='text-center'>Status</th><th class='text-center'>Privilages</th><th class='text-center'>Terminate user</th><th class='text-center'>Coupon</th></tr>";
     foreach($this->userList as $record) {
-       echo "<tr>";
-       echo "<td class='text-center'>".$record['userName']."</td>";
-       echo "<td class='text-center'>".$record['email']."</td>";
-       echo "<td class='text-center'><a id='".$record['id']."' href='/admin/change-status/id/".$record['id']."/status/".$record['status']."/' ><i class='".($record['status'] == '1' ? "text-success fa fa-dot-circle-o" : "text-danger fa fa-ban")."' aria-hidden='true'></i></a></td>";
-       echo "<td class='text-center'><a id='".$record['id']."' href='/admin/change-privilege/id/".$record['id']."/privilege/".$record['privilege']."/' ><i style='font-size: 24px;'class='".($record['privilege'] == 'admin' ? 'text-warning fa fa-user-secret' : ($record['privilege'] == 'shopUser' ? 'text-lg text-primary fa fa-shopping-bag' : 'text-success fa fa-user-circle-o'))."'></i></a></td>";
-       echo "<td class='text-center'><a id='".$record['id']."' href='/admin/remove/id/".$record['id']."/'><i class='text-danger fa fa-times'></i></a></td>";
+        echo "<tr>";
+        echo "<td class='text-center'>".$record['userName']."</td>";
+        echo "<td class='text-center'>".$record['email']."</td>";
+        echo "<td class='text-center'>";
+        if($record['privilege'] != "admin")
+           echo "<a id='".$record['id']."' href='/admin/change-status/id/".$record['id']."/status/".$record['status']."/' ><i class='".($record['status'] == '1' ? "text-success fa fa-dot-circle-o" : "text-danger fa fa-ban")."' aria-hidden='true'></i></a>";
+        echo "</td>";
+        echo "<td class='text-center'>";
+        if($record['privilege'] != "admin")
+            echo "<a id='".$record['id']."' href='/admin/change-privilege/id/".$record['id']."/privilege/".$record['privilege']."/' ><i style='font-size: 24px;'class='".($record['privilege'] == 'admin' ? 'text-warning fa fa-user-secret' : ($record['privilege'] == 'shopUser' ? 'text-lg text-primary fa fa-shopping-bag' : 'text-success fa fa-user-circle-o'))."'></i></a></td>";
+        echo "</td>";
+        echo "<td class='text-center'>";
+        if($record['privilege'] != 'admin')
+           echo "<a id='".$record['id']."' href='/admin/remove/id/".$record['id']."/'><i class='text-danger fa fa-times'></i></a>";
+        echo "</td>";
+       
        echo "<td class='text-center'>";
        if($record['privilege'] == 'customerUser') {
            if(is_null($record['coupon_id'])) {

@@ -1,0 +1,42 @@
+<div class="product-details">
+    <img src ="<?= $this->product['photo'] ?>" >
+    <div class="product-desc">
+        <p> <?= $this->product['description'] ?> </p>
+    </div>
+</div>
+<div class="rating-form">
+    <form>
+        <fieldset>
+            <span class="star-cb-group">
+                <?php 
+                $counter =5;
+                foreach ($this->rating_form->getElement('Rating')->getMultiOptions() as $label => $value) : ?>
+               
+                <input id="rating-<?= $counter ?>" type="radio" value="<?= (6-  $value); ?>" name="rating" />
+                 <label for= "rating-<?= $counter ?>"><?php echo $counter; ?></label>
+
+                <?php 
+                    $counter --;
+                    endforeach; 
+                ?>
+                <input type="radio" id="rating-0" name="rating" value="0" class="star-cb-clear" /><label for="rating-0">0</label>
+            </span>
+        </fieldset>
+        <input type="button" class="submit-button" value="Add rating">
+       
+    </form>
+</div>
+<div class="comments-form">
+     
+</div>
+<script>
+$(document).ready(function(){
+    var logID = 'log',
+      log = $('<div id="'+logID+'"></div>');
+    $('body').append(log);
+      $('[type*="radio"]').change(function () {
+        var me = $(this);
+        log.html(me.attr('value'));
+      });
+  });
+  </script>

@@ -9,10 +9,12 @@ class AdminController extends Zend_Controller_Action
 
     private $category = null;
 
+    private $shoppingCart = null;
+
     private $db = null;
 
     private $privileges = null;
-    
+
     private $transport = null;
 
     public function init()
@@ -28,6 +30,7 @@ class AdminController extends Zend_Controller_Action
         $this->user = new Application_Model_Users();
         $this->coupon = new Application_Model_Coupon();
         $this->category = new Application_Model_Category();
+        $this->shoppingCart = new Application_Model_ShoppingCart();
         $this->db = Zend_Db_Table::getDefaultAdapter();
         $metadata = $this->db->describeTable("users");
         $config = array(
@@ -38,7 +41,7 @@ class AdminController extends Zend_Controller_Action
             'password' => 'Tizen2016'
         );
         $this->transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
-        Zend_Mail::setDefaultTransport($this->transport);
+        //Zend_Mail::setDefaultTransport($this->transport);
         //$cols = array_keys($metadata);
         
         // Sending required variables to admin views
@@ -57,6 +60,11 @@ class AdminController extends Zend_Controller_Action
         $userList = $this->user->retrieveAllUsersWithCoupons();
         $this->view->userList = $userList;
         
+        $paginator = Zend_Paginator::factory($userList);
+        $paginator->setItemCountPerPage(5);
+        $paginator->setCurrentPageNumber(1);
+        $this->view->paginator = $paginator;
+        
         $newCouponForm = new Application_Form_NewCoupon();
         
         $request = $this->getRequest();
@@ -74,15 +82,19 @@ class AdminController extends Zend_Controller_Action
             $this->coupon->newCoupon($discount, $uid, $code);
             
             $mail = new Zend_Mail();
-            
             $mail_body = "You've been promoted with a coupon that gives you discount on an order you select.<br>";
             $mail_body .= "coupon: ".$code."<br>";
             $mail_body .= "Please note that this coupon is one time use only.";
             $mail->setBodyHtml($mail_body);
             $mail->setFrom('faintingdetection@gmail.com');
-            $mail->addTo($email, "site_admin");
+            
+            $mail->addTo($reciever, "site_admin");
             $mail->setSubject("Coupon promotion");
+            //var_dump($this->transport);
+            //die();
+            
             $mail->send($this->transport);
+            
             
             $this->redirect("/admin/manage-users");
         }
@@ -163,8 +175,26 @@ class AdminController extends Zend_Controller_Action
         $this->redirect("/admin/manage-users");
     }
 
+    public function listOrdersAction()
+    {
+        $orders = $this->shoppingCart->selectUsersOrders();
+        $this->view->orders = $orders;
+    }
+
+    public function orderDetailsAction()
+    {
+        $id = $this->getParam("id");
+        $order = $this->shoppingCart->selectSpecificOrder($id);
+        
+        $this->view->cart = $order;
+    }
+
 
 }
+
+
+
+
 
 
 
