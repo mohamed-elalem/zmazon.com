@@ -1,0 +1,18 @@
+
+<table class="table table-bordered">
+<?php
+	foreach($this->allSales as $key => $value)
+	{
+			echo "<tr class='danger'><td>".$value['id']."</td>".
+			"<td >".$value['percentage']."</td>".
+                        "<td>".$value['startDate']."</td>".
+			"<td>".$value['endDate']."</td>".
+			"<td> <a class='btn btn-danger' href='delete-sale/saleId/".$value['id']."'role='button'>Delete </a> </td>".
+			"<td> <a class='btn btn-danger' href='edit-sale/saleId/".$value['id']."'role='button'>Edit </a> </td></tr>";
+	}
+
+ ?>
+
+</table>
+
+<a class='btn btn-danger' href='add-sale'role='button'>Add Sale </a>

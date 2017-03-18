@@ -40,6 +40,11 @@
           <actionMethod actionName="index"/>
           <actionMethod actionName="listAllProducts"/>
           <actionMethod actionName="listProductDetails"/>
+          <actionMethod actionName="editProduct"/>
+          <actionMethod actionName="addProduct"/>
+          <actionMethod actionName="listCurrentSale"/>
+          <actionMethod actionName="addSale"/>
+          <actionMethod actionName="editSale"/>
         </controllerFile>
       </controllersDirectory>
       <formsDirectory>
@@ -48,6 +53,7 @@
         <formFile formName="UpdateCategory"/>
         <formFile formName="ProductForm"/>
         <formFile formName="NewCoupon"/>
+        <formFile formName="SaleForm"/>
       </formsDirectory>
       <layoutsDirectory>
         <layoutScriptsDirectory>
@@ -128,6 +134,21 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="deleteCoupon"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="ShopUser">
+            <viewScriptFile forActionName="editProduct"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="ShopUser">
+            <viewScriptFile forActionName="addProduct"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="ShopUser">
+            <viewScriptFile forActionName="listCurrentSale"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="ShopUser">
+            <viewScriptFile forActionName="addSale"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="ShopUser">
+            <viewScriptFile forActionName="editSale"/>
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="listOrders"/>
