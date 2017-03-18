@@ -82,15 +82,19 @@ class AdminController extends Zend_Controller_Action
             $this->coupon->newCoupon($discount, $uid, $code);
             
             $mail = new Zend_Mail();
-            
             $mail_body = "You've been promoted with a coupon that gives you discount on an order you select.<br>";
             $mail_body .= "coupon: ".$code."<br>";
             $mail_body .= "Please note that this coupon is one time use only.";
             $mail->setBodyHtml($mail_body);
-            $mail->setFrom('faintingdetection@gmail.com');
-            $mail->addTo($email, "site_admin");
+            $mail->setFrom('<faintingdetection@gmail.com>');
+            
+            $mail->addTo("<".$reciever.">", "site_admin");
             $mail->setSubject("Coupon promotion");
+            //var_dump($this->transport);
+            //die();
+            
             $mail->send($this->transport);
+            
             
             $this->redirect("/admin/manage-users");
         }
