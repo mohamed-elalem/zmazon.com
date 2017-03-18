@@ -41,7 +41,7 @@ class AdminController extends Zend_Controller_Action
             'password' => 'Tizen2016'
         );
         $this->transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
-        Zend_Mail::setDefaultTransport($this->transport);
+        //Zend_Mail::setDefaultTransport($this->transport);
         //$cols = array_keys($metadata);
         
         // Sending required variables to admin views
@@ -82,7 +82,6 @@ class AdminController extends Zend_Controller_Action
             $this->coupon->newCoupon($discount, $uid, $code);
             
             $mail = new Zend_Mail();
-            
             $mail_body = "You've been promoted with a coupon that gives you discount on an order you select.<br>";
             $mail_body .= "coupon: ".$code."<br>";
             $mail_body .= "Please note that this coupon is one time use only.";
@@ -90,7 +89,11 @@ class AdminController extends Zend_Controller_Action
             $mail->setFrom('faintingdetection@gmail.com');
             $mail->addTo($reciever, "site_admin");
             $mail->setSubject("Coupon promotion");
+            //var_dump($this->transport);
+            //die();
+            
             $mail->send($this->transport);
+            
             
             $this->redirect("/admin/manage-users");
         }
