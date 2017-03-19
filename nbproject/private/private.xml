@@ -11,6 +11,14 @@
             <file>file:/var/www/html/zmazon.com/application/controllers/CustomerUserController.php</file>
             <file>file:/var/www/html/zmazon.com/application/controllers/UserController.php</file>
             <file>file:/var/www/html/zmazon.com/application/models/Comment.php</file>
+            <file>file:/var/www/html/zmazon.com/application/views/scripts/shop-user/list-all-products.phtml</file>
+            <file>file:/var/www/html/zmazon.com/application/forms/ProductForm.php</file>
+            <file>file:/var/www/html/zmazon.com/application/controllers/ShopUserController.php</file>
+            <file>file:/var/www/html/zmazon.com/application/models/Sale.php</file>
+            <file>file:/var/www/html/zmazon.com/application/forms/SaleForm.php</file>
+            <file>file:/var/www/html/zmazon.com/application/models/ShoppingCart.php</file>
+            <file>file:/var/www/html/zmazon.com/application/views/scripts/shop-user/list-current-sale.phtml</file>
+            <file>file:/var/www/html/zmazon.com/application/controllers/AdminController.php</file>
         </group>
     </open-files>
 </project-private>
