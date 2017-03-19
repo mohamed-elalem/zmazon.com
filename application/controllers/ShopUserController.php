@@ -173,8 +173,16 @@ class ShopUserController extends Zend_Controller_Action
         
     }
 
+    public function statisticsAction()
+    {
+        $this->view->categoryStatistics = $this->productModel->statisticsForCategory() ;
+        $this->view->productStatistics =$this->productModel->statisticsForProduct();
+    }
+
 
 }
+
+
 
 
 

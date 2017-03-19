@@ -1,0 +1,31 @@
+
+<table class="table table-bordered">
+    <th>Category </th>  <th>Top product </th> <th>Num of sale </th>
+<?php
+	foreach($this->categoryStatistics as $key => $value)
+	{
+			echo "<tr class='danger'><td>".$value['cName']."</td>".
+			"<td >".$value['pName']."</td>".
+                        
+			"<td>".$value['max']."</td></tr>";
+	}
+
+ ?>
+
+</table>
+
+<table class="table table-bordered">
+    <th>Products </th>  <th>Num of sale </th> <th>Price </th> <th>Money gained </th>
+<?php
+	foreach($this->productStatistics as $key => $value)
+	{
+            $moneys=$value['numOfSale']*$value['price'];
+			echo "<tr class='danger'><td>".$value['name']."</td>".
+			"<td >".$value['numOfSale']."</td>".
+                        "<td >".$value['price']."</td>".
+			"<td>".$moneys."</td></tr>";
+	}
+
+ ?>
+
+</table>

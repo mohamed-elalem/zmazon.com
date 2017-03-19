@@ -45,6 +45,7 @@
           <actionMethod actionName="listCurrentSale"/>
           <actionMethod actionName="addSale"/>
           <actionMethod actionName="editSale"/>
+          <actionMethod actionName="statistics"/>
         </controllerFile>
       </controllersDirectory>
       <formsDirectory>
@@ -167,6 +168,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="CustomerUser">
             <viewScriptFile forActionName="removeFromCart"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="ShopUser">
+            <viewScriptFile forActionName="statistics"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
