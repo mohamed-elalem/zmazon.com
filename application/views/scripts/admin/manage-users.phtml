@@ -1,0 +1,271 @@
+<table class="table table-hover table-responsive">
+    <tr>
+        <th class="text-center">Username</th>
+        <th class="text-center">Email</th>
+        <th class="text-center">Block</th>
+        <th class="text-center">Type</th>
+        <th class="text-center">Coupon</th>
+        <th class="text-center">Terminate</th>
+    </tr>
+    <?php
+        foreach($this->users as $user) {
+            echo "<tr id='".$user['id']."'>";
+            echo "<td class='text-center'>".$user['userName']."</td>";
+            echo "<td class='text-center'>".$user['email']."</td>";
+            echo "<td class='text-center'><div class='status checkbox'>";
+            if($user['privilege'] != 'admin') {
+                echo "<input data-user_id='".$user['id']."' type='checkbox' ".($user['status'] == 0 ? "checked" : "")." /></div>";
+            }
+            echo "</div></td>";
+            echo "<td class='text-center' data-user_id='".$user['id']."' class='text-center'><div class='privilege form-group'>";
+            if($user['privilege'] != 'admin') {
+                echo "<select data-user_id='".$user['id']."' class='form-control'><option ".($user['privilege'] == 'admin' ? "selected" : "").">Admin</option><option ".($user['privilege'] == 'shopUser' ? "selected" : "").">Shop</option><option ".($user['privilege'] == 'customerUser' ? "selected" : "").">Customer</option></select>";
+            }
+            echo "</div></td>";
+            echo "<td class='text-center'><div class='coupon'>";
+            if($user['privilege'] == 'customerUser') {
+                if(is_null($user['coupon_id'])) {
+                    echo "<button data-email='".$user['email']."' data-user_id='".$user['id']."' class='add-coupon btn btn-default'>Add Coupon</button>";
+                }
+                else {
+                    echo $user['discount']."% <i class='fa fa-arrow-down text-danger'></i><button data-user_id='".$user['id']."' class='btn-transparent text-danger pull-right delete-coupon'><i class='fa fa-times'></i></button>";
+                }
+                
+            }
+            
+            echo "</div></td>";
+            echo "<td class='text-center'>";
+            if($user['privilege'] != 'admin') {
+                echo "<button data-user_id='".$user['id']."' class='btn-transparent terminate'><i class='fa fa-times text-danger'></i></button>";
+            }
+            echo "</td>";
+            echo "</tr>";
+            
+        }
+    ?>
+</table>
+<script>
+    $(document).ready(function() {
+        $(".status").change(function(e) {
+            var checkbox = e.target;
+            var status;
+            var id = $(checkbox).attr('data-user_id');
+            console.log(id);
+            if($(checkbox).is(':checked')) {
+                status = '0';
+            }
+            else {
+                status = '1';
+            }
+            
+            $.ajax({
+                'url': '/admin/change-status',
+                'type': 'post',
+                'dataType': 'JSON',
+                'data': {
+                    'id': id, 
+                    'status': status
+                },
+                'success': function(msg) {
+                    console.log(msg);
+                },
+                'error': function (xhr, ajaxOptions, thrownError){
+                    console.log(xhr);
+                    console.log(ajaxOptions);
+                    console.log(thrownError);
+                }
+            })
+        });
+        
+        $(".privilege").change(function(e) {
+            var input = e.target;
+            var id = $(input).attr('data-user_id');
+            var newValue = $(input).val();
+            var postData = {'id': id};
+            if(newValue == 'Admin') {
+                postData.privilege = 'admin';
+            }
+            else if(newValue == 'Shop') {
+                postData.privilege = 'shopUser';
+            }
+            else {
+                postData.privilege = 'customerUser';
+            }
+            
+            console.log(postData);
+            
+            $.ajax({
+                'url': '/admin/change-privilege',
+                'type': 'post',
+                'dataType': 'json',
+                'data': postData,
+                'success': function(data) {
+                    
+                    var newData = data[0];
+                    console.log(newData);
+                    var td = $(input).parent().parent().parent();
+                    var status = $(td).find('.status');
+                    var privilege = $(td).find('.privilege');
+                    var coupon = $(td).find('.coupon');
+                    console.log(status);
+                    console.log(privilege);
+                    console.log(coupon);
+                    if(newValue == 'Admin') {
+                        $(status).fadeOut("slow", function() {
+                            $(this).empty();
+                        });
+                        $(privilege).fadeOut("slow", function() {
+                            $(this).empty();
+                        });
+                        $(coupon).fadeOut("slow", function() {
+                            $(this).empty();
+                        });
+                    }
+                    else if(newValue == 'Shop') {
+                        $(status).empty();
+                        $(status).fadeIn("slow", function() {
+                            $(this).append("<input data-user_id='"+ newData.id + "' type='checkbox' " + (newData.status == 0 ? "checked" : "") + " />");
+                        });
+                        $(privilege).empty();
+                        $(privilege).fadeIn("slow", function() {
+                            $(this).append("<select data-user_id='" + newData.id + "' class='form-control'><option>Admin</option><option selected>Shop</option><option>Customer</option></select>")
+                        }); 
+                        $(coupon).fadeOut("slow", function() {
+                            $(this).empty();
+                        });
+                    }
+                    else {
+                        $(status).empty();
+                        $(privilege).empty();
+                        $(coupon).empty();
+                        $(status).fadeIn("slow", function() {
+                            $(this).append("<input data-user_id='"+newData.id + "' type='checkbox' " + (newData.status == 0 ? "checked" : "") + " />");
+                        });
+                        $(privilege).fadeIn("slow", function() {
+                            $(this).append("<select data-user_id='" + newData.id + "' class='form-control'><option>Admin</option><option>Shop</option><option selected>Customer</option></select>");
+                        });
+                        if(newData.coupon_id) {
+                            $(coupon).fadeIn("slow", function() {
+                                $(this).append(newData.discount + "% <i class='fa fa-arrow-down text-danger'></i><button data-user_id='" + newData.id + "' class='btn-transparent text-danger pull-right delete-coupon'><i class='fa fa-times'></i></button>").show();
+                            });
+                        }
+                        else {
+                            $(coupon).fadeIn("slow", function() {
+                                $(this).append("<button data-email='" + newData.email + "' data-user_id='" + newData.id + "' class='add-coupon btn btn-default'>Add Coupon</button>").show();
+                            });
+                        }
+                       
+                        
+                    }
+                },
+                'error': function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr);
+                    console.log(ajaxOptions);
+                    console.log(thrownError);
+                }
+                
+            });
+        });
+        
+        $('body').on('click', '.delete-coupon', function(e) {
+            var button = $(e.target).parent();
+            console.log(button);
+            var postData = {
+                'id': $(button).attr('data-user_id')
+            };
+            console.log('there');
+            console.log(postData);
+            $.ajax({
+                'url': '/admin/delete-coupon',
+                'type': 'post',
+                'dataType': 'json',
+                'data': postData,
+                'success': function(data) {
+                    var newData = data[0];
+                    var td = $(button).parent().parent();
+                    var deleteDiv = $(button).parent();
+                    console.log(deleteDiv);
+                    
+                    $(deleteDiv).fadeOut("slow", function() {
+                        $(this).empty();
+                        $(this).append("<button data-email='" + newData.email + "' data-user_id='" + newData.id + "' class='add-coupon btn btn-default'>Add Coupon</button>").show();    
+                        
+                    });
+                },
+                'error': function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr);
+                    console.log(ajaxOptions);
+                    console.log(thrownError);
+                }
+                
+            });
+        });
+        
+        $('body').on('click', '.add-coupon', function(e) {
+            var button = e.target;
+            var addDiv = $(button).parent();
+            console.log(addDiv);
+            $(".new-coupon-form").unbind();
+            $(".new-coupon-form").remove();
+            $(addDiv).append("<input class='new-coupon-form form-control' placeholder='e.g. 30% discount' />");
+            $(".new-coupon-form").keyup(function(e) {
+                if(e.keyCode == 13) {
+                    var input = e.target;
+                    var addDiv = $(input).parent();
+                    var button = $(addDiv).find('button');
+                    var id = $(button).attr('data-user_id');
+                    var discount = $(input).val();
+                    var email = $(button).attr('data-email');
+                    
+                    if($.isNumeric(discount)) {
+                        $.ajax({
+                            'url': '/admin/send-coupon',
+                            'type': 'post',
+                            'dataType': 'json',
+                            'data': {
+                                'userId': id,
+                                'discount': discount,
+                                'email': email
+                            },
+                            'success': function(data) {
+                                console.log(data);
+                                $(addDiv).fadeOut("slow", function() {
+                                    $(this).empty();
+                                    $(this).append(discount + "% <i class='fa fa-arrow-down text-danger'></i><button data-user_id='" + id + "' class='btn-transparent text-danger pull-right delete-coupon'><i class='fa fa-times'></i></button>").show();
+                                });
+                            },
+                            'error': function(xhr, ajaxOptions, thrownError) {
+                                console.log(xhr);
+                                console.log(ajaxOptions);
+                                console.log(thrownError);
+                            }
+                        });
+                    }
+                    else {
+                        $(addDiv).addClass('has-error');
+                    }
+                }
+            }); 
+        });
+        
+        $('body').on('click', '.terminate', function(e) {
+            var button = $(e.target).parent();
+            
+            var userId = $(button).attr('data-user_id');
+            console.log(userId);
+            
+            $.ajax({
+                'url': '/admin/remove',
+                'type': 'post',
+                'dataType': 'json',
+                'data': {'id': userId},
+                'success': function(data) {
+                    $("#" + userId).fadeOut("slow", function() {
+                        $(this).remove();
+                    });
+                }
+            });
+        });
+        
+    });
+</script>

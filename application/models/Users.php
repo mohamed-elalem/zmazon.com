@@ -4,6 +4,10 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
 {
     protected $_name = "users";
     
+    public function retrieveUser($id) {
+        return $this->find($id)->toArray();
+    }
+    
     public function retrieveAllUsers() {
         return $this->fetchAll();
     }
@@ -21,6 +25,15 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     
     public function editRecord($id, $data) {
         $this->update($data, "id = ".$id);
+        $sql = $this->select()
+                ->from(array("u" => "users"))
+                ->joinLeft(array("c" => "coupon"), "u.id = c.userId", array("c.id as coupon_id", "c.discount as discount"))
+                ->where("u.id = ".$id)
+                ->setIntegrityCheck(false);
+        $query = $sql->query();
+        $result = $query->fetchAll();
+        return $result;
+        
     }
     
     public function remove($id) {

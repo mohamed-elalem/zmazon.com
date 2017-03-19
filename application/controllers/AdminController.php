@@ -33,14 +33,12 @@ class AdminController extends Zend_Controller_Action
         $this->shoppingCart = new Application_Model_ShoppingCart();
         $this->db = Zend_Db_Table::getDefaultAdapter();
         $metadata = $this->db->describeTable("users");
-        
-        
         $config = array(
-            'auth'     => 'login',
-            'username' => 'ecommerce.zend@gmail.com',
-            'password' => 'ecommerce.zend*',
-            'port'     => '587',
-            'ssl'      => 'tls',
+            'ssl' => 'tls',
+            'port' => 587,
+            'auth' => 'login',
+            'username' => 'faintingdetection@gmail.com',
+            'password' => 'Tizen2016'
         );
 
         //Zend_Mail::setDefaultTransport($this->transport);
@@ -59,72 +57,10 @@ class AdminController extends Zend_Controller_Action
 
     public function manageUsersAction()
     {
-        $userList = $this->user->retrieveAllUsersWithCoupons();
-        $this->view->userList = $userList;
+        $users = $this->user->retrieveAllUsersWithCoupons();
         
-        $paginator = Zend_Paginator::factory($userList);
-        $paginator->setItemCountPerPage(5);
-        $paginator->setCurrentPageNumber(1);
-        $this->view->paginator = $paginator;
         
-        $newCouponForm = new Application_Form_NewCoupon();
-        
-        $request = $this->getRequest();
-        
-        if($request->isPost() && $newCouponForm->isValid($request->getParams())) {
-            $domain = "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
-            $len = strlen($domain);
-            $code = '';
-            for($i = 0; $i < 45; $i++) {
-                $code .= $domain[random_int(0, $len - 1)];
-            }
-            $uid = $request->getParam("uid");
-            $discount = $request->getParam("discount");
-            $reciever = $request->getParam("email");
-            $this->coupon->newCoupon($discount, $uid, $code);
-            $config = array(
-                'ssl' => 'tls',
-                'port' => 587   ,
-                'auth' => 'login',
-                'username' => 'faintingdetection@gmail.com',
-                'password' => 'Tizen2016'
-            );
-            $transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
-        
-            $mail = new Zend_Mail();
-            $mail_body = "Congratulations, You've been promoted with a coupon that gives you discount on an order you select.<br>";
-            $mail_body .= "coupon: ".$code."<br>";
-            $mail_body .= "discount: ".$discount." %<br>";
-            $mail_body .= "Please note that this coupon is one time use only.";
-            $mail->setBodyHtml($mail_body);
-            $mail->setFrom('site_admin');
-            $mail->addTo($reciever, "site_admin");
-            $mail->setSubject("Coupon promotion");
-            //var_dump($this->transport);
-            //die();
-            
-            $mail->send($transport);
-            
-            /*
-            $tr = new Zend_Mail_Transport_Smtp('smtp.gmail.com',
-                     array('auth' => 'login',
-                        'port' => 587,
-                        'ssl' => 'tls',
-                        'username' => 'mohamed.el.alem.2017@gmail.com',
-                        'password' => '526502333'));
-        Zend_Mail::setDefaultTransport($tr);
-
-        $mail = new Zend_Mail();
-        $mail->setFrom('mohamed.el.alem.2017@gmail.com');
-        $mail->setBodyHtml('some message - it may be html formatted text');
-        $mail->addTo('baghdadinoo@gmail.com', 'recipient');
-        $mail->setSubject('subject');
-        $mail->send($tr);
-            */
-            $this->redirect("/admin/manage-users");
-        }
-        
-        $this->view->newCouponForm = $newCouponForm;
+        $this->view->users = $users;
     }
 
     public function manageCategoriesAction()
@@ -157,27 +93,95 @@ class AdminController extends Zend_Controller_Action
 
     public function sendCouponAction()
     {
-        // action body
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+        $ajaxContext->addActionContext('addToWishList', 'json')
+            ->initContext();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout->disableLayout();
+        
+        $request = $this->getRequest();
+        if($request->isPost()) {
+            $domain = "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+            $len = strlen($domain);
+            $code = '';
+            for($i = 0; $i < 45; $i++) {
+                $code .= $domain[random_int(0, $len - 1)];
+            }
+            
+            $userId = $request->getParam("userId");
+            $discount = $request->getParam("discount");
+            $email = $request->getParam("email");
+            
+            $this->coupon->newCoupon($discount, $userId, $code);
+            
+            $tr = new Zend_Mail_Transport_Smtp('smtp.gmail.com',
+                     array(
+                            'auth' => 'login',
+                            'port' => 587,
+                            'ssl' => 'tls',
+                            'username' => 'faintingdetection@gmail.com',
+                            'password' => 'Tizen2016'
+                         )
+                    );
+            Zend_Mail::setDefaultTransport($tr);
+
+            $mail = new Zend_Mail();
+            $mail->setFrom('faintingdetection@gmail.com');
+            $mail->setBodyHtml("You've been promoted with a coupon that gives you discount on an order you select.<br>Code: ".$code."<br>Discount: ".$discount." %<br>Please note that this coupon is one time use only.");
+            $mail->addTo($email, 'Dear customer');
+            $mail->setSubject('Coupon Promotion');
+            $mail->send($tr);
+            
+            echo '["success"]';
+        }
+        
     }
 
     public function changeStatusAction()
     {
-        $id = (int) $this->getParam("id");
-        $status = (int) $this->getParam("status");
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+        $ajaxContext->addActionContext('addToWishList', 'json')
+            ->initContext();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout->disableLayout();
         
-        $this->user->editRecord($id, array('status' => 1 - $status));
-        $this->redirect("/admin/manage-users");
+        $request = $this->getRequest();
+        
+         
+        if($request->isPost()) {
+            $id = (int) $request->getParam("id");
+            $status = (int) $request->getParam("status");
+            
+            
+            $this->user->editRecord($id, array('status' => $status));
+            echo '["Success"]';
+        }
+        else {
+            http_response_code(403);
+            die("<h1>Access Forbidden 403</h1>");
+        }
         
     }
 
     public function changePrivilegeAction()
     {
-        $id = (int) $this->getParam("id");
-        $privilege = $this->getParam("privilege");
-        $newPrivilege = $this->privileges[($this->privileges[$privilege] + 1) % 3];
-        
-        $this->user->editRecord($id, array('privilege' => $newPrivilege));
-        $this->redirect("/admin/manage-users");
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+        $ajaxContext->addActionContext('addToWishList', 'json')
+            ->initContext();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout->disableLayout();
+        $request = $this->getRequest();
+        if($request->isPost()) {
+            $id = (int) $this->getParam("id");
+            $privilege = $this->getParam("privilege");
+            
+            $newData = $this->user->editRecord($id, array('privilege' => $privilege));
+            echo json_encode($newData);
+        }
+        else {
+            http_response_code(403);
+            die("<h1>Access Forbidden 403</h1>");
+        }
     }
 
     /**
@@ -185,9 +189,21 @@ class AdminController extends Zend_Controller_Action
      */
     public function removeAction()
     {
-        $id = (int) $this->getParam("id");
-        $this->user->remove($id);
-        $this->redirect("/admin/manage-users");
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+        $ajaxContext->addActionContext('addToWishList', 'json')
+            ->initContext();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout->disableLayout();
+        $request = $this->getRequest();
+        if($request->isPost()) {
+            $id = (int) $this->getParam("id");
+            $this->user->remove($id);
+            echo '["success"]';
+        }
+        else {
+            http_response_code(403);
+            die("<h1>Access Forbidden 403</h1>");
+        }
     }
 
     public function updateCategoryAction()
@@ -205,9 +221,22 @@ class AdminController extends Zend_Controller_Action
 
     public function deleteCouponAction()
     {
-        $id = $this->getParam("id");
-        $this->coupon->deleteCoupon($id);
-        $this->redirect("/admin/manage-users");
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+        $ajaxContext->addActionContext('addToWishList', 'json')
+            ->initContext();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout->disableLayout();
+        
+        $request = $this->getRequest();
+        if($request->isPost()) {
+            $id = $this->getParam("id");
+            $this->coupon->deleteCoupon($id);
+            echo json_encode($this->user->retrieveUser($id)); 
+        }
+        else {
+            http_response_code(403);
+            die("<h1>Access Forbidden 403</h1>");
+        }
     }
 
     public function listOrdersAction()
