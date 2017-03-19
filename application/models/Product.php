@@ -42,7 +42,20 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         $product['categoryId']=$newData['categoryId'];
         $this->update($product, "id=$id");
     }
-   
+    public function updateRating($product_id){
+        $sql = $this->select()
+                ->from(array('sc' => "rate"), array('avg(rate) as average'))
+                ->group("sc.productId")
+                ->having("productId =$product_id")
+                ->setIntegrityCheck(false);
+        //echo $sql->__toString();
+        
+        $query = $sql->query();
+        $result = $query->fetchAll()[0];
+        $product['rate'] = $result['average'];
+        $this->update($product, "id=$product_id");        
+    }
+    
    
         
     

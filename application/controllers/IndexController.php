@@ -8,7 +8,10 @@ class IndexController extends Zend_Controller_Action
         $this->product = new Application_Model_Product();
         $this->wishList = new Application_Model_WishList();
         $this->shoppingCart = new Application_Model_ShoppingCart();
-        $this->rating =  new Application_Form_Rating();
+        $this->rating_form =  new Application_Form_Rating();
+        $this->rate  = new Application_Model_Rate();
+        $this->commentsForm = new Application_Form_Comment();
+        $this->comment = new Application_Model_Comment();
 
     }
 
@@ -29,10 +32,12 @@ class IndexController extends Zend_Controller_Action
         $product_id = $this->_request->getParam('product_id');
         $product = $this->product->productDetails($product_id);
         $this->view->product = $product;
-        $ratingForm = new Application_Form_Rating();
-        $this->view->rating_form = $ratingForm;
+        $this->view->rating_form = $this->rating_form;
+        $this->view->rate = $this->rate;
         $auth=Zend_Auth::getInstance();
         $this->view->user = $auth->getStorage();
+        $this->view->comments_form = $this->commentsForm;
+        $this->view->all_comments = $this->comment->listAll();
    
     }
 

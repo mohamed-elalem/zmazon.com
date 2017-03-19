@@ -7,6 +7,9 @@
         <p> <?= $this->product['description'] ?> </p>
     </div>
 </div>
+<?php
+    if (! $this->rate->hasBeenRated($this->product['id'], $user->id ) ){
+?>
 <div class="rating-form" style="height:150px; ">
     <form>
         <fieldset>
@@ -29,41 +32,21 @@
        
     </form> 
 </div>
+
+<?php 
+    } ?>
+    <div class="comments-list">
+    <?php
+    foreach ($this->all_comments as $comment){
+    ?>
+    <div class="comment"><?= $user->userName.": ". $comment['comment'] ?> </div>
+    <?php }
+    ?>
+</div>
 <div class="comments-form">
+     <?php 
+     echo $this->comments_form;
+     ?> 
+    <input type="hidden" data-user_name = "<?= $user->userName ?>" data-product_id = "<?= $this->product['id'] ?>" data-user_id = "<?= $user->id ?>"  type="button" class="hidden-button">
      
 </div>
-<script>
-$(document).ready(function(){
-    var ratingValue;
-    $(document).on('change', '[type*="radio"]', function(e) {
-        ratingValue = $(this).attr('value');
-        $('.submit-rate-button').removeAttr('disabled');
-      });
-       $(document).on('click', ".submit-rate-button", function(e) {
-        
-                $.ajax({
-                    url: "/customer-user/put-rate",
-                    type: "GET",
-                    dataType:'json',
-                    context: this,
-                    data: {product_id: $(this).attr("data-product_id"), user_id : $(this).attr("data-user_id"), rating : ratingValue},
-                    success: function(){
-                        $('.rating-form').empty();
-                        $('.rating-form').append('<img style="width:60px;" src="/img/ajax-loader1.gif" >');
-                        setTimeout(function(){
-                            $('.rating-form').empty();
-                            $('.rating-form').append('<p style="font-size: 20px" > Thanks for submitting your feedback</p>');
-                        }, 1800)
-
-                    },
-                    error:function (xhr, ajaxOptions, thrownError){
-                        console.log(xhr);
-                        console.log(ajaxOptions);
-                        console.log(thrownError);
-                     } 
-                 });
-           
-            });
-      
-  });
-  </script>

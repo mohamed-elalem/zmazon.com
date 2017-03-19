@@ -9,7 +9,7 @@
            $(document).on('click', ".add-to-wishlist", function(e) {
                 $.ajax({
                     url: "/customer-user/add-to-wish-list",
-                    type: "GET",
+                    type: "POST",
                     dataType:'json',
                     context: this,
                     data: {product_id: $(this).attr("data-product_id"), user_id : $(this).attr("data-user_id")},
@@ -51,7 +51,7 @@
             $(document).on('click', ".add-to-cart", function(e) {
                 $.ajax({
                     url: "/customer-user/add-to-cart",
-                    type: "GET",
+                    type: "POST",
                     dataType:'json',
                     context: this,
                     data: {product_id: $(this).attr("data-product_id"), user_id : $(this).attr("data-user_id")},
@@ -79,7 +79,7 @@
             $(document).on('click', ".update-cart", function(e) {
                 $.ajax({
                     url: "/customer-user/update-cart",
-                    type: "GET",
+                    type: "POST",
                     dataType:'json',
                     context: this,
                     data: {product_id: $(this).attr("data-product_id"), user_id : $(this).attr("data-user_id")},
@@ -106,6 +106,60 @@
                 });
             
              });
-     
+             var ratingValue;
+            $(document).on('change', '[type*="radio"]', function(e) {
+                ratingValue = $(this).attr('value');
+                $('.submit-rate-button').removeAttr('disabled');
+            });
+            $(document).on('click', ".submit-rate-button", function(e) {
+
+                $.ajax({
+                    url: "/customer-user/put-rate",
+                    type: "POST",
+                    dataType:'json',
+                    context: this,
+                    data: {product_id: $(this).attr("data-product_id"), user_id : $(this).attr("data-user_id"), rating : ratingValue},
+                    success: function(){
+                        $('.rating-form').empty();
+                        $('.rating-form').append('<img style="width:60px;" src="/img/ajax-loader1.gif" >');
+                        setTimeout(function(){
+                            $('.rating-form').empty();
+                            $('.rating-form').append('<p style="font-size: 20px" > Thanks for submitting your feedback</p>');
+                        }, 1800)
+
+                    },
+                    error:function (xhr, ajaxOptions, thrownError){
+                        console.log(xhr);
+                        console.log(ajaxOptions);
+                        console.log(thrownError);
+                     } 
+                 });
+
+            });
+            $(document).on('click', ".comment-submit-btn", function(e) {
+                $.ajax({
+                    url: "/customer-user/add-comment",
+                    type: "POST",
+                    dataType:'json',
+                    context: this,
+                    data: {product_id: $('.hidden-button').attr("data-product_id"), user_id : $('.hidden-button').attr("data-user_id"), comment_body : $('.comment-body').val() },
+                    success: function(data){
+                        console.log(data)
+                        $('.comments-list').append('<div class="new-comment"><img style="width:30px;" src="/img/ajax-loader1.gif"> </div>');
+                        setTimeout(function(){
+                            $('.new-comment').empty();
+                            $('.new-comment').append( ($('.hidden-button').attr('data-user_name')) + ": " +  $('.comment-body').val());
+                        }, 1800)
+
+                    },
+                    error:function (xhr, ajaxOptions, thrownError){
+                        console.log(xhr);
+                        console.log(ajaxOptions);
+                        console.log(thrownError);
+                     } 
+                 });
+
+            });
+
         });
     

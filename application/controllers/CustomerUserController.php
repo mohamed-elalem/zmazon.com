@@ -2,7 +2,7 @@
 
 class CustomerUserController extends Zend_Controller_Action
 {
-    
+
     public function init()
     {
         $ajaxContext = $this->_helper->getHelper('AjaxContext');
@@ -13,6 +13,8 @@ class CustomerUserController extends Zend_Controller_Action
         $this->wishList = new Application_Model_WishList();
         $this-> shoppingCart = new Application_Model_ShoppingCart();
         $this->rating = new Application_Model_Rate();
+        $this->product = new Application_Model_Product();
+        $this->comment = new Application_Model_Comment();
     }
 
     public function indexAction()
@@ -26,19 +28,21 @@ class CustomerUserController extends Zend_Controller_Action
         $product_id  = $this->_request->getParam('product_id');
         $rating = $this->_request->getParam('rating');
         $this->rating->addRate($user_id, $product_id, $rating);
+        $this->product->updateRating($product_id);
         // The next line is for returning json object response to ajax
         echo '{"success":"done"}';
     }
 
     public function addToWishListAction()
-    {        
+    {
         $user_id  = $this->_request->getParam('user_id');
         $product_id  = $this->_request->getParam('product_id');
         $this->wishList->add($user_id, $product_id);
         // The next line is for returning json object response to ajax
         echo '{"success":"done"}';
     }
-     public function removeFromWishListAction()
+
+    public function removeFromWishListAction()
     {
         $user_id  = $this->_request->getParam('user_id');
         $product_id  = $this->_request->getParam('product_id');
@@ -58,8 +62,6 @@ class CustomerUserController extends Zend_Controller_Action
         echo '{"success":"done"}';
     }
 
-   
-
     public function updateCartAction()
     {
 
@@ -70,6 +72,7 @@ class CustomerUserController extends Zend_Controller_Action
         // The next line is for returning json object response to ajax
         echo '{"success":"done"}';
     }
+
     public function removeFromCartAction()
     {
 
@@ -79,10 +82,20 @@ class CustomerUserController extends Zend_Controller_Action
         // The next line is for returning json object response to ajax
         echo '{"success":"done"}';
     }
-    
+
+    public function addCommentAction()
+    {
+        $user_id  = $this->_request->getParam('user_id');
+        $product_id  = $this->_request->getParam('product_id');
+        $comment_body = $this->_request->getParam('comment_body');
+        $this->comment->add($user_id, $product_id, $comment_body);
+        // The next line is for returning json object response to ajax
+    }
 
 
 }
+
+
 
 
 
