@@ -31,6 +31,8 @@ class IndexController extends Zend_Controller_Action
         $this->view->product = $product;
         $ratingForm = new Application_Form_Rating();
         $this->view->rating_form = $ratingForm;
+        $auth=Zend_Auth::getInstance();
+        $this->view->user = $auth->getStorage();
    
     }
 

@@ -133,7 +133,7 @@ and open the template in the editor.
   /* the hidden clearer */
 }
 .star-cb-group * {
-  font-size: 1rem;
+  font-size: 3rem;
 }
 .star-cb-group > input {
   display: none;
@@ -182,7 +182,6 @@ and open the template in the editor.
 fieldset {
   border: 0;
   background: #222;
-  width: 5em;
   border-radius: 1px;
   padding: 1em 1.5em 0.9em;
   margin: 1em auto;

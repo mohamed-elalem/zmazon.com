@@ -87,7 +87,6 @@ class AdminController extends Zend_Controller_Action
             $mail_body .= "Please note that this coupon is one time use only.";
             $mail->setBodyHtml($mail_body);
             $mail->setFrom('faintingdetection@gmail.com');
-            
             $mail->addTo($reciever, "site_admin");
             $mail->setSubject("Coupon promotion");
             //var_dump($this->transport);
