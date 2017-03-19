@@ -3,13 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-
-            <file>file:/var/www/html/zmazon.com/application/views/scripts/shop-user/list-all-products.phtml</file>
-            <file>file:/var/www/html/zmazon.com/application/forms/ProductForm.php</file>
-            <file>file:/var/www/html/zmazon.com/application/controllers/ShopUserController.php</file>
-            <file>file:/var/www/html/zmazon.com/application/forms/SaleForm.php</file>
-            <file>file:/var/www/html/zmazon.com/application/views/scripts/shop-user/list-current-sale.phtml</file>
             <file>file:/srv/http/zmazon.com/application/Bootstrap.php</file>
+            <file>file:/srv/http/zmazon.com/application/forms/AddCategory.php</file>
             <file>file:/srv/http/zmazon.com/application/controllers/CustomerUserController.php</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/customer-user/put-rate.phtml</file>
             <file>file:/srv/http/zmazon.com/application/models/WishList.php</file>

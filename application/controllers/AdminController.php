@@ -33,14 +33,16 @@ class AdminController extends Zend_Controller_Action
         $this->shoppingCart = new Application_Model_ShoppingCart();
         $this->db = Zend_Db_Table::getDefaultAdapter();
         $metadata = $this->db->describeTable("users");
+        
+        
         $config = array(
-            'ssl' => 'tls',
-            'port' => 587   ,
-            'auth' => 'login',
-            'username' => 'faintingdetection@gmail.com',
-            'password' => 'Tizen2016'
+            'auth'     => 'login',
+            'username' => 'ecommerce.zend@gmail.com',
+            'password' => 'ecommerce.zend*',
+            'port'     => '587',
+            'ssl'      => 'tls',
         );
-        $this->transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
+
         //Zend_Mail::setDefaultTransport($this->transport);
         //$cols = array_keys($metadata);
         
@@ -80,22 +82,45 @@ class AdminController extends Zend_Controller_Action
             $discount = $request->getParam("discount");
             $reciever = $request->getParam("email");
             $this->coupon->newCoupon($discount, $uid, $code);
-            
+            $config = array(
+                'ssl' => 'tls',
+                'port' => 587   ,
+                'auth' => 'login',
+                'username' => 'faintingdetection@gmail.com',
+                'password' => 'Tizen2016'
+            );
+            $transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
+        
             $mail = new Zend_Mail();
-            $mail_body = "You've been promoted with a coupon that gives you discount on an order you select.<br>";
+            $mail_body = "Congratulations, You've been promoted with a coupon that gives you discount on an order you select.<br>";
             $mail_body .= "coupon: ".$code."<br>";
+            $mail_body .= "discount: ".$discount." %<br>";
             $mail_body .= "Please note that this coupon is one time use only.";
             $mail->setBodyHtml($mail_body);
-            $mail->setFrom('faintingdetection@gmail.com');
-            
+            $mail->setFrom('site_admin');
             $mail->addTo($reciever, "site_admin");
             $mail->setSubject("Coupon promotion");
             //var_dump($this->transport);
             //die();
             
-            $mail->send($this->transport);
+            $mail->send($transport);
             
-            
+            /*
+            $tr = new Zend_Mail_Transport_Smtp('smtp.gmail.com',
+                     array('auth' => 'login',
+                        'port' => 587,
+                        'ssl' => 'tls',
+                        'username' => 'mohamed.el.alem.2017@gmail.com',
+                        'password' => '526502333'));
+        Zend_Mail::setDefaultTransport($tr);
+
+        $mail = new Zend_Mail();
+        $mail->setFrom('mohamed.el.alem.2017@gmail.com');
+        $mail->setBodyHtml('some message - it may be html formatted text');
+        $mail->addTo('baghdadinoo@gmail.com', 'recipient');
+        $mail->setSubject('subject');
+        $mail->send($tr);
+            */
             $this->redirect("/admin/manage-users");
         }
         
@@ -108,16 +133,26 @@ class AdminController extends Zend_Controller_Action
         $this->view->categories = $categories;
         
         $updateCategoryForm = new Application_Form_UpdateCategory();
+        $addCategoryForm = new Application_Form_AddCategory();
         
         $request = $this->getRequest();
         
-        if($request->isPost() && $updateCategoryForm->isValid($request->getParams())) {
-            $id = $request->getParam("id");
-            $this->category->edit($id, array("name" => $request->getParam("category")));
-            $this->redirect("/admin/manage-categories");
+        if($request->isPost()) {
+            if(! is_null($request->getParam('category')) && $updateCategoryForm->isValid($request->getParams())) {
+                $id = $request->getParam("id");
+                $this->category->edit($id, array("name" => $request->getParam("category")));
+                $this->redirect("/admin/manage-categories");
+            }
+            else if(! is_null($request->getParam('new_category_name')) && $addCategoryForm->isValid($request->getParams())) {
+                $categoryName = $request->getParam('new_category_name');
+                $this->category->add($categoryName);
+            
+                $this->redirect("/admin/manage-categories");
+            }
         }
         
         $this->view->updateCategoryForm = $updateCategoryForm;
+        $this->view->addCategoryForm = $addCategoryForm;
     }
 
     public function sendCouponAction()
@@ -189,8 +224,15 @@ class AdminController extends Zend_Controller_Action
         $this->view->cart = $order;
     }
 
+    public function addCategoryAction()
+    {
+        
+    }
+
 
 }
+
+
 
 
 
