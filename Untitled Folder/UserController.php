@@ -5,6 +5,10 @@ class UserController extends Zend_Controller_Action
 
     public function init()
     {
+        /* Initialize action controller here */
+
+
+
 
          $auth=Zend_Auth::getInstance();
          $request=$this->getRequest();
@@ -26,6 +30,9 @@ class UserController extends Zend_Controller_Action
             $this->redirect('user/login');
 
         }
+
+
+
     }
 
     public function indexAction()
@@ -33,9 +40,23 @@ class UserController extends Zend_Controller_Action
         // action body
     }
 
+
+
+//---------------------------------------------------
+
+public function homeAction()
+	{
+
+// just for test login 
+    }
+//-----------------------------------------
+    // sign up operation 
+
     public function addAction()
-    {
-        $form=new Application_Form_SignUp();
+	{
+
+
+	    $form=new Application_Form_SignUp();
 	    $this->view->signup_form=$form;
 		$request=$this->getRequest();
 		if($request->ispost())
@@ -49,11 +70,15 @@ class UserController extends Zend_Controller_Action
 				$this->redirect("/user/add");
 			}
 		}
-    }
+	}// end add action 
 
-    public function loginAction()
-    {
-        $loginform=new Application_Form_Login();
+
+//-----------------------------------------
+
+// user login 
+	public function loginAction()
+	{
+		$loginform=new Application_Form_Login();
 		$this->view->login_form = $loginform;
 
 		$request = $this->getRequest ();
@@ -99,20 +124,33 @@ class UserController extends Zend_Controller_Action
 
 				} // if form is vaild & requset is post
 
-                }
-			
-    }
-    
-    public function logoutAction(){
-          $auth=Zend_Auth::getInstance();
-          $auth->clearIdentity();
-          return $this->redirect('user/login');
-    }
+
+			}//if request is post
+
+		} // end of login action 
+
+//-----------------------------------------------
 
 
-}
+		public function logoutAction()
+          {
+		    $auth=Zend_Auth::getInstance();
+		    $auth->clearIdentity();
+		    // Zend_Session::namespaceUnset('facebook');
+		    return $this->redirect('user/login');
+
+
+       }
 
 
 
 
+
+
+
+
+
+
+//------------------------------
+}// end of class 
 

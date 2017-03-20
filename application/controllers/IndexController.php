@@ -30,7 +30,7 @@ class IndexController extends Zend_Controller_Action
     public function productDetailsAction()
     {
         $product_id = $this->_request->getParam('product_id');
-        $product = $this->product->productDetails($product_id);
+        $product = $this->product->allProductDetails($product_id);
         $this->view->product = $product;
         $this->view->rating_form = $this->rating_form;
         $this->view->rate = $this->rate;

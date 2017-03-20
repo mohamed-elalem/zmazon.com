@@ -12,9 +12,18 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
     {
         $this->delete("id=$id");
     }
-    public function productDetails($id)
+    public function allProductDetails($id)
     {
-        return $this->find($id)->toArray()[0];
+        $sql = $this->select()
+                ->from(array('p' => "product"), array('id', 'name' , 'description', 'price' , 'quantity', 'rate', 'photo', 'addDate', 'categoryId', 'moneyGained'))
+                ->where("p.id = $id")
+                ->joinLeft(array("s" => "sale"), "p.id = s.productId", array("percentage", "startDate", "endDate"))
+                ->setIntegrityCheck(false);
+        
+        $query = $sql->query();
+        
+        $result = $query->fetchAll()[0];
+        return $result;
     }
     public function addProduct($productData)
     {
@@ -81,8 +90,54 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         return $result;
         
     }
-   
-   
+    public function hasOffer($product_id){
+         $sql = $this->select()
+                ->from(array('sc' => "sale"), array('id'))
+                ->where("productId =$product_id")
+                ->setIntegrityCheck(false);
+        //echo $sql->__toString();
+        
+        $query = $sql->query();
+        $result = $query->fetchAll()[0];
+        $id = $result['id'];
+        if ($id){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    public function getCurrentPrice($product_id){
+        $mainPrice  = $this->getMainPrice($product_id);
+        if ($this->hasOffer($product_id)){
+            $sql = $this->select()
+                ->from(array('sc' => "sale"), array('percentage'))
+                ->where("productId =$product_id")
+                ->setIntegrityCheck(false);
+        
+            $query = $sql->query();
+            $result = $query->fetchAll()[0];
+            $percentage = $result['percentage'];
+            return (((100-$percentage) * $mainPrice)/100);
+        }
+        else {
+           return $mainPrice;
+        }
+        
+    }
+    public function getMainPrice($product_id){
+        $sql = $this->select()
+            ->from(array('sc' => "product"), array('price'))
+            ->where("productId =$product_id")
+            ->setIntegrityCheck(false);
+
+        $query = $sql->query();
+        $result = $query->fetchAll()[0];
+        $price = $result['price'];
+        return $price;
+        
+    }
         
     
 

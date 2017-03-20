@@ -64,7 +64,7 @@
                         setTimeout(function(){
                             $('.x-cart-notification').removeClass('bring-forward appear loading added');
                         }, 2800)
-                        $(this).removeClass('add-to-cart').addClass('update-cart')
+                        $(this).removeClass('add-to-cart').addClass('increment-quantity')
 
                     },
                     error:function (xhr, ajaxOptions, thrownError){
@@ -76,9 +76,9 @@
                 });
             });
             
-            $(document).on('click', ".update-cart", function(e) {
+            $(document).on('click', ".increment-quantity", function(e) {
                 $.ajax({
-                    url: "/customer-user/update-cart",
+                    url: "/customer-user/increment-quantity",
                     type: "POST",
                     dataType:'json',
                     context: this,
