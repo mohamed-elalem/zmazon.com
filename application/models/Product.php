@@ -67,6 +67,17 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         return $result;
         
     }
+    
+    public function search($name)
+    {
+        $word='%'.$name.'%';
+        $sql = $this->select()
+                ->from(['p'=>'product'])
+                ->where('name like ?', $word)
+                ->setIntegrityCheck(false);
+        $result = $sql->query()->fetchAll();
+        return $result;
+    }
    
    
         

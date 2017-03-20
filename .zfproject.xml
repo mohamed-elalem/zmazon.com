@@ -47,6 +47,7 @@
           <actionMethod actionName="editSale"/>
           <actionMethod actionName="statistics"/>
         </controllerFile>
+        
       </controllersDirectory>
       <formsDirectory>
         <formFile formName="Rating"/>
