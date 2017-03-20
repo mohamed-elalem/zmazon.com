@@ -2,7 +2,7 @@ CREATE DATABASE  IF NOT EXISTS `Zamazon` /*!40100 DEFAULT CHARACTER SET latin1 *
 USE `Zamazon`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Linux (x86_64)
 --
--- Host: localhost    Database: Zamazon
+-- Host: 127.0.0.1    Database: Zamazon
 -- ------------------------------------------------------
 -- Server version	5.7.17-0ubuntu0.16.04.1
 
@@ -18,6 +18,36 @@ USE `Zamazon`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `cart_products`
+--
+
+DROP TABLE IF EXISTS `cart_products`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cart_products` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cartId` int(11) DEFAULT NULL,
+  `productId` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `_idx` (`productId`),
+  KEY `fk_cart_products_1_idx` (`cartId`),
+  CONSTRAINT `fk_cart_products_1` FOREIGN KEY (`cartId`) REFERENCES `shoppingCart` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_cart_products_2` FOREIGN KEY (`productId`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cart_products`
+--
+
+LOCK TABLES `cart_products` WRITE;
+/*!40000 ALTER TABLE `cart_products` DISABLE KEYS */;
+INSERT INTO `cart_products` VALUES (1,4,1,2);
+/*!40000 ALTER TABLE `cart_products` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `category`
 --
 
@@ -28,7 +58,7 @@ CREATE TABLE `category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,6 +67,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
+INSERT INTO `category` VALUES (1,'sports');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,7 +89,7 @@ CREATE TABLE `comment` (
   KEY `fk_comment_2_idx` (`userId`),
   CONSTRAINT `fk_comment_product` FOREIGN KEY (`productId`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_comment_user` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,6 +98,7 @@ CREATE TABLE `comment` (
 
 LOCK TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment` DISABLE KEYS */;
+INSERT INTO `comment` VALUES (1,1,1,'kdsgi',NULL),(2,1,1,'kdsgi',NULL),(3,1,1,'kdsgi',NULL),(4,1,1,'ada',NULL),(5,1,1,'ada',NULL),(6,1,1,'ada',NULL),(7,1,1,'ada',NULL),(8,1,1,'',NULL),(9,1,1,'d',NULL),(10,1,1,'weewf',NULL),(11,1,1,'wef',NULL),(12,1,1,'wef',NULL),(13,1,1,'qdkqw;',NULL),(14,1,1,'wewpo3po',NULL),(15,1,1,'apoafo',NULL),(16,1,1,'apoafo',NULL),(17,1,1,'apoafo',NULL),(18,1,1,'apoafo',NULL),(19,1,1,'apoafo',NULL),(20,1,1,'ugyu',NULL),(21,1,1,'ugyu',NULL),(22,1,1,'op',NULL),(23,1,1,'i',NULL),(24,1,1,'l;jgoroj;',NULL),(25,1,1,'l;jgoroj;sdgio',NULL),(26,1,1,'afaepo',NULL),(27,1,1,'afaepo',NULL),(28,1,1,'afaepo',NULL),(29,1,1,'afaepo',NULL);
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,7 +117,7 @@ CREATE TABLE `coupon` (
   PRIMARY KEY (`id`),
   KEY `fk_coupon_1_idx` (`userId`),
   CONSTRAINT `fk_coupon_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,6 +126,7 @@ CREATE TABLE `coupon` (
 
 LOCK TABLES `coupon` WRITE;
 /*!40000 ALTER TABLE `coupon` DISABLE KEYS */;
+INSERT INTO `coupon` VALUES (2,'JKkW1PLzGtbs2tMVYmtsQgmN5I0ed8skvXGVrPXZGU6AY',30,1),(3,'1niPER9HoqnHdB9OWikFXqalvxB4brsSFnOdTz0Yzqwzv',30,1);
 /*!40000 ALTER TABLE `coupon` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,10 +147,11 @@ CREATE TABLE `product` (
   `photo` varchar(200) DEFAULT NULL,
   `addDate` datetime NOT NULL,
   `categoryId` int(11) NOT NULL,
+  `moneyGained` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_product_1_idx` (`categoryId`),
   CONSTRAINT `fk_product_1` FOREIGN KEY (`categoryId`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -126,6 +160,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
+INSERT INTO `product` VALUES (1,'Tomato','afiwgowgowegafniwego',30,20,3,'rgjkef','2016-05-05 00:00:00',1,NULL);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -146,7 +181,7 @@ CREATE TABLE `rate` (
   KEY `fk_rate_2_idx` (`productId`),
   CONSTRAINT `fk_rate_product` FOREIGN KEY (`productId`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_rate_user` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -155,6 +190,7 @@ CREATE TABLE `rate` (
 
 LOCK TABLES `rate` WRITE;
 /*!40000 ALTER TABLE `rate` DISABLE KEYS */;
+INSERT INTO `rate` VALUES (1,1,3,1);
 /*!40000 ALTER TABLE `rate` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,14 +232,14 @@ DROP TABLE IF EXISTS `shoppingCart`;
 CREATE TABLE `shoppingCart` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userId` int(11) NOT NULL,
-  `productId` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
+  `total` int(11) DEFAULT NULL,
+  `purchasedFlag` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_shoppingCart_1_idx` (`productId`),
+  KEY `fk_shoppingCart_1_idx` (`total`),
   KEY `fk_shoppingCart_2_idx` (`userId`),
-  CONSTRAINT `fk_shoppingCart_1` FOREIGN KEY (`productId`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_shoppingCart_1` FOREIGN KEY (`total`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_shoppingCart_2` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,6 +248,7 @@ CREATE TABLE `shoppingCart` (
 
 LOCK TABLES `shoppingCart` WRITE;
 /*!40000 ALTER TABLE `shoppingCart` DISABLE KEYS */;
+INSERT INTO `shoppingCart` VALUES (4,1,NULL,0);
 /*!40000 ALTER TABLE `shoppingCart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,7 +269,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `userName_UNIQUE` (`userName`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,6 +278,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'magdy','muhammed_magdy838@yahoo.com','12345','active','customerUser');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -281,4 +319,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-15 17:58:52
+-- Dump completed on 2017-03-20  0:56:07

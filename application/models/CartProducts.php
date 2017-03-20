@@ -1,0 +1,37 @@
+<?php
+
+class Application_Model_CartProducts extends Zend_Db_Table_Abstract
+{
+    protected $_name = "cart_products";
+    
+    public function add($cartId , $product_id){
+       $row=$this->createRow();
+       $row->cartId = $cartId;
+       $row->productId = $product_id;
+       $row->quantity = 1;
+       $row->save();
+    }
+    
+    public function incrementQuantity($cart_id, $product_id) {
+        
+       $where = array();
+       $where[] = "cartId = $cart_id ";
+       $where[] = "productId = $product_id";
+       $data = array(
+             'quantity'      =>  new Zend_DB_Expr('quantity + 1')
+        );
+        $this->update( $data, $where);
+
+    }
+    public function listRelatedProducts($cart_id, $productModel) {
+        $sql = $this->select()
+            ->from(array('sc' => "cart_products"), array('id', 'quantity'))
+            ->where("cartId =$cart_id")
+            ->setIntegrityCheck(false);
+
+        $query = $sql->query();
+        $result = $query->fetchAll();
+    }
+
+}
+

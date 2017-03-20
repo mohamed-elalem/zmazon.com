@@ -5,10 +5,6 @@ class UserController extends Zend_Controller_Action
 
     public function init()
     {
-        /* Initialize action controller here */
-
-
-
 
          $auth=Zend_Auth::getInstance();
          $request=$this->getRequest();
@@ -30,9 +26,6 @@ class UserController extends Zend_Controller_Action
             $this->redirect('user/login');
 
         }
-
-
-
     }
 
     public function indexAction()
@@ -40,23 +33,9 @@ class UserController extends Zend_Controller_Action
         // action body
     }
 
-
-
-//---------------------------------------------------
-
-public function homeAction()
-	{
-
-// just for test login 
-    }
-//-----------------------------------------
-    // sign up operation 
-
     public function addAction()
-	{
-
-
-	    $form=new Application_Form_SignUp();
+    {
+        $form=new Application_Form_SignUp();
 	    $this->view->signup_form=$form;
 		$request=$this->getRequest();
 		if($request->ispost())
@@ -70,69 +49,64 @@ public function homeAction()
 				$this->redirect("/user/add");
 			}
 		}
-	}// end add action 
+    }
 
+    public function loginAction()
+    {
+        $loginform=new Application_Form_Login();
+        $this->view->login_form = $loginform;
 
-//-----------------------------------------
+        $request = $this->getRequest ();
 
-// user login 
-	public function loginAction()
-	{
-		$loginform=new Application_Form_Login();
-		$this->view->login_form = $loginform;
+        if($request-> isPost()){
 
-		$request = $this->getRequest ();
+                if($loginform-> isValid($request-> getPost()))
+                {
 
-		if($request-> isPost()){
-
-			if($loginform-> isValid($request-> getPost()))
-			{
-
-				$email=$request->getParam('email');
-				$password=$request->getParam('password');
-				//we get object of ZendDbAdapter to know which database we connect on
-				$db=zend_Db_Table::getDefaultAdapter();
+                        $email=$request->getParam('email');
+                        $password=$request->getParam('password');
+                        //we get object of ZendDbAdapter to know which database we connect on
+                        $db=zend_Db_Table::getDefaultAdapter();
 
 
 
-				$adapter=new Zend_Auth_Adapter_DbTable($db,'users','email','password');
+                        $adapter=new Zend_Auth_Adapter_DbTable($db,'users','email','password');
 
-				$adapter->setIdentity($email);
+                        $adapter->setIdentity($email);
 
-				$adapter->setCredential($password);
-				//execute qyery
-				$result=$adapter->authenticate();
+                        $adapter->setCredential($password);
+                        //execute qyery
+                        $result=$adapter->authenticate();
 
-					if($result->isValid())
-					{
-    					print_r('authentiacte');
+                                if($result->isValid())
+                                {
+                                print_r('authentiacte');
 
 //session steps                             
-					    $sessionDataObj=$adapter->getResultRowObject(['id','email','password','userName']);
-					    $auth=Zend_Auth::getInstance();
-					    $storage=$auth->getStorage();
-					    $storage->write($sessionDataObj);
-					    $this->redirect('/user/home');
+                                    $sessionDataObj=$adapter->getResultRowObject(['id','email','password','userName']);
+                                    $auth=Zend_Auth::getInstance();
+                                    $storage=$auth->getStorage();
+                                    $storage->write($sessionDataObj);
+                                    $this->redirect('/user/home');
 
-					}
+                                }
 
-					else
-					{
+                                else
+                                {
 
-   						$this->redirect('/user/add');
-					}
+                                        $this->redirect('/user/add');
+                                }
 
-				} // if form is vaild & requset is post
+                        } // if form is vaild & requset is post
 
 
-			}//if request is post
+                }//if request is post
 
-		} // end of login action 
+        } // end of login action 
 
 //-----------------------------------------------
 
-
-		public function logoutAction()
+    public function logoutAction()
           {
 		    $auth=Zend_Auth::getInstance();
 		    $auth->clearIdentity();
@@ -140,19 +114,20 @@ public function homeAction()
 		    return $this->redirect('user/login');
 
 
-       }
+        }
        
        
 
 
 
 
+}
+			
 
 
 
 
 
 
-//------------------------------
-}// end of class 
+
 

@@ -35,6 +35,9 @@
           <actionMethod actionName="removeFromWishList"/>
           <actionMethod actionName="updateCart"/>
           <actionMethod actionName="removeFromCart"/>
+          <actionMethod actionName="addComment"/>
+          <actionMethod actionName="incrementQuantity"/>
+          <actionMethod actionName="viewCart"/>
         </controllerFile>
         <controllerFile controllerName="ShopUser">
           <actionMethod actionName="index"/>
@@ -47,7 +50,12 @@
           <actionMethod actionName="editSale"/>
           <actionMethod actionName="statistics"/>
         </controllerFile>
-        
+        <controllerFile controllerName="User">
+          <actionMethod actionName="index"/>
+          <actionMethod actionName="add"/>
+          <actionMethod actionName="login"/>
+          <actionMethod actionName="logout"/>
+        </controllerFile>
       </controllersDirectory>
       <formsDirectory>
         <formFile formName="Rating"/>
@@ -72,6 +80,7 @@
         <modelFile modelName="Comment"/>
         <modelFile modelName="ShoppingCart"/>
         <modelFile modelName="WishList"/>
+        <modelFile modelName="CartProducts"/>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>
       <servicesDirectory enabled="false"/>
@@ -170,8 +179,29 @@
           <viewControllerScriptsDirectory forControllerName="CustomerUser">
             <viewScriptFile forActionName="removeFromCart"/>
           </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="CustomerUser">
+            <viewScriptFile forActionName="addComment"/>
+          </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="ShopUser">
             <viewScriptFile forActionName="statistics"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="CustomerUser">
+            <viewScriptFile forActionName="incrementQuantity"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="CustomerUser">
+            <viewScriptFile forActionName="viewCart"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="add"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="login"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="logout"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

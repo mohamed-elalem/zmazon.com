@@ -27,8 +27,9 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
         $result = $query->fetchAll();
         return $result;
     }
-     public function is_exists($user_id , $product_id){
-        $where= "userId = $user_id & productId = $product_id";
+    
+     public function is_exists($user_id){
+        $where= "userId = $user_id ";
         $select = $this->select();
         $select->where($where);
         $rows = $this->fetchAll($select);
@@ -39,28 +40,47 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
             return false;
         }
     }
-    public function add($user_id, $product_id){
+    
+    public function add($user_id, $product_id, $cartProductsModel){
        $row=$this->createRow();
        $row->userId = $user_id;
-       $row->productId = $product_id;
-       $row->quantity = 1;
+       $row->purchasedFlag = 0;
        $row->save();
+       $cartId = $row->id;
+       $cartProductsModel->add($cartId, $product_id);
         
     }
-    public function remove($user_id, $product_id){
+    
+    public function remove($user_id,$product_id){
         $this->delete("userId=$user_id","productId = $product_id");
     }
-    public function updateQuantity($user_id, $product_id) {
-        
-        $where = array();
-        $where[] = "userId = $user_id ";
-        $where[] = "productId = $product_id";
-       $data = array(
-             'quantity'      =>  new Zend_DB_Expr('quantity + 1')
-        );
-
-        $this->update( $data, $where);
-
+    
+    public function incrementQuantity($user_id, $product_id, $cartProductsModel) {
+        $sql = $this->select()
+                ->from(array('sc' => "shoppingCart"), array('id'))
+                ->where("userId = $user_id")
+                ->setIntegrityCheck(false);
+        //echo $sql->__toString();
+        $query = $sql->query();
+        $result= $query->fetchAll()[0];
+        $cartId = $result['id'];
+        $cartProductsModel->incrementQuantity($cartId, $product_id);
     }
+    
+    public function cartDetails($cart_id) {
+        $sql = $this->select()
+                ->from(array('sc' => "shoppingCart"))
+                ->joinInner(array("p" => "cart_products"), "p.cartId = sc.id", array("productId", "quantity"))
+                ////
+                ->joinLeft(array("s" => "sale"), "p.productId = s.productId", array("percentage as discount"))
+                ->joinInner(array("p" => "product"), "p.id = sc.productId", array("name as product_name", "price", "rate", "quantity as product_quantity"))
+                ->where("sc.userId = ".$userId)
+                ->setIntegrityCheck(false);
+        $query = $sql->query();
+        $result = $query->fetchAll();
+        return $result;
+        
+    }
+    
 }
 
