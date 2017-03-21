@@ -14,6 +14,10 @@ class Application_Model_Rate extends Zend_Db_Table_Abstract
         $row->save();
         
     }
+    
+    public function deleteUserRates($uid) {
+        $this->delete("usedId = ".$uid);
+    }
 
 }
 

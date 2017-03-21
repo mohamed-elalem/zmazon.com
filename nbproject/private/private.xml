@@ -5,12 +5,14 @@
         <group>
             <file>file:/srv/http/zmazon.com/application/Bootstrap.php</file>
             <file>file:/srv/http/zmazon.com/application/forms/AddCategory.php</file>
+            <file>file:/srv/http/zmazon.com/application/models/Rate.php</file>
             <file>file:/srv/http/zmazon.com/application/controllers/CustomerUserController.php</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/customer-user/put-rate.phtml</file>
             <file>file:/srv/http/zmazon.com/application/models/WishList.php</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/shop-user/list-product-details.phtml</file>
             <file>file:/srv/http/zmazon.com/application/controllers/AdminController.php</file>
             <file>file:/srv/http/zmazon.com/.zfproject.xml</file>
+            <file>file:/srv/http/zmazon.com/application/controllers/AdminController.php.orig</file>
             <file>file:/srv/http/zmazon.com/application/models/Coupon.php</file>
             <file>file:/srv/http/zmazon.com/application/models/ShoppingCart.php</file>
             <file>file:/srv/http/zmazon.com/application/models/Category.php</file>
@@ -24,8 +26,11 @@
             <file>file:/srv/http/zmazon.com/application/views/scripts/error/error.phtml</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/admin/manage-users.phtml</file>
             <file>file:/srv/http/zmazon.com/application/controllers/UserController.php</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/index/product-details.phtml</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/shop-user/list-all-products.phtml</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/customer-user/add-to-cart.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/controllers/ShopUserController.php</file>
+            <file>file:/srv/http/zmazon.com/application/models/Comment.php</file>
             <file>file:/srv/http/zmazon.com/application/configs/application.ini</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/admin/index.phtml</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/admin/list-orders.phtml</file>

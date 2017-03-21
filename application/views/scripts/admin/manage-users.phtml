@@ -208,43 +208,44 @@
             $(".new-coupon-form").unbind();
             $(".new-coupon-form").remove();
             $(addDiv).append("<input class='new-coupon-form form-control' placeholder='e.g. 30% discount' />");
-            $(".new-coupon-form").keyup(function(e) {
-                if(e.keyCode == 13) {
-                    var input = e.target;
-                    var addDiv = $(input).parent();
-                    var button = $(addDiv).find('button');
-                    var id = $(button).attr('data-user_id');
-                    var discount = $(input).val();
-                    var email = $(button).attr('data-email');
-                    
-                    if($.isNumeric(discount)) {
-                        $.ajax({
-                            'url': '/admin/send-coupon',
-                            'type': 'post',
-                            'dataType': 'json',
-                            'data': {
-                                'userId': id,
-                                'discount': discount,
-                                'email': email
-                            },
-                            'success': function(data) {
-                                console.log(data);
-                                $(addDiv).fadeOut("slow", function() {
-                                    $(this).empty();
-                                    $(this).append(discount + "% <i class='fa fa-arrow-down text-danger'></i><button data-user_id='" + id + "' class='btn-transparent text-danger pull-right delete-coupon'><i class='fa fa-times'></i></button>").show();
-                                });
-                            },
-                            'error': function(xhr, ajaxOptions, thrownError) {
-                                console.log(xhr);
-                                console.log(ajaxOptions);
-                                console.log(thrownError);
-                            }
-                        });
-                    }
-                    else {
-                        $(addDiv).addClass('has-error');
-                    }
+            $(".new-coupon-form").change(function(e) {
+                var input = e.target;
+                var addDiv = $(input).parent();
+                var button = $(addDiv).find('button');
+                var id = $(button).attr('data-user_id');
+                var discount = $(input).val();
+                var email = $(button).attr('data-email');
+
+                if($.isNumeric(discount) && discount >= 1  && discount <= 100) {
+                    $(addDiv).removeClass('has-error');
+                    $.ajax({
+                        'url': '/admin/send-coupon',
+                        'type': 'post',
+                        'dataType': 'json',
+                        'data': {
+                            'userId': id,
+                            'discount': discount,
+                            'email': email
+                        },
+                        'success': function(data) {
+                            console.log(data);
+                            $(addDiv).fadeOut("slow", function() {
+                                $(this).empty();
+                                $(this).append(discount + "% <i class='fa fa-arrow-down text-danger'></i><button data-user_id='" + id + "' class='btn-transparent text-danger pull-right delete-coupon'><i class='fa fa-times'></i></button>").show();
+                            });
+                        },
+                        'error': function(xhr, ajaxOptions, thrownError) {
+                            console.log(xhr);
+                            console.log(ajaxOptions);
+                            console.log(thrownError);
+                        }
+                    });
                 }
+                else {
+                    $(addDiv).removeClass('has-error');
+                    $(addDiv).addClass('has-error');
+                }
+
             }); 
         });
         

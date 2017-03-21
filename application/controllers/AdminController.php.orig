@@ -1,4 +1,4 @@
-<?php
+r<?php
 
 class AdminController extends Zend_Controller_Action
 {
@@ -36,19 +36,12 @@ class AdminController extends Zend_Controller_Action
         
         
         $config = array(
-<<<<<<< OURS
             'auth'     => 'login',
-            'username' => 'ecommerce.zend@gmail.com',
-            'password' => 'ecommerce.zend*',
-            'port'     => '587',
-            'ssl'      => 'tls',
-=======
             'ssl' => 'tls',
             'port' => 587,
             'auth' => 'login',
             'username' => 'faintingdetection@gmail.com',
             'password' => 'Tizen2016'
->>>>>>> THEIRS
         );
 
         //Zend_Mail::setDefaultTransport($this->transport);
@@ -140,27 +133,13 @@ class AdminController extends Zend_Controller_Action
         $categories = $this->category->retrieveAll();
         $this->view->categories = $categories;
         
-        $updateCategoryForm = new Application_Form_UpdateCategory();
-        $addCategoryForm = new Application_Form_AddCategory();
         
         $request = $this->getRequest();
         
         if($request->isPost()) {
-            if(! is_null($request->getParam('category')) && $updateCategoryForm->isValid($request->getParams())) {
-                $id = $request->getParam("id");
-                $this->category->edit($id, array("name" => $request->getParam("category")));
-                $this->redirect("/admin/manage-categories");
-            }
-            else if(! is_null($request->getParam('new_category_name')) && $addCategoryForm->isValid($request->getParams())) {
-                $categoryName = $request->getParam('new_category_name');
-                $this->category->add($categoryName);
             
-                $this->redirect("/admin/manage-categories");
-            }
         }
         
-        $this->view->updateCategoryForm = $updateCategoryForm;
-        $this->view->addCategoryForm = $addCategoryForm;
     }
 
     public function sendCouponAction()

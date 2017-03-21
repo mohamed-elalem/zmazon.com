@@ -10,6 +10,12 @@ class AdminController extends Zend_Controller_Action
     private $category = null;
 
     private $shoppingCart = null;
+    
+    private $wishList = null;
+    
+    private $comment = null;
+    
+    private $rates = null;
 
     private $db = null;
 
@@ -31,7 +37,11 @@ class AdminController extends Zend_Controller_Action
         $this->coupon = new Application_Model_Coupon();
         $this->category = new Application_Model_Category();
         $this->shoppingCart = new Application_Model_ShoppingCart();
+        $this->wishList = new Application_Model_WishList();
+        $this->comments = new Application_Model_Comment();
+        $this->rates = new Application_Model_Rate();
         $this->db = Zend_Db_Table::getDefaultAdapter();
+        
         $metadata = $this->db->describeTable("users");
         $config = array(
             'ssl' => 'tls',
@@ -197,7 +207,12 @@ class AdminController extends Zend_Controller_Action
         $request = $this->getRequest();
         if($request->isPost()) {
             $id = (int) $this->getParam("id");
+            $this->coupon->deleteCoupon($id);
+            $this->shoppingCart->deleteUserCart($id);
+            $this->wishList->deleteUserWishList($id);
+            $this->rates->deleteUserRates($id);
             $this->user->remove($id);
+            
             echo '["success"]';
         }
         else {
@@ -208,15 +223,28 @@ class AdminController extends Zend_Controller_Action
 
     public function updateCategoryAction()
     {
-        
+       
     }
 
     public function deleteCategoryAction()
     {
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+        $ajaxContext->addActionContext('addToWishList', 'json')
+            ->initContext();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout->disableLayout();
+        
+        
         $request = $this->getRequest();
-        $id = $request->getParam("id");
-        $this->category->remove($id);
-        $this->redirect("/admin/manage-categories");
+        if($request->isPost()) {
+            $id = $request->getParam("id");
+            $this->category->remove($id);
+            echo '["success"]';
+        }
+        else {
+            http_response_code(403);
+            die("<h1>Access Forbidden 403</h1>");
+        }
     }
 
     public function deleteCouponAction()
@@ -232,6 +260,7 @@ class AdminController extends Zend_Controller_Action
             $id = $this->getParam("id");
             $this->coupon->deleteCoupon($id);
             echo json_encode($this->user->retrieveUser($id)); 
+            
         }
         else {
             http_response_code(403);
@@ -258,8 +287,55 @@ class AdminController extends Zend_Controller_Action
         
     }
 
+    public function editCategoryNameAction()
+    {
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+        $ajaxContext->addActionContext('addToWishList', 'json')
+            ->initContext();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout->disableLayout();
+        
+        $request = $this->getRequest();
+        
+        if($request->isPost()) {
+            $id = $request->getParam("id");
+            $name = $request->getParam("name");
+            
+            $this->category->edit($id, array('name' => $name));
+        }
+        else {
+            http_response_code(403);
+            die("<h1>Access Forbidden 403</h1>");
+        }
+        
+        echo '["success"]';
+    }
+
+    public function editCategoryImageAction()
+    {
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+        $ajaxContext->addActionContext('addToWishList', 'json')
+            ->initContext();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout->disableLayout();
+        
+        $request = $this->getRequest();
+        
+        if($request->isPost()) {
+            echo json_encode($_POST);
+        }
+        else {
+            http_response_code(403);
+            die("<h1>Access Forbidden 403</h1>");
+        }
+    }
+
 
 }
+
+
+
+
 
 
 

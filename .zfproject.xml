@@ -26,6 +26,8 @@
           <actionMethod actionName="listOrders"/>
           <actionMethod actionName="orderDetails"/>
           <actionMethod actionName="addCategory"/>
+          <actionMethod actionName="editCategoryName"/>
+          <actionMethod actionName="editCategoryImage"/>
         </controllerFile>
         <controllerFile controllerName="CustomerUser">
           <actionMethod actionName="index"/>
@@ -172,6 +174,12 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="addCategory"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="editCategoryName"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="editCategoryImage"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

@@ -1,109 +1,124 @@
 <table class="table table-hover table-responsive">
     <tr>
-        <th class='text-center'>Category name</th>
-        <th class='text-center'>Edit category name</th>
-        <th class='text-center'>Delete Category</th>
-        <?php
-            foreach($this->categories as $category) {
-                echo "<tr>";
-                echo "<td class='text-center'>".$category['name']."</td>";
-                echo<<<EOL
-                <td class='text-center'>
-                    <button type="button" class="text-primary btn-transparent" data-toggle="modal" data-target="#category
-EOL;
-                echo $category['id'];
-                echo<<<EOL
-">
-                        <i class="fa fa-pencil-square-o"></i>
-                    </button>
-                    <div class="text-left modal fade" id="category
-EOL;
-                echo $category['id'];
-                echo<<<EOL
-" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <form method='post' action='/admin/manage-categories/id/
-EOL;
-                echo $category['id'];
-                echo<<<EOL
-'>
-                                <div class="modal-header">
-                                    <button type="button" class="btn-transparent close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="myModalLabel">Rename category 
-EOL;
-                echo $category['name'];
-                echo <<<EOL
-                
-                                    </h4>
-                                </div>
-                                <div class="modal-body">
-EOL;
-                echo "<div class='form-group'";
-                echo $this->updateCategoryForm->category;
-                echo "</div>";
-                
-                echo <<<EOL
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-EOL;
-                //echo $this->updateCategoryForm->update;
-                echo<<<EOL
-                                    <button type="submit" name="submit" id="submit" class="btn btn-primary">Save changes</button>
-                                </div>
-                            </form>
-                            </div>
-                        </div>
-                    </div>
-                </td>
-EOL;
-                echo "<td class='text-center'><a href='/admin/delete-category/id/".$category['id']."'><i class='text-danger fa fa-times'></i></a></td>";
-            }
-            
-        ?>
+        <th class="text-center">Name</th>
+        <th class="text-center">Edit name</th>
+        <th class="text-center">Edit photo</th>
+        <th class="text-center">Terminate</th>
     </tr>
+    <?php
+        foreach($this->categories as $category) {
+            echo "<tr>";
+            echo "<td class='text-left category_name'><img class='img-responsive img-circle' width='20' height='20' src='#' /><span data-category_id='".$category['id']."'>".$category['name']."</span></td>";
+            echo "<td class='text-center'><input type='text' data-category_id='".$category['id']."' class='form-control edit-name' placeholder='e.g. Sports' /></img>";
+            echo "<td class='text-center'><form enctype='multipart/form-data' class='form-inline'><input class='edit-photo' type='file' data-category_id='".$category['id']."' /><button type='button' class='btn btn-default confirm-photo'>Confirm</button></form></td>";
+            echo "<td class='text-center'><button data-category_id='".$category['id']."' class='terminate btn-transparent'><i class='fa fa-times text-danger'></i></button></td>";
+        }
+    ?>
 </table>
-<div class="container">
-    <div class="row">
-        
-        <div class="col-md-12">
-            <?php
-                echo<<<EOL
-                    <button type="button" class="btn btn-default btn-lg btn-block" data-toggle="modal" data-target="#newCategory">
-                        Add new category
-                    </button>
-                    <div class="text-left modal fade" id="newCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog" role="document">
-                            
-                            <form name='new_category' method='post' action=''>
-                            <div class="modal-content">
-                                
-                                <div class="modal-header">
-                                    <button type="button" class="btn-transparent close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="myModalLabel">Adding new Category  
-                                    </h4>
-                                </div>
-                                <div class="modal-body">
-                                    
-EOL;
-                echo $this->addCategoryForm;
 
-                echo <<<EOL
-                                    
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button type='submit' id='new_category_button' class="btn btn-primary">Save changes</button>
-                                </div>
-                                </form>
-                                
-                            </div>
-                        </div>
-                    </div>
-EOL;
+<script>
+    $(document).ready(function() {
+       $('body').on('change', '.edit-name', function(e) {
+            var input = e.target;
+            var newCategoryName = $(input).val();
+            var id = $(input).attr('data-category_id');
+            
+            if(newCategoryName.length < 4) {
+                $($(input).parent()).removeClass('has-error');
+                $($(input).parent()).addClass('has-error');
+            }
+            else {
+                $($(input).parent()).removeClass('has-error');
+                $.ajax({
+                   'url': '/admin/edit-category-name',
+                   'type': 'post',
+                   'dataType': 'json',
+                   'data': {
+                        'id': id,
+                        'name': newCategoryName
+                    },
+                    'success': function(data) {
+                        $(input).val('');
+                        console.log(data);
+                        categoryName = $(input).parent().parent().find('.category_name');
+                        $(categoryName).fadeOut("slow", function() {
+                            $(this).find('span').html('');
+                            $(this).parent().show();
+                            $(this).fadeIn("slow", function() {
+                                $(this).find('span').html(newCategoryName);
+                            });
+                            
+                        });
+                        
+                    },
+                    'error': function(xhrError, ajaxOptions, thrownErrors) {
+                        console.log(xhrError);
+                        console.log(ajaxOptions);
+                        console.log(thrownErrors);
+                    }
+                });
+            }
+           
+       });
        
-            ?>
-        </div>
-    </div>
-</div>
+       $('body').on('click', ".terminate", function(e) {
+           var button = e.target;
+           console.log(button);
+           var id = $(this).attr('data-category_id');
+           $.ajax({
+              'url': '/admin/delete-category',
+              'type': 'post',
+              'dataType': 'json',
+              'data': {
+                  'id': id
+              },
+              'success': function(data) {
+                  console.log(data);
+                  var row = $(button).parent().parent().parent();
+                  $(row).fadeOut("slow", function() {
+                        $(this).remove();
+                  });
+                
+              },
+              'error': function(xhrError, ajaxOptions, thrownError) {
+                  console.log(xhrError);
+                  console.log(ajaxOptions);
+                  console.log(thrownError);
+              }
+           });
+       });
+       
+       var file;
+       
+       $('.edit-photo').change(function(e) {
+           //file = e.target.files;
+           //console.log(file);
+       });
+       
+       $('.confirm-photo').click(function(e) {
+           console.log('clicked');
+           var form = $(e.target).parent();
+           var formData = new FormData(form);
+           console.log(form);
+           console.log(formData);
+           var id = $($(form).find('.edit-photo')).attr('data-category_id');
+           
+           $.ajax({
+              'url': '/admin/edit-category-image',
+              'type': 'post',
+              'dataType': 'json',
+              'data': {
+                  'file': form
+              },
+              'success': function(data) {
+                  console.log(data);
+              },
+              'error': function(xhrError, ajaxOptions, thrownErrors) {
+                  console.log(xhrError);
+                  console.log(ajaxOptions);
+                  console.log(thrownErrors);
+              }
+           });
+       });
+    });
+</script>
