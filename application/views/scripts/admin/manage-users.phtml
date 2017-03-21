@@ -107,30 +107,32 @@
                     var status = $(td).find('.status');
                     var privilege = $(td).find('.privilege');
                     var coupon = $(td).find('.coupon');
+                    var terminate = $(td).find(".terminate");
                     console.log(status);
                     console.log(privilege);
                     console.log(coupon);
                     if(newValue == 'Admin') {
-                        $(status).fadeOut("slow", function() {
+                        $(status).hide("drop", 500, function() {
                             $(this).empty();
                         });
-                        $(privilege).fadeOut("slow", function() {
+                        $(privilege).hide("drop", 500, function() {
                             $(this).empty();
                         });
-                        $(coupon).fadeOut("slow", function() {
+                        $(coupon).hide("drop", 500, function() {
+                            $(this).empty();
+                        });
+                        $(terminate).hide("drop", 500, function() {
                             $(this).empty();
                         });
                     }
                     else if(newValue == 'Shop') {
-                        $(status).empty();
-                        $(status).fadeIn("slow", function() {
-                            $(this).append("<input data-user_id='"+ newData.id + "' type='checkbox' " + (newData.status == 0 ? "checked" : "") + " />");
-                        });
-                        $(privilege).empty();
-                        $(privilege).fadeIn("slow", function() {
-                            $(this).append("<select data-user_id='" + newData.id + "' class='form-control'><option>Admin</option><option selected>Shop</option><option>Customer</option></select>")
-                        }); 
-                        $(coupon).fadeOut("slow", function() {
+                        //$(status).empty();
+                        //$(status).fadeIn("slow", function() {
+                        //    $(this).append("<input data-user_id='"+ newData.id + "' type='checkbox' " + (newData.status == 0 ? "checked" : "") + " />");
+                        //});
+                        //$(privilege).empty();
+                        //$(privilege).append("<select data-user_id='" + newData.id + "' class='form-control'><option>Admin</option><option selected>Shop</option><option>Customer</option></select>")
+                        $(coupon).hide("drop", 500, function() {
                             $(this).empty();
                         });
                     }
@@ -186,9 +188,9 @@
                     var deleteDiv = $(button).parent();
                     console.log(deleteDiv);
                     
-                    $(deleteDiv).fadeOut("slow", function() {
+                    $(deleteDiv).hide("explode", 1000, function() {
                         $(this).empty();
-                        $(this).append("<button data-email='" + newData.email + "' data-user_id='" + newData.id + "' class='add-coupon btn btn-default'>Add Coupon</button>").show();    
+                        $(this).append("<button data-email='" + newData.email + "' data-user_id='" + newData.id + "' class='add-coupon btn btn-default'>Add Coupon</button>").show("fade", 500);    
                         
                     });
                 },
@@ -207,8 +209,12 @@
             console.log(addDiv);
             $(".new-coupon-form").unbind();
             $(".new-coupon-form").remove();
-            $(addDiv).append("<input class='new-coupon-form form-control' placeholder='e.g. 30% discount' />");
-            $(".new-coupon-form").change(function(e) {
+            $(button).hide("bounce", 500, function() {
+                $(addDiv).append("<input class='new-coupon-form form-control' placeholder='e.g. 30% discount' />").hide().show("slide", 500);
+                //$(addDiv).find("input").hide();
+                //$(addDiv).find("input").show("slide", 500);
+            });
+            $('body').on('change', ".new-coupon-form", function(e) {
                 var input = e.target;
                 var addDiv = $(input).parent();
                 var button = $(addDiv).find('button');
@@ -262,7 +268,7 @@
                 'data': {'id': userId},
                 'success': function(data) {
                     console.log(data);
-                    $("#" + userId).fadeOut("slow", function() {
+                    $("#" + userId).hide("drop", 500, function() {
                         $(this).remove();
                     });
                 },
