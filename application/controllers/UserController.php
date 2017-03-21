@@ -54,63 +54,78 @@ class UserController extends Zend_Controller_Action
     public function loginAction()
     {
         $loginform=new Application_Form_Login();
-		$this->view->login_form = $loginform;
+        $this->view->login_form = $loginform;
 
-		$request = $this->getRequest ();
+        $request = $this->getRequest ();
 
-		if($request-> isPost()){
+        if($request-> isPost()){
 
-			if($loginform-> isValid($request-> getPost()))
-			{
+                if($loginform-> isValid($request-> getPost()))
+                {
 
-				$email=$request->getParam('email');
-				$password=$request->getParam('password');
-				//we get object of ZendDbAdapter to know which database we connect on
-				$db=zend_Db_Table::getDefaultAdapter();
+                        $email=$request->getParam('email');
+                        $password=$request->getParam('password');
+                        //we get object of ZendDbAdapter to know which database we connect on
+                        $db=zend_Db_Table::getDefaultAdapter();
 
 
 
-				$adapter=new Zend_Auth_Adapter_DbTable($db,'users','email','password');
+                        $adapter=new Zend_Auth_Adapter_DbTable($db,'users','email','password');
 
-				$adapter->setIdentity($email);
+                        $adapter->setIdentity($email);
 
-				$adapter->setCredential($password);
-				//execute qyery
-				$result=$adapter->authenticate();
+                        $adapter->setCredential($password);
+                        //execute qyery
+                        $result=$adapter->authenticate();
 
-					if($result->isValid())
-					{
-    					print_r('authentiacte');
+                                if($result->isValid())
+                                {
+                                print_r('authentiacte');
 
 //session steps                             
-					    $sessionDataObj=$adapter->getResultRowObject(['id','email','password','userName']);
-					    $auth=Zend_Auth::getInstance();
-					    $storage=$auth->getStorage();
-					    $storage->write($sessionDataObj);
-					    $this->redirect('/user/home');
+                                    $sessionDataObj=$adapter->getResultRowObject(['id','email','password','userName']);
+                                    $auth=Zend_Auth::getInstance();
+                                    $storage=$auth->getStorage();
+                                    $storage->write($sessionDataObj);
+                                    $this->redirect('/user/home');
 
-					}
+                                }
 
-					else
-					{
+                                else
+                                {
 
-   						$this->redirect('/user/add');
-					}
+                                        $this->redirect('/user/add');
+                                }
 
-				} // if form is vaild & requset is post
+                        } // if form is vaild & requset is post
 
-                }
-			
-    }
-    
-    public function logoutAction(){
-          $auth=Zend_Auth::getInstance();
-          $auth->clearIdentity();
-          return $this->redirect('user/login');
-    }
+
+                }//if request is post
+
+        } // end of login action 
+
+//-----------------------------------------------
+
+    public function logoutAction()
+          {
+		    $auth=Zend_Auth::getInstance();
+		    $auth->clearIdentity();
+		    // Zend_Session::namespaceUnset('facebook');
+		    return $this->redirect('user/login');
+
+
+        }
+       
+       
+
+
 
 
 }
+			
+
+
+
 
 
 

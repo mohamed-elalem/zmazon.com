@@ -105,6 +105,20 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         return $result;
         
     }
+
+    
+    public function search($name)
+    {
+        $word='%'.$name.'%';
+        $sql = $this->select()
+                ->from(['p'=>'product'])
+                ->where('name like ?', $word)
+                ->setIntegrityCheck(false);
+        $result = $sql->query()->fetchAll();
+        return $result;
+    }
+   
+   
     public function hasOffer($product_id){
          $sql = $this->select()
                 ->from(array('sc' => "sale"), array('id'))
@@ -153,6 +167,7 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         return $price;
         
     }
+
         
     
 
