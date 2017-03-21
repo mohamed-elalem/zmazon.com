@@ -261,9 +261,15 @@
                 'dataType': 'json',
                 'data': {'id': userId},
                 'success': function(data) {
+                    console.log(data);
                     $("#" + userId).fadeOut("slow", function() {
                         $(this).remove();
                     });
+                },
+                'error': function(xhrError, ajaxOptions, thrownErrors) {
+                    console.log(xhrError);
+                    console.log(ajaxOptions);
+                    console.log(thrownErrors);
                 }
             });
         });

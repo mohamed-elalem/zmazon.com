@@ -28,6 +28,7 @@
           <actionMethod actionName="addCategory"/>
           <actionMethod actionName="editCategoryName"/>
           <actionMethod actionName="editCategoryImage"/>
+          <actionMethod actionName="contactDevelopers"/>
         </controllerFile>
         <controllerFile controllerName="CustomerUser">
           <actionMethod actionName="index"/>
@@ -58,6 +59,8 @@
         <formFile formName="NewCoupon"/>
         <formFile formName="SaleForm"/>
         <formFile formName="AddCategory"/>
+        <formFile formName="EditCategoryImage"/>
+        <formFile formName="ContactDevelopers"/>
       </formsDirectory>
       <layoutsDirectory>
         <layoutScriptsDirectory>
@@ -180,6 +183,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="editCategoryImage"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="contactDevelopers"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

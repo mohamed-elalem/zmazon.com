@@ -10,11 +10,11 @@ class AdminController extends Zend_Controller_Action
     private $category = null;
 
     private $shoppingCart = null;
-    
+
     private $wishList = null;
-    
+
     private $comment = null;
-    
+
     private $rates = null;
 
     private $db = null;
@@ -78,27 +78,6 @@ class AdminController extends Zend_Controller_Action
         $categories = $this->category->retrieveAll();
         $this->view->categories = $categories;
         
-        $updateCategoryForm = new Application_Form_UpdateCategory();
-        $addCategoryForm = new Application_Form_AddCategory();
-        
-        $request = $this->getRequest();
-        
-        if($request->isPost()) {
-            if(! is_null($request->getParam('category')) && $updateCategoryForm->isValid($request->getParams())) {
-                $id = $request->getParam("id");
-                $this->category->edit($id, array("name" => $request->getParam("category")));
-                $this->redirect("/admin/manage-categories");
-            }
-            else if(! is_null($request->getParam('new_category_name')) && $addCategoryForm->isValid($request->getParams())) {
-                $categoryName = $request->getParam('new_category_name');
-                $this->category->add($categoryName);
-            
-                $this->redirect("/admin/manage-categories");
-            }
-        }
-        
-        $this->view->updateCategoryForm = $updateCategoryForm;
-        $this->view->addCategoryForm = $addCategoryForm;
     }
 
     public function sendCouponAction()
@@ -212,7 +191,6 @@ class AdminController extends Zend_Controller_Action
             $this->wishList->deleteUserWishList($id);
             $this->rates->deleteUserRates($id);
             $this->user->remove($id);
-            
             echo '["success"]';
         }
         else {
@@ -284,7 +262,28 @@ class AdminController extends Zend_Controller_Action
 
     public function addCategoryAction()
     {
+        $categoryForm = new Application_Form_AddCategory();
         
+        $request = $this->getRequest();
+        //var_dump($request->getParams());
+        //die();
+        
+        if($request->isPost()) {
+            if($categoryForm->isValid($request->getParams())) {
+                if($categoryForm->photo->isUploaded()) {
+                    $name = $request->getParam("name");
+                    $photo = $categoryForm->photo->getValue();
+                    $this->category->add(array(
+                        "name" => $name,
+                        "photo" => $photo
+                    ));
+                    $this->redirect("/admin/manage-categories");
+                }
+            }
+            
+        }
+        
+        $this->view->categoryForm = $categoryForm;
     }
 
     public function editCategoryNameAction()
@@ -313,25 +312,71 @@ class AdminController extends Zend_Controller_Action
 
     public function editCategoryImageAction()
     {
-        $ajaxContext = $this->_helper->getHelper('AjaxContext');
-        $ajaxContext->addActionContext('addToWishList', 'json')
-            ->initContext();
-        $this->_helper->viewRenderer->setNoRender(true);
-        $this->_helper->layout->disableLayout();
+        $categoryForm = new Application_Form_EditCategoryImage();
         
         $request = $this->getRequest();
         
         if($request->isPost()) {
-            echo json_encode($_POST);
+            if($categoryForm->isValid($request->getParams())) {
+                if($categoryForm->photo->isUploaded()) {
+                    $id = $this->getParam('id');
+                    $photo = $categoryForm->photo->getValue();
+                    $this->category->edit($id, array(
+                        "photo" => $photo
+                    ));
+                    $this->redirect("/admin/manage-categories");
+                }
+            }
+            
         }
-        else {
-            http_response_code(403);
-            die("<h1>Access Forbidden 403</h1>");
+        
+        $this->view->categoryForm = $categoryForm;
+        
+    }
+
+    public function contactDevelopersAction()
+    {
+        $contactForm = new Application_Form_ContactDevelopers();
+        
+        $request = $this->getRequest();
+        
+        if($request->isPost()) {
+            if($contactForm->isValid($request->getParams())) {
+                $first_name = "Session_First_Name";
+                $last_name = "Session_Last_Name";
+                $subject = $request->getParam("subject");
+                $content = $request->getParam("content");
+                
+                $tr = new Zend_Mail_Transport_Smtp('smtp.gmail.com',
+                     array(
+                            'auth' => 'login',
+                            'port' => 587,
+                            'ssl' => 'tls',
+                            'username' => 'faintingdetection@gmail.com',
+                            'password' => 'Tizen2016'
+                         )
+                    );
+                Zend_Mail::setDefaultTransport($tr);
+
+                $mail = new Zend_Mail();
+                $mail->setFrom('faintingdetection@gmail.com');
+                $mail->setBodyHtml("First name: ".$first_name."<br>Last name: ".$last_name."<br><br><strong>Problem Description</strong><br><br>".$content);
+                $mail->addTo("mohamed.el.alem.2017@gmail.com", 'Site issue');
+                $mail->setSubject($subject);
+                $mail->send($tr);
+                
+                $this->redirect("/admin");
+            }
         }
+        
+        $this->view->contactForm = $contactForm;
+        
     }
 
 
 }
+
+
 
 
 

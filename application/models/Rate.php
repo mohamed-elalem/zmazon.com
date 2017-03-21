@@ -16,7 +16,7 @@ class Application_Model_Rate extends Zend_Db_Table_Abstract
     }
     
     public function deleteUserRates($uid) {
-        $this->delete("usedId = ".$uid);
+        $this->delete("userId = ".$uid);
     }
 
 }

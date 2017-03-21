@@ -1,21 +1,12 @@
 <?php
 
-class Application_Form_AddCategory extends Zend_Form
+class Application_Form_EditCategoryImage extends Zend_Form
 {
 
     public function init()
     {
         $this->setMethod('POST');
         $this->setEnctype(Zend_Form::ENCTYPE_MULTIPART);
-        $categoryName = new Zend_Form_Element_Text("name");
-        $categoryName->setAttribs(array(
-            'class' => "form-control",
-            'placeholder' => 'e.g. Sports'
-        ));
-        $categoryName->setLabel("Category name");
-        $categoryName->setRequired();
-        $categoryName->addValidator("StringLength", false, array(4, 80));
-        
         
         $categoryPhoto = new Zend_Form_Element_File("photo");
         $categoryPhoto->setLabel("Image")
@@ -34,7 +25,7 @@ class Application_Form_AddCategory extends Zend_Form
         
         
         
-        $this->addElements(array($categoryName, $categoryPhoto, $submit));
+        $this->addElements(array($categoryPhoto, $submit));
     }
 
 

@@ -64,7 +64,7 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
     }
     
     public function deleteUserCart($uid) {
-        $this->delete("usedId = ".$uid);
+        $this->delete("userId = ".$uid);
     }
 }
 

@@ -28,7 +28,7 @@ class Application_Model_WishList extends Zend_Db_Table_Abstract
     }
     
     public function deleteUserWishList($uid) {
-        $this->delete("usedId = ".$uid);
+        $this->delete("userId = ".$uid);
     }
 
 }

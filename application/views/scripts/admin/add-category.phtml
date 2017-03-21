@@ -1,4 +1,32 @@
-<br /><br />
-<div id="view-content">
-	<p>View script for controller <b>Admin</b> and script/action name <b>addCategory</b></p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3>New Category</h3>
+                </div>
+                <div class="panel-body">
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <?=$this->categoryForm->name?>
+                        </div>
+                        <div class="form-group">
+                            <?=$this->categoryForm->photo?>
+                        </div>
+                        <div class="btn-group-justified">
+                            <div class="btn-group">
+                                <input class='btn btn-primary' type='submit' name='submit' value='Submit' />
+                            </div>
+                            <div class="btn-group">
+                                <a class="btn btn-danger" href='/admin/manage-categories'>Cancel</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

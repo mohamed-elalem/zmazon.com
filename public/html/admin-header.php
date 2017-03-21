@@ -17,6 +17,8 @@
             <li><a href="/admin/manage-users/">Manage Users</a></li>
             <li><a href="/admin/manage-categories/">Manage Categories</a></li>
             <li><a href="/admin/list-orders">View orders</a></li>
+            <li><a href="/admin/add-category">New Category</a></li>
+            <li><a href="/admin/contact-developers/">Contact Developers team</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="/admin/logout">Logout</a></li>

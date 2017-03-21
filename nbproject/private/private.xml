@@ -5,6 +5,7 @@
         <group>
             <file>file:/srv/http/zmazon.com/application/Bootstrap.php</file>
             <file>file:/srv/http/zmazon.com/application/forms/AddCategory.php</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/admin/add-category.phtml</file>
             <file>file:/srv/http/zmazon.com/application/models/Rate.php</file>
             <file>file:/srv/http/zmazon.com/application/controllers/CustomerUserController.php</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/customer-user/put-rate.phtml</file>
@@ -32,6 +33,7 @@
             <file>file:/srv/http/zmazon.com/application/controllers/ShopUserController.php</file>
             <file>file:/srv/http/zmazon.com/application/models/Comment.php</file>
             <file>file:/srv/http/zmazon.com/application/configs/application.ini</file>
+            <file>file:/srv/http/zmazon.com/application/forms/EditCategoryImage.php</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/admin/index.phtml</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/admin/list-orders.phtml</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/customer-user/index.phtml</file>
@@ -40,6 +42,7 @@
             <file>file:/srv/http/zmazon.com/application/views/scripts/admin/order-details.phtml</file>
             <file>file:/srv/http/zmazon.com/application/forms/UpdateCategory.php</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/user/add.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/admin/edit-category-image.phtml</file>
         </group>
     </open-files>
 </project-private>

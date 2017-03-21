@@ -172,9 +172,9 @@ class AdminController extends Zend_Controller_Action
      */
     public function removeAction()
     {
+        
         $id = (int) $this->getParam("id");
         $this->user->remove($id);
-        $this->redirect("/admin/manage-users");
     }
 
     public function updateCategoryAction()

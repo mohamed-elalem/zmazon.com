@@ -6,7 +6,7 @@ class Application_Model_Comment extends Zend_Db_Table_Abstract
     
     
     public function deleteUserComments($uid) {
-        $this->delete("usedId = ".$uid);
+        $this->delete("userId = ".$uid);
     }
 }
 
