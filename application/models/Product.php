@@ -25,6 +25,11 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         $result = $query->fetchAll()[0];
         return $result;
     }
+    public function productDetails($id)
+    {
+        return $this->find($id)->toArray()[0];
+	
+    }
     public function allProductsDetails()
     {
         $sql = $this->select()
@@ -48,6 +53,7 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         $product->quantity=(int)$productData['quantity'];
         $product->price=(float)$productData['price'];
         $product->rate=0;
+        $product->moneyGained =0;
         $product->numOfSale=0;
         $product->photo=$productData['photo'];
         $product->addDate=new Zend_Db_Expr('NOW()');
