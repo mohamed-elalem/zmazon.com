@@ -6,7 +6,7 @@ class CustomerUserController extends Zend_Controller_Action
     public function init()
     {
         
-        $actionName=$request->getActionName();
+        $actionName=$this->_request->getActionName();
         if ($actionName != 'view-cart' && $actionName != 'view-wishlist') {
             $ajaxContext = $this->_helper->getHelper('AjaxContext');
             $ajaxContext->addActionContext('addToWishList', 'json')
@@ -105,8 +105,13 @@ class CustomerUserController extends Zend_Controller_Action
 
     public function viewCartAction()
     {
-       $cart_id= $this->_request->getParam('cart_id');
-       
+        $auth=Zend_Auth::getInstance();
+        $user_id = $auth->getStorage()->read()->id;
+        $this->view->cart = $this->shoppingCart->getCartDetails($user_id);
+
+
+        
+        
     }
 
 

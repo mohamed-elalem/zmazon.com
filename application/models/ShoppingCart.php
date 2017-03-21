@@ -67,17 +67,19 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
         $cartProductsModel->incrementQuantity($cartId, $product_id);
     }
     
-    public function cartDetails($cart_id) {
+    public function getCartDetails($user_id) {
         $sql = $this->select()
                 ->from(array('sc' => "shoppingCart"))
-                ->joinInner(array("p" => "cart_products"), "p.cartId = sc.id", array("productId", "quantity"))
-                ////
-                ->joinLeft(array("s" => "sale"), "p.productId = s.productId", array("percentage as discount"))
-                ->joinInner(array("p" => "product"), "p.id = sc.productId", array("name as product_name", "price", "rate", "quantity as product_quantity"))
-                ->where("sc.userId = ".$userId)
+                ->joinInner(array("c" => "cart_products"), "c.cartId = sc.id", array("productId", "quantity"))
+                ->joinLeft(array("s" => "sale"), "c.productId = s.productId", array("percentage as discount"))
+                ->joinInner(array("p" => "product"), "p.id = c.productId", array("name as product_name", "price as product_price", "rate", "quantity as product_quantity", "photo as product_photo" ))
+                ->where("sc.userId = $user_id and purchasedFlag = 0")
                 ->setIntegrityCheck(false);
+//        echo $sql->__toString();
+//        die();
+                
         $query = $sql->query();
-        $result = $query->fetchAll();
+        $result = $query->fetchAll()[0];
         return $result;
         
     }
