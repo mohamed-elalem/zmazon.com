@@ -131,10 +131,11 @@ class ShopUserController extends Zend_Controller_Action
             if($this->saleForm->isValid($request->getPost()))
             {
                 //$saleModel =new Application_Model_Sale();
-                $saleData['productId']=(int) $this->saleForm->productId->getValue();
-                $saleData['endDate']= $this->saleForm->endDate->getValue();
-                $saleData['startDate']= $this->saleForm->startDate->getValue();
-                $saleData['percentage'] =(int) $this->saleForm->percentage->getValue();
+                $saleData['productId']=(int) $request->getParam("productId");
+                $saleData['endDate']= $request->getParam("endDate");
+                $saleData['startDate']= $request->getParam("startDate");
+                $saleData['percentage'] =(int) $request->getParam("percentage");
+                
                 $this->saleModel->addSale($saleData);
                 $this->redirect('/shop-user/list-current-sale');
             }
