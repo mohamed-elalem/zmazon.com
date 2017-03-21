@@ -133,7 +133,7 @@ and open the template in the editor.
   /* the hidden clearer */
 }
 .star-cb-group * {
-  font-size: 1rem;
+  font-size: 3rem;
 }
 .star-cb-group > input {
   display: none;
@@ -182,7 +182,6 @@ and open the template in the editor.
 fieldset {
   border: 0;
   background: #222;
-  width: 5em;
   border-radius: 1px;
   padding: 1em 1.5em 0.9em;
   margin: 1em auto;
@@ -198,3 +197,41 @@ fieldset {
 h1 {
   text-align: center;
 }
+/*************************
+Styling the index page
+*********************/
+.product-list .entry-product .entry-featured{
+    position relative;
+}
+.star-rating {
+       position: absolute;
+       top: 10px;
+       right: 20px;
+       display: none;
+       unicode-bidi:bidi-override;
+       direction:rtl;
+       font-size:30px;
+}
+.product-list .entry-product:hover .star-rating {
+    display: block;
+}
+.star-rating span.star {
+      font-family:FontAwesome;
+      font-weight:normal;
+      font-style:normal;
+      display:inline-block;
+}
+.star-rating span.star:hover {
+     cursor:pointer;
+}
+.star-rating span.star:before {
+     content:"\f006";
+     padding-right:5px;
+     color:#999999;
+}
+.star-rating .star.filled:before {
+    content:"\f005";
+     color: darkred;
+}
+
+
