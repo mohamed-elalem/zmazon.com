@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+   	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/node_modules/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/node_modules/bootstrap/dist/css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/node_modules/admin-lte/dist/css/AdminLTE.min.css" />
+        <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/node_modules/admin-lte/dist/css/skins/skin-blue.css" />
+        <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/node_modules/font-awesome/css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/css/style.css" /> 
+        <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/node_modules/jquery-ui-dist/jquery-ui.min.css" />
+        <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/node_modules/jquery-ui-dist/jquery-ui.theme.min.css" />
+        <script src="<?= $this->baseUrl()?>/node_modules/tether/dist/js/tether.min.js"></script>
+	<script src="<?= $this->baseUrl()?>/node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="<?= $this->baseUrl()?>/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="<?= $this->baseUrl()?>/node_modules/admin-lte/dist/js/app.min.js"></script>
+        <script src="<?= $this->baseUrl()?>/node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
+        <script src="<?= $this->baseUrl()?>/js/app.js"></script>
+    </head>
+    <body>
+        <?php
+           
+            include_once "html/admin-header.php";
+            
+            $auth = Zend_Auth::getInstance();
+            $identity = $auth->getIdentity();
+            if (!empty($identity)) {
+
+            ?>
+            <a href="<?php echo $this->baseUrl()
+            ?>/User/logout"> Logout </a>
+        <?php
+
+
+            }
+
+
+?>
+
+
+
+        <?php echo $this->layout()->content; ?> 
+           
+    </body>
+</html>
