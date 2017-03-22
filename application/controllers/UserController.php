@@ -20,7 +20,7 @@ class UserController extends Zend_Controller_Action
 
         }
 
-         if(!$auth->hasIdentity()&&$actionName != 'login')
+         if(!$auth->hasIdentity() && $actionName != 'login' && $actionName != "add")
         {
 
             $this->redirect('user/login');
@@ -36,19 +36,43 @@ class UserController extends Zend_Controller_Action
     public function addAction()
     {
         $form=new Application_Form_SignUp();
-	    $this->view->signup_form=$form;
-		$request=$this->getRequest();
-		if($request->ispost())
-		{
+        $this->view->signup_form=$form;
+        $request=$this->getRequest();
+        if($request->isPost())
+        {
 
-	    	if($form->isValid($request->getParams()))
-			{
+            if($form->isValid($request->getParams()))
+            {
 
-				$user_model = new Application_Model_Users();
-				$user_model->Register($request->getParams());
-				$this->redirect("/user/add");
-			}
-		}
+                $user_model = new Application_Model_Users();
+                $user_model->Register($request->getParams());
+                
+                $db=zend_Db_Table::getDefaultAdapter();
+
+                $adapter=new Zend_Auth_Adapter_DbTable($db,'users','email','password');
+
+                $adapter->setIdentity($email);
+
+                $adapter->setCredential($password);
+                
+                $result=$adapter->authenticate();
+
+                
+                if($result->isValid()) {
+                    $sessionDataObj=$adapter->getResultRowObject(['id','email','password','userName']);
+                    $auth=Zend_Auth::getInstance();
+                    $storage=$auth->getStorage();
+                    $storage->write($sessionDataObj);
+                
+                    if($request->getParam("privilege") == "Shop") {
+                        $this->redirect("/shop-user");
+                    }
+                    else {
+                        $this->redirect("/");
+                    }
+                }
+            }
+        }
     }
 
     public function loginAction()

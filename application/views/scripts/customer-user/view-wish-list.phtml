@@ -1,0 +1,21 @@
+<div class="container">
+    <?php foreach($this->userWishList as $product): ?>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h4><?=$product['name']?></h4>
+            </div>
+            
+            <div class="col-md-4">
+                <h4><a  href="/index/product-details/product_id/<?=$product['id']?>/"><img class="img-responsive img-rounded" src="<?= $this->baseUrl()?>/images/<?=$product['photo']?>" width="250" height="150"/></a></h4>
+            </div>
+            
+            <div class="col-md-4">
+                <h5><?=$product['description']?></h5>
+            </div>
+        </div>
+    </div>
+    
+    <?php endforeach ?>
+</div>

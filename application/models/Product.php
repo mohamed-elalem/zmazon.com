@@ -59,6 +59,7 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         $product->photo=$productData['photo'];
         $product->addDate=new Zend_Db_Expr('NOW()');
         $product->categoryId=(int)$productData['categoryId'];
+        $product->userId = 4; // Will be in session
 //        var_dump($product);
 //        exit();
         $product->save();

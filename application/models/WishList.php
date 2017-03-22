@@ -26,6 +26,16 @@ class Application_Model_WishList extends Zend_Db_Table_Abstract
     public function remove($user_id, $product_id){
         $this->delete("userId=$user_id","productId = $product_id");
     }
+    
+    public function retrieveUserWishList($userId) {
+        $sql = $this->select()
+                ->from(array("wl" => "wishList"), array("id as wish_list_id"))
+                ->joinInner(array("p" => "product"), "p.id = wl.productId and wl.userId = ".$userId)
+                ->setIntegrityCheck(false);
+        $query = $sql->query();
+        $result = $query->fetchAll();
+        return $result;
+    }
 
 
 }
