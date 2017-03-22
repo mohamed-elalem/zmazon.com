@@ -22,7 +22,7 @@
                         </div>
                         <div id="date-error" class="panel panel-danger" style="display: none;">
                             <div class="panel-heading">
-                                <h3>Error Starting date cannot be larger or equal to the ending date</h3>
+                                <h4>Error Offer ends on the same day</h4>
                             </div>
                         </div>
                         <div class="btn-group-justified">
@@ -43,12 +43,13 @@
 
 <script>
     $(document).ready(function() {
+        var currentDate = new Date();
         $(".datepicker").datepicker({
             showOn: 'focus',
             changeMonth: true,
             changeYear: true,
             dateFormat: 'yy-mm-dd',
-            //minDate: new Date(currentYear, currentMonth, currentDate)
+            minDate: currentDate
         });
         
         $(".datepicker").change(function () {

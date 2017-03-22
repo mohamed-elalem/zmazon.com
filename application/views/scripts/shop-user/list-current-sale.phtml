@@ -1,18 +1,34 @@
 
-<table class="table table-bordered">
-<?php
-	foreach($this->allSales as $key => $value)
-	{
-			echo "<tr class='danger'><td>".$value['name']."</td>".
-			"<td >".$value['percentage']."</td>".
-                        "<td>".$value['startDate']."</td>".
-			"<td>".$value['endDate']."</td>".
-			"<td> <a class='btn btn-danger' href='delete-sale/saleId/".$value['id']."'role='button'>Delete </a> </td>".
-			"<td> <a class='btn btn-danger' href='edit-sale/saleId/".$value['id']."'role='button'>Edit </a> </td></tr>";
-	}
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h1 class="text-center">Sales in progress</h1>
+    </div>
+    <div class="panel-body">
+        <table class="table table-responsive table-hover">
+            <tr>
+                <th class="text-center">Product name</th>
+                <th class="text-center">Product name</th>
+                <th class="text-center">Product name</th>
+                <th class="text-center">Product name</th>
+            </tr>
+            <?php
+                foreach($this->allSales as $key => $value)
+                {
+                    echo "<tr>".
+                    "<td>".$value['name']."</td>".
+                    "<td >".$value['percentage']."</td>".
+                    "<td>".$value['startDate']."</td>".
+                    "<td>".$value['endDate']."</td>".
+                    "<td> <a class='btn btn-danger' href='delete-sale/saleId/".$value['id']."'role='button'>Delete </a> </td>".
+                    "<td> <a class='btn btn-danger' href='edit-sale/saleId/".$value['id']."'role='button'>Edit </a> </td>".
+                    "</tr>";
+                }
 
- ?>
+             ?>
 
-</table>
+            </table>
 
-<a class='btn btn-danger' href='add-sale'role='button'>Add Sale </a>
+            <a class='btn btn-danger' href='add-sale'role='button'>Add Sale </a>
+
+    </div>
+</div>
