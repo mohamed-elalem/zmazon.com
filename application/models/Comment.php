@@ -11,7 +11,7 @@ class Application_Model_Comment extends Zend_Db_Table_Abstract
         $comment->comment = $comment_body;
        
         $comment->save();
-        echo json_encode($this->listAll() );
+        //echo json_encode($this->listAll() );
     }
     public function listAll(){
         return $this->fetchAll()->toArray();

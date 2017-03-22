@@ -10,17 +10,19 @@
                 <th class="text-center">Product name</th>
                 <th class="text-center">Product name</th>
                 <th class="text-center">Product name</th>
+                <th class="text-center">Terminate</th>
+                <th class="text-center">Edit</th>
             </tr>
             <?php
                 foreach($this->allSales as $key => $value)
                 {
                     echo "<tr>".
-                    "<td>".$value['name']."</td>".
-                    "<td >".$value['percentage']."</td>".
-                    "<td>".$value['startDate']."</td>".
-                    "<td>".$value['endDate']."</td>".
-                    "<td> <a class='btn btn-danger' href='delete-sale/saleId/".$value['id']."'role='button'>Delete </a> </td>".
-                    "<td> <a class='btn btn-danger' href='edit-sale/saleId/".$value['id']."'role='button'>Edit </a> </td>".
+                    "<td class='text-center' >".$value['name']."</td>".
+                    "<td class='text-center' >".$value['percentage']."</td>".
+                    "<td class='text-center' >".$value['startDate']."</td>".
+                    "<td class='text-center' >".$value['endDate']."</td>".
+                    "<td class='text-center' > <a class='text-danger' href='delete-sale/saleId/".$value['id']."'role='button'><i class='fa fa-times'></i></a></td>".
+                    "<td class='text-center' > <a class='btn btn-danger' href='edit-sale/saleId/".$value['id']."'role='button'>Edit </a> </td>".
                     "</tr>";
                 }
 
