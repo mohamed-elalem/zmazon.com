@@ -20,6 +20,7 @@ class CustomerUserController extends Zend_Controller_Action
         $this->product = new Application_Model_Product();
         $this->comment = new Application_Model_Comment();
         $this->cartProducts = new Application_Model_CartProducts();
+        $this->coupon =  new Application_Model_Coupon();
     }
 
     public function indexAction()
@@ -77,9 +78,9 @@ class CustomerUserController extends Zend_Controller_Action
     public function removeFromCartAction()
     {
 
-        $user_id  = $this->_request->getParam('user_id');
+        $cart_id  = $this->_request->getParam('cart_id');
         $product_id  = $this->_request->getParam('product_id');
-        $this->shoppingCart->remove($user_id, $product_id);
+        $this->cartProducts->removeFromCart($cart_id, $product_id);
         // The next line is for returning json object response to ajax
         echo '{"success":"done"}';
     }
@@ -91,7 +92,7 @@ class CustomerUserController extends Zend_Controller_Action
         $comment_body = $this->_request->getParam('comment_body');
         $this->comment->add($user_id, $product_id, $comment_body);
         // The next line is for returning json object response to ajax
-        echo '{"success":"done"}';
+//        echo '{"success":"done"}';
     }
 
     public function incrementQuantityAction()
@@ -108,6 +109,7 @@ class CustomerUserController extends Zend_Controller_Action
         $auth=Zend_Auth::getInstance();
         $user_id = $auth->getStorage()->read()->id;
         $this->view->cart = $this->shoppingCart->getCartDetails($user_id);
+        $this->view->coupon = $this->coupon->getCouponCode($user_id);
 
 
         

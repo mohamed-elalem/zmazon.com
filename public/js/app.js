@@ -160,6 +160,71 @@
                  });
 
             });
+            $(document).on('click', ".remove-from-cart", function(e) {
+                $.ajax({
+                    url: "/customer-user/remove-from-cart",
+                    type: "POST",
+                    dataType:'json',
+                    context: this,
+                    data: {product_id: $(this).attr("data-product_id"), cart_id : $(this).attr("data-cart_id")},
+                    success: function(){
+                        console.log(1);
+                        $('.x-cart-notification').addClass('bring-forward appear loading');
+                        setTimeout(function(){
+                            $('.x-cart-notification').addClass('added');
+                        }, 1400)
+                        setTimeout(function(){
+                            $('.x-cart-notification').removeClass('bring-forward appear loading added');
+                            location.reload();
+                        }, 2800)
+                        $(this).removeClass('add-to-cart').addClass('increment-quantity')
 
+                    },
+                    error:function (xhr, ajaxOptions, thrownError){
+                        console.log(xhr);
+                        console.log(ajaxOptions);
+                        console.log(thrownError);
+                     }
+           
+                });
+            });
+            
+            $(document).on('change', ".cart-product-qty", function(e) {
+                $('.update-cart-button').removeAttr('disabled');
+            });
+            $(document).on('click', ".update-cart-button", function(e) {
+                var selected = $('.cart-product-qty');
+                var productIdArr = document.querySelectorAll('.cart-product-qty')[0].getAttribute('data-product_id');
+                console.log(productIdArr);
+                var cartId  =document.querySelectorAll('.cart-product-qty')[0].getAttribute('data-cart_id');
+                console.log(cartId)
+          
+                $.ajax({
+                    url: "/customer-user/update-cart",
+                    type: "POST",
+                    dataType:'json',
+                    context: this,
+                    data: {product_id: $(this).attr("data-product_id"), cart_id : $(this).attr("data-cart_id")},
+                    success: function(){
+                        console.log(1);
+                        $('.x-cart-notification').addClass('bring-forward appear loading');
+                        setTimeout(function(){
+                            $('.x-cart-notification').addClass('added');
+                        }, 1400)
+                        setTimeout(function(){
+                            $('.x-cart-notification').removeClass('bring-forward appear loading added');
+                            location.reload();
+                        }, 2800)
+                        $(this).removeClass('add-to-cart').addClass('increment-quantity')
+
+                    },
+                    error:function (xhr, ajaxOptions, thrownError){
+                        console.log(xhr);
+                        console.log(ajaxOptions);
+                        console.log(thrownError);
+                     }
+           
+                });
+            });
         });
     

@@ -32,6 +32,9 @@ class Application_Model_CartProducts extends Zend_Db_Table_Abstract
         $query = $sql->query();
         $result = $query->fetchAll();
     }
+    public function removeFromCart($cart_id , $product_id) {
+        $this->delete("cartId=$cart_id and productId = $product_id");
+    }
 
 }
 
