@@ -18,11 +18,12 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
                 ->from(array('p' => "product"), array('id', 'name' , 'description', 'price' , 'quantity', 'rate', 'photo', 'addDate', 'categoryId', 'moneyGained'))
                 ->where("p.id = $id")
                 ->joinLeft(array("s" => "sale"), "p.id = s.productId", array("percentage", "startDate", "endDate"))
-                ->setIntegrityCheck(false);
-        
+                ->joinLeft(array("w" => "wishList"),  "w.productId = p.id", array("userId as wishlist_user_id"))
+                ->joinLeft(array("cp" => "cart_products"), "cp.productId = p.id", array("productId as cart_product_id"))
+                ->joinLeft(array("sc" => "shoppingCart" ), "sc.id = cp.cartId" , array("id as cart_id", "userId as shopping_cart_user_id"))
+                ->setIntegrityCheck(false);        
         $query = $sql->query();
-        
-        $result = $query->fetchAll()[0];
+        $result= $query->fetchAll()[0];
         return $result;
     }
     public function productDetails($id)

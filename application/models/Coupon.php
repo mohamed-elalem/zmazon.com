@@ -11,6 +11,16 @@ class Application_Model_Coupon extends Zend_Db_Table_Abstract
     public function deleteCoupon($id) {
         $this->delete("id = ".$id);
     }
+    public function getCouponCode($user_id){
+        $sql = $this->select()
+                ->from(array('coup' => "coupon"))
+                ->where("coup.userId = $user_id")
+                ->setIntegrityCheck(false);
+        $query = $sql->query();
+        $result = $query->fetchAll()[0];
+        return $result;
+
+    }
 
 }
 
