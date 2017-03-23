@@ -189,11 +189,13 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="addCategory"/>
+          </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="CustomerUser">
             <viewScriptFile forActionName="addComment"/>
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="ShopUser">
             <viewScriptFile forActionName="statistics"/>
+          </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="editCategoryName"/>
           </viewControllerScriptsDirectory>
@@ -205,6 +207,7 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="contactDevelopers"/>
+          </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="CustomerUser">
             <viewScriptFile forActionName="viewCart"/>
           </viewControllerScriptsDirectory>
