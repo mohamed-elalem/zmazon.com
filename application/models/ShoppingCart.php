@@ -6,22 +6,38 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
     
     public function selectUsersOrders() {
         $sql = $this->select()
-                ->from(array('sc' => "shoppingCart"), array('userId', 'count(*) as orders'))
+                ->from(array('sc' => "shoppingCart"), array('userId', 'count(*) as orders', 'sum(total) as paidCash'))
                 ->joinInner(array("u" => "users"), "sc.userId = u.Id", array("userName"))
                 ->group("sc.userId")
+                ->where("purchasedFlag = 1")
                 ->setIntegrityCheck(false);
+        
         $query = $sql->query();
         $result = $query->fetchAll();
         return $result;
     }
     
     public function selectSpecificOrder($userId) {
-        $sql = $this->select()
+        /*$sql = $this->select()
                 ->from(array('sc' => "shoppingCart"))
+                ->joinInner(array("cp" => "cart_products"), "cartId = sc.id")
                 ->joinLeft(array("s" => "sale"), "sc.productId = s.productId", array("percentage as discount"))
-                ->joinInner(array("p" => "product"), "p.id = sc.productId", array("name as product_name", "price", "rate", "quantity as product_quantity"))
+                ->joinInner(array("p" => "product"), "cp.id = sc.productId", array("name as product_name", "price", "rate", "quantity as product_quantity"))
                 ->joinInner(array("c" => "category"), "p.categoryId = c.id", array("name as category_name"))
                 ->where("sc.userId = ".$userId)
+                ->setIntegrityCheck(false);
+        $query = $sql->query();
+        $result = $query->fetchAll();
+         * 
+         */
+        
+        $sql = $this->select()
+                ->from(array("sc" => "shoppingCart"), array("userId"))
+                ->joinInner(array("cp" => "cart_products"), "cp.cartId = sc.id", array("productId", "quantity"))
+                ->joinInner(array("p" => "product"), "p.id = cp.productId", array("name as product_name", "price", "rate", "quantity as product_quantity"))
+                ->joinLeft(array("s" => "sale"), "s.productId = p.id", array("percentage as discount"))
+                ->joinInner(array("c" => "category"), "p.categoryId = c.id", array("name as category_name"))
+                ->where("sc.userId = 4 and sc.purchasedFlag = 1")
                 ->setIntegrityCheck(false);
         $query = $sql->query();
         $result = $query->fetchAll();
