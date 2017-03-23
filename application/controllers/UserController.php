@@ -43,7 +43,8 @@ class UserController extends Zend_Controller_Action
 
             if($form->isValid($request->getParams()))
             {
-
+                $email = $request->getParam("email");
+                $password = md5($request->getParam("password"));
                 $user_model = new Application_Model_Users();
                 $user_model->Register($request->getParams());
                 
@@ -55,16 +56,17 @@ class UserController extends Zend_Controller_Action
 
                 $adapter->setCredential($password);
                 
+                
                 $result=$adapter->authenticate();
 
                 
                 if($result->isValid()) {
-                    $sessionDataObj=$adapter->getResultRowObject(['id','email','password','userName']);
+                    $sessionDataObj=$adapter->getResultRowObject(['id','email','password','userName', 'fname', 'lname', 'privilege', 'status']);
                     $auth=Zend_Auth::getInstance();
                     $storage=$auth->getStorage();
                     $storage->write($sessionDataObj);
                 
-                    if($request->getParam("privilege") == "Shop") {
+                    if($request->getParam("privilege") == "shopUser") {
                         $this->redirect("/shop-user");
                     }
                     else {
@@ -84,61 +86,76 @@ class UserController extends Zend_Controller_Action
 
         if($request-> isPost()){
 
-                if($loginform-> isValid($request-> getPost()))
+            if($loginform-> isValid($request-> getPost()))
+            {
+
+                $email=$request->getParam('email');
+                $password=md5($request->getParam('password'));
+                //we get object of ZendDbAdapter to know which database we connect on
+                $db=zend_Db_Table::getDefaultAdapter();
+
+
+
+                $adapter=new Zend_Auth_Adapter_DbTable($db,'users','email','password');
+
+                $adapter->setIdentity($email);
+
+                $adapter->setCredential($password);
+                //execute qyery
+                $result=$adapter->authenticate();
+
+                if($result->isValid())
                 {
 
-                        $email=$request->getParam('email');
-                        $password=$request->getParam('password');
-                        //we get object of ZendDbAdapter to know which database we connect on
-                        $db=zend_Db_Table::getDefaultAdapter();
-
-
-
-                        $adapter=new Zend_Auth_Adapter_DbTable($db,'users','email','password');
-
-                        $adapter->setIdentity($email);
-
-                        $adapter->setCredential($password);
-                        //execute qyery
-                        $result=$adapter->authenticate();
-
-                                if($result->isValid())
-                                {
-                                print_r('authentiacte');
-
 //session steps                             
-                                    $sessionDataObj=$adapter->getResultRowObject(['id','email','password','userName']);
-                                    $auth=Zend_Auth::getInstance();
-                                    $storage=$auth->getStorage();
-                                    $storage->write($sessionDataObj);
-                                    $this->redirect('/user/home');
+                    $sessionDataObj=$adapter->getResultRowObject(['id','email','password','userName', 'fname', 'lname', 'privilege', 'status']);
+                    if($sessionDataObj->status == "0") {
+                        $this->view->error = true;
+                        $this->view->message = "Account blocked by administrator";
+                    }
+                    else {
+                        $auth=Zend_Auth::getInstance();
+                        $storage=$auth->getStorage();
+                        $storage->write($sessionDataObj);
+                        $userSession = new Zend_Session_Namespace("user");
+                        $userSession->user->privilege = $sessionDataObj->privilege;
+                        if($sessionDataObj->privilege == "admin") {
+                            $this->redirect("/admin/");
+                        }
+                        else if($sessionDataObj->privilege == "shop") {
+                            $this->redirect("/shop/");
+                        }
+                        else {
+                            $this->redirect("/");
+                        }
+                    }
+                }
+                else {
+                    $this->view->error = true;
+                    $this->view->message = "Wrong email or password";
+                }
 
-                                }
+                
 
-                                else
-                                {
-
-                                        $this->redirect('/user/add');
-                                }
-
-                        } // if form is vaild & requset is post
+            } // if form is vaild & requset is post
 
 
-                }//if request is post
+        }//if request is post
 
-        } // end of login action 
+    } // end of login action 
 
 //-----------------------------------------------
 
     public function logoutAction()
-          {
-		    $auth=Zend_Auth::getInstance();
-		    $auth->clearIdentity();
-		    // Zend_Session::namespaceUnset('facebook');
-		    return $this->redirect('user/login');
+    {
+        $auth=Zend_Auth::getInstance();
+        $auth->clearIdentity();
+        Zend_Session::destroy(true);
+        // Zend_Session::namespaceUnset('facebook');
+        return $this->redirect('/');
 
 
-        }
+    }
        
        
 

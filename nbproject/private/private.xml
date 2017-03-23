@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/user/login.phtml</file>
             <file>file:/srv/http/zmazon.com/application/models/Product.php</file>
             <file>file:/srv/http/zmazon.com/application/Bootstrap.php</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/shop-user/list-current-sale.phtml</file>
@@ -13,6 +14,7 @@
             <file>file:/srv/http/zmazon.com/application/views/scripts/shop-user/edit-product.phtml</file>
             <file>file:/srv/http/zmazon.com/application/models/WishList.php</file>
             <file>file:/srv/http/zmazon.com/application/forms/SaleForm.php</file>
+            <file>file:/srv/http/zmazon.com/library/Zmazon/Controller/Helper/Acl.php</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/shop-user/list-product-details.phtml</file>
             <file>file:/srv/http/zmazon.com/application/controllers/AdminController.php</file>
             <file>file:/srv/http/zmazon.com/.zfproject.xml</file>
@@ -36,8 +38,8 @@
             <file>file:/srv/http/zmazon.com/application/views/scripts/customer-user/add-to-cart.phtml</file>
             <file>file:/srv/http/zmazon.com/application/controllers/ShopUserController.php</file>
             <file>file:/srv/http/zmazon.com/application/models/Comment.php</file>
+            <file>file:/srv/http/zmazon.com/application/forms/Login.php</file>
             <file>file:/srv/http/zmazon.com/application/configs/application.ini</file>
-            <file>file:/srv/http/zmazon.com/application/views/scripts/shop-user/statistics.phtml</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/admin/index.phtml</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/admin/list-orders.phtml</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/shop-user/add-sale.phtml</file>
@@ -47,6 +49,7 @@
             <file>file:/srv/http/zmazon.com/application/views/scripts/admin/order-details.phtml</file>
             <file>file:/srv/http/zmazon.com/application/forms/UpdateCategory.php</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/shop-user/edit-sale.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/forms/SignUp.php</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/user/add.phtml</file>
         </group>
     </open-files>
