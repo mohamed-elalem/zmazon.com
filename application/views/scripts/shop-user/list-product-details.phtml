@@ -1,30 +1,24 @@
 
 <div class="container">
-<div class="panel panel-primary">
-  <div class="panel-heading">
-<center class="danger"><h1>
-<?php
-	echo $this->product['name'];
-?>
-</h1></center>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1><?=$this->product['name']?></h1>
+        </div>
+    <div class="panel-body">
+          <h3>
+          <?php
+                  echo "Description :".$this->product['description'];
 
+           ?>
+          </h3>
+          <h3>
+          <?php
+                  echo "Quantity :".$this->product['quantity'];
 
-</div>
-  <div class="panel-body">
-		<h3>
-		<?php
-			echo "Description :".$this->product['description'];
+           ?>
+          </h3>
+    <?php echo '<img src="/images/'.$this->product['photo'].'" width="150" height="150">'?>
 
-		 ?>
-		</h3>
-		<h3>
-		<?php
-			echo "Quantity :".$this->product['quantity'];
-
-		 ?>
-		</h3>
-      <?php echo '<img src="/images/'.$this->product['photo'].'" width="150" height="150">'?>
-      
       
       <!--<img src="//$this->baseUrl('images/img1.gif')?>"alt="...">-->
 

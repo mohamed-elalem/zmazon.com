@@ -1,0 +1,105 @@
+<?php 
+    $sub_total = 0;
+    $cart_arrLength = count ($this->cart);
+ ?>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+        <table class="table table-striped" cellspacing="0">
+            <thead>
+                <tr>
+			<th class="product-remove">&nbsp;</th>
+			<th class="product-thumbnail">&nbsp;</th>
+			<th class="product-name">Product</th>
+			<th class="product-price">Price</th>
+			<th class="product-quantity">Quantity</th>
+			<th class="product-subtotal">Total</th>
+		</tr>
+            </thead>
+            <tbody>
+                
+            <?php foreach($this->cart as $product): ?>
+                <?php if ($product['discount']):
+                    $product['product_price'] = $product['product_price'] * ((100 - $product['discount']) /100);
+                endif;  ?>
+		<tr class="cart_item">
+                    <td class="product-remove">
+                        <a style="cursor: pointer" class="remove-from-cart" title="Remove this item" data-cart_id = "<?=$product['id']?>" data-product_id="<?= $product['product_id'] ?>">×</a>	
+                    </td>
+                    <td class="product-thumbnail">
+                        <a href="/index/product-details/product_id/<?= $product['id'] ?>" > <img width="180" height="180" src="/images/<?= $product['product_photo'] ?>"  alt="poster_2_up"></a>					
+                    </td>
+                    <td class="product-name" data-title="Product">
+                        <a href="/index/product-details/product_id/<?= $product['id'] ?>"><?= $product['product_name'] ?></a>
+                    </td>
+                    <td class="product-price" data-title="Price">
+                        <span class="Price-amount amount"><span class="currencySymbol">$</span><?= $product['product_price'] ?></span>
+                    </td>
+                    <td class="product-quantity" data-title="Quantity">
+                        <div class="quantity">
+                            <input data-cart_id = "<?=$product['id']?>" data-product_id="<?= $product['product_id'] ?>" type="number" step="1" min="0" max=""  value="<?= $product['quantity']?>" title="Qty" class="input-text cart-product-qty text" size="4" pattern="[0-9]*" inputmode="numeric">
+                        </div>
+                    </td>
+                    <td class="product-subtotal" data-title="Total">
+                        <?php $product_subtotal = $product['quantity'] * $product['product_price']; ?>
+                        <span class="Price-amount amount"><span class="Price-currencySymbol">$</span><?= $product_subtotal   ?> </span>
+                    </td>
+                </tr>
+                
+            <?php 
+                $sub_total += $product_subtotal;
+                endforeach; ?>
+		<tr>
+                    <td colspan="6" class="actions">
+                        <?php if($this->coupon): ?>
+                            <div class="coupon">
+                                <label for="coupon_code">Coupon:</label> 
+                                <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="Coupon code">
+                                <input type="submit" class="button" name="apply_coupon" value="Apply Coupon">
+
+                            </div>
+                        <?php endif; ?>
+                        <input data-arr_length="<?= $cart_arrLength ?>" class="update-cart-button" name="update_cart" value="Update Cart" disabled="">
+                            <input type="hidden" id="_wpnonce" name="_wpnonce" value="c94fc7486c">
+                            <input type="hidden" name="_wp_http_referer" value="/shop-integrity/cart/">
+                    </td>
+		</tr>
+
+            </tbody>
+        </table>
+        <div class="cart-collaterals">
+            <div class="cart_totals">
+                <h2>Cart Totals</h2>
+                <table cellspacing="0" class="shop_table shop_table_responsive">
+                    <tbody>
+                        <tr class="cart-subtotal">
+                            <th>Subtotal</th>
+                            <td data-title="Subtotal"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span><?= $sub_total ?></span></td>
+                        </tr>
+                        <tr class="order-total">
+                            <th>Total</th>
+                            <td data-title="Total"><strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>24.00</span></strong> </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            <div class="wc-proceed-to-checkout">		
+                    <a href="http://demo.theme.co/shop-integrity/checkout/" class="checkout-button button alt wc-forward">
+            Proceed to Checkout</a>
+            </div>
+        </div>
+
+
+</div>
+            
+        </div>
+    </div>
+    <div class="x-cart-notification">
+        <div class="x-cart-notification-icon loading">
+            <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+        </div>
+        <div class="x-cart-notification-icon added">
+            <i class="fa fa-check" aria-hidden="true"></i>
+        </div>
+    </div>
+</div>

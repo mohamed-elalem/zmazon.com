@@ -101,7 +101,6 @@ class AdminController extends Zend_Controller_Action
             $userId = $request->getParam("userId");
             $discount = $request->getParam("discount");
             $email = $request->getParam("email");
-            
             $this->coupon->newCoupon($discount, $userId, $code);
             
             $tr = new Zend_Mail_Transport_Smtp('smtp.gmail.com',

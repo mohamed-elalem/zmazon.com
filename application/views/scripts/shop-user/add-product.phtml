@@ -1,15 +1,46 @@
 <div class="container">
-<div class="panel panel-primary">
-  <div class="panel-heading">
-<center class="danger"><h1>Add product data </h1></center>
-
-</div>
-
-
-
-<?php
-	echo $this->productForm;
- ?>
-</div>
-
+    <div class="row">
+        <div class="col-md-4">
+            
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="text-center">New product</h3>
+                </div>
+                <div class="panel-body">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <?=$this->productForm->name?>
+                        </div>
+                        <div class="form-group">
+                            <?=$this->productForm->categoryId?>
+                        </div>
+                        <div class="form-group">
+                            <?=$this->productForm->description?>
+                        </div>
+                        
+                        <div class="form-group">
+                            <?=$this->productForm->price?>
+                        </div>
+                        <div class="form-group">
+                            <?=$this->productForm->quantity?>
+                        </div>
+                        <div class="form-group">
+                            <?=$this->productForm->photo?>
+                        </div>
+                        <div class="btn-group-justified">
+                            <div class="btn-group">
+                                <input class="btn btn-default" type="submit" />
+                            </div>
+                            <div class="btn-group">
+                                <a class="btn btn-danger" href="/shop-user/list-all-products">Cancel</a>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

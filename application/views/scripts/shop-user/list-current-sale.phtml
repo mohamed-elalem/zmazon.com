@@ -1,18 +1,36 @@
 
-<table class="table table-bordered">
-<?php
-	foreach($this->allSales as $key => $value)
-	{
-			echo "<tr class='danger'><td>".$value['id']."</td>".
-			"<td >".$value['percentage']."</td>".
-                        "<td>".$value['startDate']."</td>".
-			"<td>".$value['endDate']."</td>".
-			"<td> <a class='btn btn-danger' href='delete-sale/saleId/".$value['id']."'role='button'>Delete </a> </td>".
-			"<td> <a class='btn btn-danger' href='edit-sale/saleId/".$value['id']."'role='button'>Edit </a> </td></tr>";
-	}
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h1 class="text-center">Sales in progress</h1>
+    </div>
+    <div class="panel-body">
+        <table class="table table-responsive table-hover">
+            <tr>
+                <th class="text-center">Product name</th>
+                <th class="text-center">Product name</th>
+                <th class="text-center">Product name</th>
+                <th class="text-center">Product name</th>
+                <th class="text-center">Terminate</th>
+                <th class="text-center">Edit</th>
+            </tr>
+            <?php
+                foreach($this->allSales as $key => $value)
+                {
+                    echo "<tr>".
+                    "<td class='text-center' >".$value['name']."</td>".
+                    "<td class='text-center' >".$value['percentage']."</td>".
+                    "<td class='text-center' >".$value['startDate']."</td>".
+                    "<td class='text-center' >".$value['endDate']."</td>".
+                    "<td class='text-center' > <a class='text-danger' href='delete-sale/saleId/".$value['id']." 'role='button'><i class='fa fa-times'></i></a></td>".
+                    "<td class='text-center' > <a class='text-primary' href='edit-sale/saleId/".$value['id']."' role='button'><i class='fa fa-edit'></i> </a> </td>".
+                    "</tr>";
+                }
 
- ?>
+             ?>
 
-</table>
+            </table>
 
-<a class='btn btn-danger' href='add-sale'role='button'>Add Sale </a>
+        <a class='btn btn-default btn-block btn-lg' href='add-sale'role='button'><i class="fa fa-plus-circle"></i> Add Sale</a>
+
+    </div>
+</div>

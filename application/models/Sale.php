@@ -28,7 +28,14 @@ class Application_Model_Sale extends Zend_Db_Table_Abstract
     }
     public function listAllSale()
     {
-        return $this->fetchAll()->toArray();
+        $sql = $this->select()
+                ->from(array('s' => "sale"), array('id','percentage', 'startDate','endDate'))
+                ->joinInner(array('p' => "product"), "p.id = s.productId", array("name"))
+                ->setIntegrityCheck(false);
+        $query = $sql->query();
+        $result = $query->fetchAll();
+        return $result;
+        
     }
 
     public function saleDetails($id)

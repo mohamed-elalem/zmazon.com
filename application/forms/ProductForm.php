@@ -10,7 +10,7 @@ class Application_Form_ProductForm extends Zend_Form
         //product name :
         $name =new Zend_Form_Element_Text('name');
         $name->setLabel('Product Name :');
-        $name->setAttribs(['placeholder'=>'lenovo phone',
+        $name->setAttribs(['placeholder'=>'e.g. lenovo phone',
             'class'=>'form-control']);
         $name->setRequired();
         $name->addFilter('StringTrim');
@@ -19,14 +19,14 @@ class Application_Form_ProductForm extends Zend_Form
         $description =new Zend_Form_Element_Textarea('description');
         $description->setLabel('Product Description :');
         $description->setAttribs(['placeholder'=>'description',
-            'class'=>'form-control']);
+            'class'=>'form-control', "rows" => "10", "style" => "resize: none;"]);
         $description->setRequired();
         $description->addFilter('StringTrim');
         
         // product quantity:
         $quantity =new Zend_Form_Element_Text('quantity');
         $quantity->setLabel('Product Quantity :');
-        $quantity->setAttribs(['placeholder'=>'',
+        $quantity->setAttribs(['placeholder'=>'e.g. 10',
             'class'=>'form-control']);
         $quantity->setRequired();
         $quantity->addFilter('StringTrim');
@@ -34,7 +34,7 @@ class Application_Form_ProductForm extends Zend_Form
         // product quantity:
         $price =new Zend_Form_Element_Text('price');
         $price->setLabel('Product Price :');
-        $price->setAttrib('class','form-control');
+        $price->setAttribs(['class' => 'form-control', 'placeholder' => "e.g. 40"]);
         $price->setRequired();
         $price->addFilter('StringTrim');
         

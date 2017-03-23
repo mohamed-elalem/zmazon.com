@@ -1,28 +1,56 @@
+<div class="container">
+    <div class="col-md-1">
+        
+    </div>
+    <div class="col-md-10">
+        <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="text-center">All products</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover table-responsive">
+            <tr>
+                <th class="text-center">Product id</th>
+                <th class="text-center">Product name</th>
+                <th class="text-center">Product Description</th>
+                <th class="text-center">Product Details</th>
+                <th class="text-center">Terminate product</th>
+                <th class="text-center">Edit product info</th>
+            </tr>
+            
+            <?php
+                foreach($this->products as $key => $value)
+                {
+                    echo "<tr>".
+                    "<td class='text-center' >".$value['id']."</td>".
+                    "<td class='text-center'>".$value['name']."</td>".
+                    "<td class='text-center'>".$value['description']."</td>".
+                    "<td class='text-center'> <a class='text-info' href='list-product-details/productId/".$value['id']."'role='button'><i class='fa fa-info-circle pull'></i></a> </td>".
+                    "<td class='text-center'> <a class='text-danger' href='delete-product/productId/".$value['id']."'role='button'><i class='fa fa-times'></i></a> </td>".
+                    "<td class='text-center'> <a class='text-primary' href='edit-product/productId/".$value['id']."'role='button'><i class='fa fa-edit'></i></a></td>". 
+                    "</tr>";
+                }
+
+             ?>
+
+            </table>
+            <div class="btn-group-justified">
+                <div class="btn-group">
+                    <a class='btn btn-default' href='add-product'role='button'>Add Product<i class="fa fa-plus-circle pull-right"></i></a>
+                </div>
+                <div class="btn-group">
+                    <a class='btn btn-info' href='list-current-sale'role='button'>List all sales<i class="fa fa-money pull-right" style="font-size: 16px;"></i></a>
+                </div>
+                <div class="btn-group">
+                    <a class='btn btn-primary' href='statistics'role='button'>Statistics<i class="fa fa-bar-chart pull-right"></i></a>
+                </div>
+            </div>
 
 
-<div class="panel-heading panel-primary">
-        <center class="danger"><h1>All Products  </h1></center>
 
+
+    </div>
 </div>
-<table class="table table-bordered">
-<?php
-	foreach($this->products as $key => $value)
-	{
-			echo "<tr class='danger'><td>".$value['id']."</td>".
-			"<td >".$value['name']."</td>".
-			"<td>".$value['description']."</td>".
-			"<td> <a class='btn btn-info' href='list-product-details/productId/".$value['id']."'role='button'>Details </a> </td>".
-			"<td> <a class='btn btn-danger' href='delete-product/productId/".$value['id']."'role='button'>Delete </a> </td>".
-			"<td> <a class='btn btn-danger' href='edit-product/productId/".$value['id']."'role='button'>Edit </a> </td></tr>";
-	}
 
- ?>
-
-</table>
-
-<a class='btn btn-danger' href='add-product'role='button'>Add Product </a>
-<a class='btn btn-danger' href='list-current-sale'role='button'>List all sale </a>
-
-
-
-
+    </div>
+</div>
