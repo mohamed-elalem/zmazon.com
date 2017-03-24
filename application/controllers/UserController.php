@@ -65,6 +65,11 @@ class UserController extends Zend_Controller_Action
                     $auth=Zend_Auth::getInstance();
                     $storage=$auth->getStorage();
                     $storage->write($sessionDataObj);
+                    
+                    $userSession = new Zend_Session_Namespace("user");
+                    //$userSession->user->privilege = $sessionDataObj->privilege;
+                    $userSession->user = $sessionDataObj;
+                        
                 
                     if($request->getParam("privilege") == "shopUser") {
                         $this->redirect("/shop-user");
@@ -123,8 +128,8 @@ class UserController extends Zend_Controller_Action
                         if($sessionDataObj->privilege == "admin") {
                             $this->redirect("/admin/");
                         }
-                        else if($sessionDataObj->privilege == "shop") {
-                            $this->redirect("/shop/");
+                        else if($sessionDataObj->privilege == "shopUser") {
+                            $this->redirect("/shop-user/");
                         }
                         else {
                             $this->redirect("/");
@@ -151,7 +156,9 @@ class UserController extends Zend_Controller_Action
     {
         $auth=Zend_Auth::getInstance();
         $auth->clearIdentity();
-        Zend_Session::destroy(true);
+        //Zend_Session::destroy(true);
+        $userSession = new Zend_Session_Namespace("user");
+        $userSession->unsetAll();
         // Zend_Session::namespaceUnset('facebook');
         return $this->redirect('/');
 

@@ -29,6 +29,12 @@
             if($controllerName == "admin") {
                 include_once "html/admin-header.php";
             }
+            else {
+                $languageSession = new Zend_Session_Namespace("language");
+                $language = ($languageSession->language == "Ar" ? "Ar" : "En");
+                echo "<a href='/index/toggle-language/controller_name/".$controllerName."/action_name/".$actionName."/'>".$language."</a>";
+                
+            }
       
             $auth = Zend_Auth::getInstance();
             $identity = $auth->getIdentity();

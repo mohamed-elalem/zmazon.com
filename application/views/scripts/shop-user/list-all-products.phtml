@@ -1,3 +1,8 @@
+<?php
+    $languageSession = new Zend_Session_Namespace("language");
+    $language = ($languageSession->language == "Ar" ? "_ar" : "");
+    echo $language;
+?>
 <div class="container">
     <div class="col-md-1">
         
@@ -23,8 +28,8 @@
                 {
                     echo "<tr>".
                     "<td class='text-center' >".$value['id']."</td>".
-                    "<td class='text-center'>".$value['name']."</td>".
-                    "<td class='text-center'>".$value['description']."</td>".
+                    "<td class='text-center'>".$value['name'.$language]."</td>".
+                    "<td class='text-center'>".$value['description'.$language]."</td>".
                     "<td class='text-center'> <a class='text-info' href='list-product-details/productId/".$value['id']."'role='button'><i class='fa fa-info-circle pull'></i></a> </td>".
                     "<td class='text-center'> <a class='text-danger' href='delete-product/productId/".$value['id']."'role='button'><i class='fa fa-times'></i></a> </td>".
                     "<td class='text-center'> <a class='text-primary' href='edit-product/productId/".$value['id']."'role='button'><i class='fa fa-edit'></i></a></td>". 

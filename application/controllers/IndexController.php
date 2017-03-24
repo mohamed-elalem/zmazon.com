@@ -41,8 +41,40 @@ class IndexController extends Zend_Controller_Action
    
     }
 
+    public function setArabicLanguageAction()
+    {
+        $languageSession = new Zend_Session_Namespace("language");
+        $languageSession->language = "Ar";
+    }
+
+    public function setEnglishLanguageAction()
+    {
+        $languageSession = new Zend_Session_Namespace("language");
+        $languageSession->unsetAll();
+    }
+
+    public function toggleLanguageAction()
+    {
+        $controller = $this->getParam("controller_name");
+        $action = $this->getParam("action_name");
+        $languageSession = new Zend_Session_Namespace("language");
+        if($languageSession->language == "Ar") {
+            $languageSession->unsetAll();
+        }
+        else {
+            $languageSession->language = "Ar";
+        }
+        $this->redirect("/".$controller."/".$action);
+    }
+
 
 }
+
+
+
+
+
+
 
 
 
