@@ -118,7 +118,8 @@ class UserController extends Zend_Controller_Action
                         $storage=$auth->getStorage();
                         $storage->write($sessionDataObj);
                         $userSession = new Zend_Session_Namespace("user");
-                        $userSession->user->privilege = $sessionDataObj->privilege;
+                        //$userSession->user->privilege = $sessionDataObj->privilege;
+                        $userSession->user = $sessionDataObj;
                         if($sessionDataObj->privilege == "admin") {
                             $this->redirect("/admin/");
                         }

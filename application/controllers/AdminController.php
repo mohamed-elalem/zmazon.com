@@ -342,8 +342,9 @@ class AdminController extends Zend_Controller_Action
         
         if($request->isPost()) {
             if($contactForm->isValid($request->getParams())) {
-                $first_name = "Session_First_Name";
-                $last_name = "Session_Last_Name";
+                $userSession = new Zend_Session_Namespace("user");
+                $first_name = $userSession->user->fname;
+                $last_name = $userSession->user->lname;
                 $subject = $request->getParam("subject");
                 $content = $request->getParam("content");
                 
