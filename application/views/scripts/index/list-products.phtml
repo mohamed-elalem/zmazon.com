@@ -1,0 +1,10 @@
+<?php
+    $languageSession = new Zend_Session_Namespace("language");
+    $language = "";
+    if($languageSession->language == "Ar")
+        $language = "_ar";
+?>
+
+<?php foreach($this->products as $product): ?>
+<a href="/index/product-details/product_id/<?=$product['id']?>/"><?=($language == "_ar" && ! empty($product['name'.$language]) ? $product['name'.$language] : $product['name'])?></a><br>
+<?php endforeach; ?>

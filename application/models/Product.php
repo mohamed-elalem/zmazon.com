@@ -176,7 +176,15 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         
     }
 
-        
+    
+    public function retrieveCategoryProducts($categoryId) {
+        $sql = $this->select()
+                ->from("product")
+                ->where("categoryId = ".$categoryId);
+        $query = $sql->query();
+        $result = $query->fetchAll();
+        return $result;
+    }
     
 
 }

@@ -51,11 +51,18 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         $row->lname = $formData['lname'];
         $row->privilege = $formData['privilege'];
         $row->status = "1";
-        $row->save();
-
+        
+        try {
+            $row->save();
+            return false;
+        } catch (Exception $ex) {
+            return true;
+        }
     }
 
-
+    public function checkUsernameExistence($username) {
+        return $this->fetchRow("userName = ".$username);
+    }
 
 
 }

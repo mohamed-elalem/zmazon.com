@@ -13,6 +13,8 @@
           <actionMethod actionName="setArabicLanguage"/>
           <actionMethod actionName="setEnglishLanguage"/>
           <actionMethod actionName="toggleLanguage"/>
+          <actionMethod actionName="categories"/>
+          <actionMethod actionName="listProducts"/>
         </controllerFile>
         <controllerFile controllerName="Error"/>
         <controllerFile controllerName="Admin">
@@ -237,6 +239,12 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Index">
             <viewScriptFile forActionName="toggleLanguage"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="categories"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="listProducts"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

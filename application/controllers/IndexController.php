@@ -3,6 +3,8 @@
 class IndexController extends Zend_Controller_Action
 {
 
+    private $categories = null;
+
     public function init()
     {
         $this->product = new Application_Model_Product();
@@ -12,6 +14,7 @@ class IndexController extends Zend_Controller_Action
         $this->rate  = new Application_Model_Rate();
         $this->commentsForm = new Application_Form_Comment();
         $this->comment = new Application_Model_Comment();
+        $this->categories = new Application_Model_Category();
 
     }
 
@@ -55,8 +58,6 @@ class IndexController extends Zend_Controller_Action
 
     public function toggleLanguageAction()
     {
-        $controller = $this->getParam("controller_name");
-        $action = $this->getParam("action_name");
         $languageSession = new Zend_Session_Namespace("language");
         if($languageSession->language == "Ar") {
             $languageSession->unsetAll();
@@ -64,11 +65,28 @@ class IndexController extends Zend_Controller_Action
         else {
             $languageSession->language = "Ar";
         }
-        $this->redirect("/".$controller."/".$action);
+        $this->redirect($this->getRequest()->getServer('HTTP_REFERER'));
+    }
+
+    public function categoriesAction()
+    {
+        $this->view->categories = $this->categories->retrieveAll();
+    }
+
+    public function listProductsAction()
+    {
+        $categoryId = $this->getParam("id");
+        $this->view->products = $this->product->retrieveCategoryProducts($categoryId);
     }
 
 
 }
+
+
+
+
+
+
 
 
 

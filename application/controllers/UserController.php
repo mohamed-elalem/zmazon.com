@@ -46,7 +46,10 @@ class UserController extends Zend_Controller_Action
                 $email = $request->getParam("email");
                 $password = md5($request->getParam("password"));
                 $user_model = new Application_Model_Users();
-                $user_model->Register($request->getParams());
+                $error = $user_model->Register($request->getParams());
+                $this->view->error = $error;
+                
+                
                 
                 $db=zend_Db_Table::getDefaultAdapter();
 
@@ -60,7 +63,7 @@ class UserController extends Zend_Controller_Action
                 $result=$adapter->authenticate();
 
                 
-                if($result->isValid()) {
+                if(!$error && $result->isValid()) {
                     $sessionDataObj=$adapter->getResultRowObject(['id','email','password','userName', 'fname', 'lname', 'privilege', 'status']);
                     $auth=Zend_Auth::getInstance();
                     $storage=$auth->getStorage();

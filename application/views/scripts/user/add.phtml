@@ -34,6 +34,12 @@
                         <div class='form-group'>
                             <?=$this->signup_form->confirm_password?>   
                         </div>
+                        <div class="error panel panel-danger" style="display: none;">
+                            <div class="panel-heading">
+                                User is registered.<br>
+                                Please check username and email
+                            </div>
+                        </div>
                         <div class='btn-group-justified'>
                             <div class='btn-group'>
                                 <input type='submit' class='btn btn-default' />
@@ -49,3 +55,11 @@
         </div>
     </div>
 </div>
+
+<?php if($this->error): ?>
+    <script>
+        $(".error").show("bounce", 750);
+    </script>
+<?php endif ?>
+    
+}
