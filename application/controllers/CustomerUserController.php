@@ -70,7 +70,10 @@ class CustomerUserController extends Zend_Controller_Action
 
     public function updateCartAction()
     {
-
+        $productArr =$this->_request->getParam('productArr');
+        $cart_id = $this->_request->getParam('cart_id');
+        $this->cartProducts->updateCart($productArr, $cart_id);
+        echo '{"success":"done"}';
 
         
     }
@@ -110,14 +113,27 @@ class CustomerUserController extends Zend_Controller_Action
         $user_id = $auth->getStorage()->read()->id;
         $this->view->cart = $this->shoppingCart->getCartDetails($user_id);
         $this->view->coupon = $this->coupon->getCouponCode($user_id);
+        $this->view->user_id = $user_id;
+        
+    }
 
+    public function checkoutAction()
+    {
+        $cart_id = $this->_request->getParam('cart_id');
+        $total_amount = $this->_request->getParam('totalAmount');
+        $subtotal = $this->_request->getParam('subtotal');
+        $user_id =  $this->_request->getParam('user_id');
+        $this->shoppingCart->purchased($user_id, $cart_id, $total_amount, $subtotal);
+        echo '{"success":"done"}';
 
         
-        
+                
     }
 
 
 }
+
+
 
 
 

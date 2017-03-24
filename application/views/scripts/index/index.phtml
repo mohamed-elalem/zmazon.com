@@ -35,25 +35,27 @@ $col_counter  = 0;
                                 </div>
                             </a>
                             <?php
-                            if (!($this->user->isEmpty() )) :  
-                                if ($user->id == $product['shopping_cart_user_id'] ) : ?>
-                                    <a rel="nofollow"  data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" class="increment-quantity">
-                                        Add to cart
-                                    </a>
-                                <?php
-                                else: ?>
-                                    <a rel="nofollow"  data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" class="add-to-cart">
-                                        Add to cart
-                                    </a>
-                                <?php
-                                endif;
-                                if ( $user->id == $product['wishlist_user_id']  ) : ?>
-                                        <a class="btn btn-danger remove-from-wishlist" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" > Remove From wish list </a>
-                                <?php
-                                else: ?>
-                                        <a class="btn btn-primary add-to-wishlist" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" > Add to wish list </a>
+                            if (!($this->user->isEmpty() )) : 
+                                if($product['quantity'] > 0): 
+                                    if ($user->id == $product['shopping_cart_user_id'] ) : ?>
+                                        <a rel="nofollow"  data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" class="increment-quantity">
+                                            Add to cart
+                                        </a>
+                                    <?php
+                                    else: ?>
+                                        <a rel="nofollow"  data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" class="add-to-cart">
+                                            Add to cart
+                                        </a>
+                                    <?php
+                                    endif;
+                                    if ( $user->id == $product['wishlist_user_id']  ) : ?>
+                                            <a class="btn btn-danger remove-from-wishlist" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" > Remove From wish list </a>
+                                    <?php
+                                    else: ?>
+                                            <a class="btn btn-primary add-to-wishlist" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" > Add to wish list </a>
 
-                                <?php    
+                                    <?php    
+                                    endif;
                                 endif;
                             endif;
                                  ?>

@@ -3,28 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/var/www/html/zmazon.com/application/models/Sale.php</file>
-            <file>file:/var/www/html/zmazon.com/application/controllers/ShopUserController.php</file>
-            <file>file:/var/www/html/zmazon.com/application/models/ShoppingCart.php</file>
-            <file>file:/var/www/html/zmazon.com/application/models/Product.php</file>
-            <file>file:/var/www/html/zmazon.com/application/models/WishList.php</file>
-            <file>file:/var/www/html/zmazon.com/application/views/scripts/shop-user/list-current-sale.phtml</file>
-            <file>file:/var/www/html/zmazon.com/application/controllers/AdminController.php</file>
-            <file>file:/var/www/html/zmazon.com/application/views/scripts/shop-user/statistics.phtml</file>
-=======
-            <file>file:/var/www/html/zmazon.com/application/forms/ProductForm.php</file>
-            <file>file:/var/www/html/zmazon.com/application/forms/Rating.php</file>
-            <file>file:/var/www/html/zmazon.com/application/controllers/IndexController.php</file>
+            <file>file:/var/www/html/zmazon.com/application/views/scripts/customer-user/view-cart.phtml</file>
             <file>file:/var/www/html/zmazon.com/application/models/Coupon.php</file>
-            <file>file:/var/www/html/zmazon.com/application/models/Product.php</file>
+            <file>file:/var/www/html/zmazon.com/application/views/scripts/index/index.phtml</file>
             <file>file:/var/www/html/zmazon.com/application/models/ShoppingCart.php</file>
-            <file>file:/var/www/html/zmazon.com/application/views/scripts/index/product-details.phtml</file>
+            <file>file:/var/www/html/zmazon.com/application/models/Product.php</file>
             <file>file:/var/www/html/zmazon.com/application/controllers/CustomerUserController.php</file>
-            <file>file:/var/www/html/zmazon.com/application/controllers/UserController.php</file>
-            <file>file:/var/www/html/zmazon.com/application/models/Comment.php</file>
+            <file>file:/var/www/html/zmazon.com/application/models/Users.php</file>
             <file>file:/var/www/html/zmazon.com/application/models/CartProducts.php</file>
->>>>>>> c589cc4c263c07eb0c9485b8569e029db8673980
         </group>
     </open-files>
 </project-private>

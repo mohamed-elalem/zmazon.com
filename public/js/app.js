@@ -194,17 +194,19 @@
             });
             $(document).on('click', ".update-cart-button", function(e) {
                 var selected = $('.cart-product-qty');
-                var productIdArr = document.querySelectorAll('.cart-product-qty')[0].getAttribute('data-product_id');
-                console.log(productIdArr);
-                var cartId  =document.querySelectorAll('.cart-product-qty')[0].getAttribute('data-cart_id');
-                console.log(cartId)
+                var productQty = document.querySelectorAll('.cart-product-qty');
+                var productIdArrLen = productQty.length;
+                var productArr = [];
+                for (var i=0; i < productIdArrLen; i++) {
+                    productArr.push({ 'product_id' : productQty[i].getAttribute("data-product_id") , 'product_quantity':productQty[i].value  });   
+                }
           
                 $.ajax({
                     url: "/customer-user/update-cart",
                     type: "POST",
                     dataType:'json',
                     context: this,
-                    data: {product_id: $(this).attr("data-product_id"), cart_id : $(this).attr("data-cart_id")},
+                    data:{'productArr' : productArr, 'cart_id' : productQty[0].getAttribute("data-cart_id") },
                     success: function(){
                         console.log(1);
                         $('.x-cart-notification').addClass('bring-forward appear loading');
@@ -226,5 +228,52 @@
            
                 });
             });
-        });
+             $(document).on('change', "#coupon_code_input", function(e) {
+                $('.apply-coupon-btn').removeAttr('disabled');
+            });
+            $(document).on('click', '.apply-coupon-btn', function(e){
+                if ( $('#coupon_code_input').val() == $('.coupon-code-hidden').attr('data-coupon_code') ){
+                    var discount = $('.coupon-code-hidden').attr('data-coupon_discount');
+                    var subtotal = $('.coupon-code-hidden').attr('data-sub_total');
+                     $('.coupon').empty();
+                        $('.coupon').append('<img style="width:60px;" src="/img/ajax-loader1.gif" >');
+                        setTimeout(function(){
+                            $('.coupon').empty();
+                            $('.coupon').append('<p style="font-size: 20px" > Coupon code is correct ! You can enjoy now the discount </p>');
+                            $('.total-amount').empty();
+                            $('.total-amount').append(((100 - discount) * subtotal)/100);
+                        }, 1800)
+                }
+                else {
+                    $('.coupon-err-msg').append("<p> Coupon code isn't correct </p>");
+                }
+            })
+            $(document).on('click', '.checkout-button', function(e){
+                console.log("aijf: " + $(this).attr('data-user_id') + "cart id : " + $(this).attr('data-cart_id'));
+                $.ajax({
+                    url: "/customer-user/checkout",
+                    type: "POST",
+                    dataType:'json',
+                    data:{'totalAmount' : $('.total-amount').text(), 'subtotal' : $('.subtotal-amount').text() , 'cart_id' : $(this).attr('data-cart_id'), 'user_id' : $(this).attr('data-user_id')  },
+                    success: function(){
+                        console.log(1);
+                        $('.x-cart-notification').addClass('bring-forward appear loading');
+                        setTimeout(function(){
+                            $('.x-cart-notification').addClass('added');
+                        }, 1400)
+                        setTimeout(function(){
+                            $('.x-cart-notification').removeClass('bring-forward appear loading added');
+                            location.reload();
+                        }, 2800)
+                        $(this).removeClass('add-to-cart').addClass('increment-quantity')
+
+                    },
+                    error:function (xhr, ajaxOptions, thrownError){
+                        console.log(xhr);
+                        console.log(ajaxOptions);
+                        console.log(thrownError);
+                     }
+                })
+            })
+        }); 
     

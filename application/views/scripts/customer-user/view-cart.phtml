@@ -19,6 +19,7 @@
             <tbody>
                 
             <?php foreach($this->cart as $product): ?>
+                
                 <?php if ($product['discount']):
                     $product['product_price'] = $product['product_price'] * ((100 - $product['discount']) /100);
                 endif;  ?>
@@ -37,7 +38,7 @@
                     </td>
                     <td class="product-quantity" data-title="Quantity">
                         <div class="quantity">
-                            <input data-cart_id = "<?=$product['id']?>" data-product_id="<?= $product['product_id'] ?>" type="number" step="1" min="0" max=""  value="<?= $product['quantity']?>" title="Qty" class="input-text cart-product-qty text" size="4" pattern="[0-9]*" inputmode="numeric">
+                            <input data-cart_id = "<?=$product['id']?>" data-product_id="<?= $product['product_id'] ?>" type="number" step="1" min="1" max="<?= $product['product_quantity'] ?>"  value="<?= $product['quantity']?>" title="Qty" class="input-text cart-product-qty text" size="4" pattern="[0-9]*" inputmode="numeric">
                         </div>
                     </td>
                     <td class="product-subtotal" data-title="Total">
@@ -54,14 +55,14 @@
                         <?php if($this->coupon): ?>
                             <div class="coupon">
                                 <label for="coupon_code">Coupon:</label> 
-                                <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="Coupon code">
-                                <input type="submit" class="button" name="apply_coupon" value="Apply Coupon">
+                                <input type="text" name="coupon_code" class="input-text" id="coupon_code_input" value="" placeholder="Coupon code">
+                                <div class="coupon-err-msg"> </div>
+                                <input type="button" disabled="true" class="btn btn-primary apply-coupon-btn" name="apply_coupon" value="Apply Coupon">
+                                <input type="hidden" class="coupon-code-hidden" data-sub_total="<?=$sub_total ?>" data-coupon_code ="<?= $this->coupon['code']?>" data-coupon_discount = "<?= $this->coupon['discount'] ?>">
 
                             </div>
                         <?php endif; ?>
                         <input data-arr_length="<?= $cart_arrLength ?>" class="update-cart-button" name="update_cart" value="Update Cart" disabled="">
-                            <input type="hidden" id="_wpnonce" name="_wpnonce" value="c94fc7486c">
-                            <input type="hidden" name="_wp_http_referer" value="/shop-integrity/cart/">
                     </td>
 		</tr>
 
@@ -74,18 +75,21 @@
                     <tbody>
                         <tr class="cart-subtotal">
                             <th>Subtotal</th>
-                            <td data-title="Subtotal"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span><?= $sub_total ?></span></td>
+                            <td data-title="Subtotal"><span class="Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span><span class="subtotal-amount"><?= $sub_total ?></span></td>
                         </tr>
                         <tr class="order-total">
                             <th>Total</th>
-                            <td data-title="Total"><strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>24.00</span></strong> </td>
+                            <td data-title="Total"><strong><span class="Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span><span class="total-amount"><?= $sub_total ?> </span> </span></strong> </td>
                         </tr>
 
                     </tbody>
                 </table>
-            <div class="wc-proceed-to-checkout">		
-                    <a href="http://demo.theme.co/shop-integrity/checkout/" class="checkout-button button alt wc-forward">
-            Proceed to Checkout</a>
+            <div class="wc-proceed-to-checkout">	
+                <input class="coupon-code-hidden" type="hidden" >
+
+                    <a class="btn btn-danger checkout-button" data-user_id="<?= $this->user_id ?>" data-cart_id ="<?= $this->cart[0]['id'] ?> " >
+                        Proceed to Checkout
+                    </a>
             </div>
         </div>
 

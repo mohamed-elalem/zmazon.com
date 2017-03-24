@@ -38,6 +38,7 @@
           <actionMethod actionName="addComment"/>
           <actionMethod actionName="incrementQuantity"/>
           <actionMethod actionName="viewCart"/>
+          <actionMethod actionName="checkout"/>
         </controllerFile>
         <controllerFile controllerName="ShopUser">
           <actionMethod actionName="index"/>
@@ -202,6 +203,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="User">
             <viewScriptFile forActionName="logout"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="CustomerUser">
+            <viewScriptFile forActionName="checkout"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

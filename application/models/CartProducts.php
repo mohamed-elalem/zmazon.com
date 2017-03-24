@@ -35,6 +35,20 @@ class Application_Model_CartProducts extends Zend_Db_Table_Abstract
     public function removeFromCart($cart_id , $product_id) {
         $this->delete("cartId=$cart_id and productId = $product_id");
     }
+    public function updateCart($productArr, $cart_id){        
+        
+       for ($i=0; $i < count($productArr) ; $i++){
+           
+            $where = array();
+            $where[] = "cartId = $cart_id ";
+            $where[] = "productId = ". (int) $productArr[$i]['product_id'];
+            $data = array(
+                  'quantity'      =>    (int) $productArr[$i]['product_quantity']
+             );
+             $this->update( $data, $where);
+        }
+    }
+
 
 }
 
