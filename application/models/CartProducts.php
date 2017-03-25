@@ -23,8 +23,6 @@ class Application_Model_CartProducts extends Zend_Db_Table_Abstract
              'quantity'      =>  new Zend_DB_Expr('quantity + 1')
         );
         $this->update( $data, $where);
-       // echo '{"success":"done"}';
-
 
     }
     public function listRelatedProducts($cart_id, $productModel) {

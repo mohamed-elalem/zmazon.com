@@ -6,9 +6,9 @@ class Application_Form_SaleForm extends Zend_Form
     public function init()
     {
         $this->setMethod('POST');
-        
+        $userSession = new Zend_Session_Namespace("user");
         $productModel =new Application_Model_Product();
-        $allProducts = $productModel->listAllProducts();
+        $allProducts = $productModel->listAllProducts($userSession->user->id);
         $productId = new Zend_Form_Element_Select('productId');
         $productId->setLabel('Select Product : ');
         $productId->setAttrib('class', 'form-control');

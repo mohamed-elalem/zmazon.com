@@ -70,7 +70,11 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
                 ->setIntegrityCheck(false);
 
       $query = $sql->query();
-      $result = $query->fetchAll()[0];
+      $result = $query->fetchAll();
+      if(!empty($result))
+          $result = $result[0];
+      else 
+          return false;
       
       if ($result['storage_product_quantity'] > 0) {
           if (!is_null($result['cart_product_quantity']) && $result['cart_product_quantity'] >= $result['storage_product_quantity']){
@@ -112,8 +116,7 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
                 ->where("sc.userId= $user_id and purchasedFlag = 0")
                 ->setIntegrityCheck(false);
        $query = $sql->query();
-       echo $sql->__toString();
-       die();
+    
        
        $cart_id=  $query->fetchAll()[0];
        $cart_id = $cart_id['id'];
@@ -125,7 +128,7 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
             $cart_id = $row->id;
        }
        $cartProductsModel->add($cart_id, $product_id);
-               echo '{"success":"done"}';
+       echo '{"success":"done"}';
 
         
     }
@@ -156,6 +159,7 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
                 ->joinInner(array("c" => "cart_products"), "c.cartId = sc.id", array("productId", "quantity"))
                 ->joinLeft(array("s" => "sale"), "c.productId = s.productId", array("percentage as discount"))
                 ->joinInner(array("p" => "product"), "p.id = c.productId", array("id as product_id" , "name as product_name", "price as product_price", "rate", "quantity as product_quantity", "photo as product_photo" ))
+                ->joinInner(array("u" => "users"), "u.id = sc.userId", "email")
                 ->where("sc.userId = $user_id and purchasedFlag = 0")
                 ->setIntegrityCheck(false);          
         $query = $sql->query();
@@ -164,35 +168,41 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
         
     }
     public function purchased($user_id, $cart_id, $total_amount, $subtotal) {
-       $cart_details = $this->getCartDetails($user_id);
-        foreach ($cart_details as $product){
-            if ($product['discount'] ) {
-                $product['price'] = ((100 - $product['discount']) * $product['price'])/100;
-            }
-            $data = array('numOfSale'   => new Zend_DB_Expr('numOfSale + 1'), 
-                          'moneyGained' =>  new Zend_DB_Expr("moneyGained +" . ($product['product_price'] * $product['quantity'])) ,
-                          'quantity'     => new Zend_DB_Expr("quantity - " .  $product['quantity'] ) 
-                );
+        try {
+            $cart_details = $this->getCartDetails($user_id);
+            foreach ($cart_details as $product){
+                if ($product['discount'] ) {
+                    $product['price'] = ((100 - $product['discount']) * $product['price'])/100;
+                }
+                $data = array('numOfSale'   => new Zend_DB_Expr('numOfSale + 1'), 
+                              'moneyGained' =>  new Zend_DB_Expr("moneyGained +" . ($product['product_price'] * $product['quantity'])) ,
+                              'quantity'     => new Zend_DB_Expr("quantity - " .  $product['quantity'] ) 
+                    );
 
-            $where = array(
-                'id = ?' => $product['product_id']
+                $where = array(
+                    'id = ?' => $product['product_id']
+                );
+                $productModel = new Application_Model_Product();
+                $productModel->update( $data, $where);
+            }
+           $where = array();
+
+           $where[] = "id = $cart_id ";
+           $data = array(
+                 'purchasedFlag'      =>  1 ,
+                 'total'         => $total_amount
             );
-            $productModel = new Application_Model_Product();
-            $productModel->update( $data, $where);
+           $coupon = new Application_Model_Coupon();
+            $this->update( $data, $where);
+            if ($subtotal != $total_amount) {
+                $coupon->delete( array(
+                    'userId = ?' => $user_id
+                ));
+            }
+            return false;
         }
-       $where = array();
-       
-       $where[] = "id = $cart_id ";
-       $data = array(
-             'purchasedFlag'      =>  1 ,
-             'total'         => $total_amount
-        );
-       $coupon = new Application_Model_Coupon();
-        $this->update( $data, $where);
-        if ($subtotal != $total_amount) {
-            $coupon->delete( array(
-                'userId = ?' => $user_id
-            ));
+        catch(Exception $ex) {
+            return true; 
         }
     }
            

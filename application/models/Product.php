@@ -4,9 +4,14 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
 {
     protected $_name = "product";
     
-    public function listAllProducts()
+    public function listAllProducts($userId)
     {
-        return $this->fetchAll()->toArray();
+        $sql = $this->select()
+                ->from("product")
+                ->where("userId = ".$userId);
+        $query = $sql->query();
+        $result = $query->fetchAll();
+        return $result;
     }
     public function deleteProduct($id)
     {
@@ -19,8 +24,8 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
                 ->where("p.id = $id")
                 ->joinLeft(array("s" => "sale"), "p.id = s.productId", array("percentage", "startDate", "endDate" , "(s.endDate > CURRENT_DATE and s.startDate <= CURRENT_DATE) AS saleflag"))
                 ->joinLeft(array("w" => "wishList"),  "w.productId = p.id", array("userId as wishlist_user_id"))
-                ->joinLeft(array("cp" => "cart_products"), "cp.productId = p.id", array("productId as cart_product_id"))
-                ->joinLeft(array("sc" => "shoppingCart" ), "sc.id = cp.cartId" , array("id as cart_id", "userId as shopping_cart_user_id"))
+                ->joinInner(array("cp" => "cart_products"), "cp.productId = p.id", array("productId as cart_product_id"))
+                ->joinInner(array("sc" => "shoppingCart" ), "sc.id = cp.cartId" , array("id as cart_id", "userId as shopping_cart_user_id"))
                 ->joinInner(array("c" => "category"), "p.categoryId = c.id" , array("name as category_name"))
                 ->setIntegrityCheck(false);        
         $query = $sql->query();
@@ -38,8 +43,8 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
                 ->from(array('p' => "product"))
                 ->joinLeft(array("s" => "sale"), "p.id = s.productId", array("percentage", "startDate", "endDate", "(s.endDate > CURRENT_DATE and s.startDate <= CURRENT_DATE) AS saleflag"))
                 ->joinLeft(array("w" => "wishList"),  "w.productId = p.id", array("userId as wishlist_user_id"))
-                ->joinInner(array("cp" => "cart_products"), "cp.productId = p.id", array("productId as cart_product_id"))
-                ->joinInner(array("sc" => "shoppingCart" ), "sc.id = cp.cartId" , array("id as cart_id", "userId as shopping_cart_user_id", "purchasedFlag"))
+                ->joinLeft(array("cp" => "cart_products"), "cp.productId = p.id", array("productId as cart_product_id"))
+                ->joinLeft(array("sc" => "shoppingCart" ), "sc.id = cp.cartId" , array("id as cart_id", "userId as shopping_cart_user_id", "purchasedFlag"))
                 ->setIntegrityCheck(false);
         
 //        echo $sql->__toString();
@@ -48,6 +53,25 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         $result= $query->fetchAll();
         return $result;
     }
+    
+    public function allCategoryProductsDetails($categoryId)
+    {
+        $sql = $this->select()
+                ->from(array('p' => "product"))
+                ->joinLeft(array("s" => "sale"), "p.id = s.productId", array("percentage", "startDate", "endDate", "(s.endDate > CURRENT_DATE and s.startDate <= CURRENT_DATE) AS saleflag"))
+                ->joinInner(array("w" => "wishList"),  "w.productId = p.id", array("userId as wishlist_user_id"))
+                ->joinInner(array("cp" => "cart_products"), "cp.productId = p.id", array("productId as cart_product_id"))
+                ->joinInner(array("sc" => "shoppingCart" ), "sc.id = cp.cartId" , array("id as cart_id", "userId as shopping_cart_user_id"))
+                ->where("categoryId = ".$categoryId)
+                ->setIntegrityCheck(false);
+        
+//        echo $sql->__toString();
+//        die();
+        $query = $sql->query();
+        $result= $query->fetchAll();
+        return $result;
+    }
+    
     public function addProduct($productData)
     {
         $product=$this->createRow();
@@ -57,14 +81,14 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         $product->description_ar = $productData['description_ar'];
         $product->quantity=(int)$productData['quantity'];
         $product->price=(float)$productData['price'];
+        $product->userId = (int) $productData['userId'];
         $product->rate=0;
         $product->moneyGained =0;
         $product->numOfSale=0;
         $product->photo=$productData['photo'];
         $product->addDate=new Zend_Db_Expr('NOW()');
         $product->categoryId=(int)$productData['categoryId'];
-        $product->userId = 4; // Will be in session
-//        var_dump($product);
+        //var_dump($product);
 //        exit();
         $product->save();
         
@@ -77,6 +101,8 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         $product['quantity']=$newData['quantity'];
         $product['photo']=$newData['photo'];
         $product['categoryId']=$newData['categoryId'];
+        $product['name_ar'] = $newData['name_ar'];
+        $product['description_ar'] = $newData['description_ar'];
         $this->update($product, "id=$id");
     }
     public function updateRating($product_id){
@@ -265,7 +291,6 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
 
         $result= $this->fetchAll($sql)-> toArray();
 
-      
     }
     
 

@@ -147,7 +147,6 @@ class AdminController extends Zend_Controller_Action
         }
         else {
             http_response_code(403);
-            die("<h1>Access Forbidden 403</h1>");
         }
         
     }
@@ -169,7 +168,6 @@ class AdminController extends Zend_Controller_Action
         }
         else {
             http_response_code(403);
-            die("<h1>Access Forbidden 403</h1>");
         }
     }
 
@@ -195,7 +193,6 @@ class AdminController extends Zend_Controller_Action
         }
         else {
             http_response_code(403);
-            die("<h1>Access Forbidden 403</h1>");
         }
     }
 
@@ -221,7 +218,8 @@ class AdminController extends Zend_Controller_Action
         }
         else {
             http_response_code(403);
-            die("<h1>Access Forbidden 403</h1>");
+            $request->setControllerName("index");
+            $request->setActionName("error403");;
         }
     }
 
@@ -242,7 +240,6 @@ class AdminController extends Zend_Controller_Action
         }
         else {
             http_response_code(403);
-            die("<h1>Access Forbidden 403</h1>");
         }
     }
 
@@ -304,7 +301,6 @@ class AdminController extends Zend_Controller_Action
         }
         else {
             http_response_code(403);
-            die("<h1>Access Forbidden 403</h1>");
         }
         
         echo '["success"]';

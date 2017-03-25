@@ -123,6 +123,7 @@ class CustomerUserController extends Zend_Controller_Action
         $this->view->cart = $this->shoppingCart->getCartDetails($user_id);
         $this->view->coupon = $this->coupon->getCouponCode($user_id);
         $this->view->user_id = $user_id;
+        $this->view->user = $auth->getStorage();
         
     }
 
@@ -132,9 +133,46 @@ class CustomerUserController extends Zend_Controller_Action
         $total_amount = $this->_request->getParam('totalAmount');
         $subtotal = $this->_request->getParam('subtotal');
         $user_id =  $this->_request->getParam('user_id');
-        $this->shoppingCart->purchased($user_id, $cart_id, $total_amount, $subtotal);
-        echo '{"success":"done"}';
+        $cartDetails = $this->shoppingCart->getCartDetails($user_id);
+        $mail_body = "<strong>Checkout Details</strong><br>";
+        $totalPrice = 0;
+        foreach($cartDetails as $product) {
+            $productPrice = $product['product_price'] * (1 - (is_null($product['discount']) ? 0 : $product['discount'])) * $product['quantity'];
+            $mail_body .= "<p>Product name: ".$product['product_name']."</p>";
+            $mail_body .= "<p>Quantity purchaced: ".$product['quantity']."</p>";
+            $mail_body .= "<p>Price: ".$productPrice."</p>";
+            $mail_body .= "<hr>";
+            $totalPrice += $productPrice;
+        }
+        $mail_body .= "<p>Total price: ".$totalPrice."</p>";
+        
+        $error = $this->shoppingCart->purchased($user_id, $cart_id, $total_amount, $subtotal);
+        if($error) {
+            echo '{"success": "failed"}';
+        }
+        else {
+            echo '{"success":"done"}';
+            $tr = new Zend_Mail_Transport_Smtp('smtp.gmail.com',
+                array(
+                       'auth' => 'login',
+                       'port' => 587,
+                       'ssl' => 'tls',
+                       'username' => 'faintingdetection@gmail.com',
+                       'password' => 'Tizen2016'
+                    )
+               );
+           Zend_Mail::setDefaultTransport($tr);
 
+           $mail = new Zend_Mail();
+           $mail->setFrom('faintingdetection@gmail.com');
+           $mail->setBodyHtml($mail_body);
+           $mail->addTo("mohamed.el.alem.2017@gmail.com", 'Bill information');
+           $mail->setSubject("Bill information");
+           $mail->send($tr);
+           
+           $this->shoppingCart->deleteUserCart($user_id);
+                
+        }
         
                 
     }

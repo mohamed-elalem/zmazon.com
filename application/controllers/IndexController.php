@@ -21,7 +21,7 @@ class IndexController extends Zend_Controller_Action
     public function indexAction()
     {
         
-        $all_products = $this->product-> allProductsDetails();
+        $all_products = $this->product->allProductsDetails();
         $this->view->all_products = $all_products;
         $auth=Zend_Auth::getInstance();
         $this->view->user = $auth->getStorage();
@@ -81,12 +81,17 @@ class IndexController extends Zend_Controller_Action
     public function categoriesAction()
     {
         $this->view->categories = $this->categories->retrieveAll();
+        $userSession = new Zend_Session_Namespace("user");
+        $this->view->user = $userSession->user;
     }
 
     public function listProductsAction()
     {
         $categoryId = $this->getParam("id");
-        $this->view->products = $this->product->retrieveCategoryProducts($categoryId);
+        $this->view->products = $this->product->allCategoryProductsDetails($categoryId);
+        $auth=Zend_Auth::getInstance();
+        $this->view->user = $auth->getStorage();
+        
     }
 
     public function topproductAction()
@@ -106,10 +111,23 @@ class IndexController extends Zend_Controller_Action
         $top_offers = new Application_Model_Product();
         $this->view->topOffers = $top_offers->topOffers(); 
     }
-    
+
+    public function error404Action()
+    {
+        // action body
+    }
+
+    public function error403Action()
+    {
+        // action body
+    }
 
 
 }
+
+
+
+
 
 
 
