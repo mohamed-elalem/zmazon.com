@@ -41,7 +41,10 @@ class IndexController extends Zend_Controller_Action
         $this->view->user = $auth->getStorage();
         $this->view->comments_form = $this->commentsForm;
         $this->view->all_comments = $this->comment->listAll();
-   
+   //--------------------------------------------------------------
+
+        $related_product = new Application_Model_Product();
+        $this->view->relatedProduct = $related_product->relatedProdects($product_id); 
     }
 
     public function setArabicLanguageAction()
