@@ -3,10 +3,64 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/var/www/html/zmazon.com/application/views/scripts/admin/index.phtml</file>
             <file>file:/var/www/html/zmazon.com/application/layouts/scripts/layout.phtml</file>
             <file>file:/var/www/html/zmazon.com/application/views/scripts/index/index.phtml</file>
             <file>file:/var/www/html/zmazon.com/application/layouts/scripts/admin-layout.phtml</file>
+=======
+            <file>file:/srv/http/zmazon.com/application/views/scripts/user/login.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/models/Product.php</file>
+            <file>file:/srv/http/zmazon.com/library/My/Controller/Plugin/Acl.php</file>
+            <file>file:/srv/http/zmazon.com/application/models/Rate.php</file>
+            <file>file:/srv/http/zmazon.com/application/controllers/CustomerUserController.php</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/customer-user/put-rate.phtml</file>
+            <file>file:/srv/http/zmazon.com/.zfproject.xml</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/shop-user/add-product.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/models/Category.php</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/admin/manage-categories.phtml</file>
+            <file>file:/srv/http/zmazon.com/.gitignore</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/index/index.phtml</file>
+            <file>file:/srv/http/zmazon.com/.zfproject.xml.orig</file>
+            <file>file:/srv/http/zmazon.com/application/controllers/UserController.php</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/shop-user/list-all-products.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/controllers/ShopUserController.php</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/index/list-products.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/admin/index.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/customer-user/index.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/admin/order-details.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/forms/SignUp.php</file>
+            <file>file:/srv/http/zmazon.com/library/My/Controller/Helper/Acl.php</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/user/add.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/Bootstrap.php</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/shop-user/list-current-sale.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/index/categories.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/models/Sale.php</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/shop-user/edit-product.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/models/WishList.php</file>
+            <file>file:/srv/http/zmazon.com/application/forms/SaleForm.php</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/shop-user/list-product-details.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/controllers/AdminController.php</file>
+            <file>file:/srv/http/zmazon.com/application/models/Coupon.php</file>
+            <file>file:/srv/http/zmazon.com/application/models/ShoppingCart.php</file>
+            <file>file:/srv/http/zmazon.com/application/forms/ProductForm.php</file>
+            <file>file:/srv/http/zmazon.com/application/models/Users.php</file>
+            <file>file:/srv/http/zmazon.com/application/forms/NewCoupon.php</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/shop-user/index.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/error/error.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/admin/manage-users.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/index/product-details.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/customer-user/add-to-cart.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/models/Comment.php</file>
+            <file>file:/srv/http/zmazon.com/application/forms/Login.php</file>
+            <file>file:/srv/http/zmazon.com/application/configs/application.ini</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/admin/list-orders.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/shop-user/add-sale.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/controllers/IndexController.php</file>
+            <file>file:/srv/http/zmazon.com/application/layouts/scripts/layout.phtml</file>
+            <file>file:/srv/http/zmazon.com/application/forms/UpdateCategory.php</file>
+            <file>file:/srv/http/zmazon.com/application/views/scripts/shop-user/edit-sale.phtml</file>
+>>>>>>> 058d15d965e89a0225c8e0657b70396971ee156e
         </group>
     </open-files>
 </project-private>

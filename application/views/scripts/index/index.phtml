@@ -1,5 +1,10 @@
 <?php  
 $user = $this->user->read();
+$languageSession = new Zend_Session_Namespace("language");
+$language = "";
+if($languageSession->language == "Ar") {
+    $language = "_ar";
+}
 $col_counter  = 0;  
 //var_dump($this->user->read());
 //die();
@@ -16,11 +21,23 @@ $col_counter  = 0;
 						<div class="btn-group pull-right">
 							<div class="btn-group">
 								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-									English
+									<?php if($language == "_ar"): ?>
+                                                                                العربية
+                                                                        <?php else: ?>
+                                                                                English
+                                                                            
+                                                                        <?php endif; ?>
 									<span class="caret"></span>
 								</button>
 								<ul class="dropdown-menu">
-									<li><a href="#">العربية</a></li>
+                                                                    <li><a href="/index/toggle-language">
+                                                                        <?php if($language == "_ar"): ?>
+                                                                                English
+                                                                        <?php else: ?>
+                                                                                 العربية
+                                                                            
+                                                                        <?php endif; ?>
+                                                                        </a></li>
 								</ul>
 							</div>
 							
@@ -201,7 +218,7 @@ $col_counter  = 0;
                                                                         <div class="entry-wrap">
                                                                             <header class="entry-header">
                                                                                 <h3 style="text-align: left;">
-                                                                                    <a class="product-name"  href="/index/product-details/product_id/<?= $product['id'] ?>"><?=$product['name'] ?></a>
+                                                                                    <a class="product-name"  href="/index/product-details/product_id/<?= $product['id'] ?>"><?=($language == "_ar" && ! empty($product['name'.$language]) ? $product['name'.$language] : $product['name']) ?></a>
                                                                                 </h3>
                                                                                 <div style="text-align: left;"class="price">
                                                                                 <?php if ($product['percentage']): ?>

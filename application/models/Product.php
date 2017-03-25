@@ -15,7 +15,7 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
     public function allProductDetails($id)
     {
         $sql = $this->select()
-                ->from(array('p' => "product"), array('id', 'name' , 'description', 'price' , 'quantity', 'rate', 'photo', 'addDate', 'categoryId', 'moneyGained'))
+                ->from(array('p' => "product"))
                 ->where("p.id = $id")
                 ->joinLeft(array("s" => "sale"), "p.id = s.productId", array("percentage", "startDate", "endDate"))
                 ->joinLeft(array("w" => "wishList"),  "w.productId = p.id", array("userId as wishlist_user_id"))
@@ -34,7 +34,7 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
     public function allProductsDetails()
     {
         $sql = $this->select()
-                ->from(array('p' => "product"), array('id', 'name' , 'description', 'price' , 'quantity', 'rate', 'photo', 'addDate', 'categoryId', 'moneyGained'))
+                ->from(array('p' => "product"))
                 ->joinLeft(array("s" => "sale"), "p.id = s.productId", array("percentage", "startDate", "endDate"))
                 ->joinLeft(array("w" => "wishList"),  "w.productId = p.id", array("userId as wishlist_user_id"))
                 ->joinLeft(array("cp" => "cart_products"), "cp.productId = p.id", array("productId as cart_product_id"))
@@ -176,7 +176,15 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         
     }
 
-        
+    
+    public function retrieveCategoryProducts($categoryId) {
+        $sql = $this->select()
+                ->from("product")
+                ->where("categoryId = ".$categoryId);
+        $query = $sql->query();
+        $result = $query->fetchAll();
+        return $result;
+    }
     
 
 }

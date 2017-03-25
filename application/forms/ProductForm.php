@@ -9,11 +9,17 @@ class Application_Form_ProductForm extends Zend_Form
         
         //product name :
         $name =new Zend_Form_Element_Text('name');
-        $name->setLabel('Product Name :');
+        $name->setLabel('Product Name');
         $name->setAttribs(['placeholder'=>'e.g. lenovo phone',
             'class'=>'form-control']);
         $name->setRequired();
         $name->addFilter('StringTrim');
+        
+        $name_ar =new Zend_Form_Element_Text('name_ar');
+        $name_ar->setLabel('Product Name');
+        $name_ar->setAttribs(['placeholder'=>'e.g. هاتف لينوفو',
+            'class'=>'form-control']);
+        $name_ar->addFilter('StringTrim');
         
         // product description :
         $description =new Zend_Form_Element_Textarea('description');
@@ -22,6 +28,12 @@ class Application_Form_ProductForm extends Zend_Form
             'class'=>'form-control', "rows" => "10", "style" => "resize: none;"]);
         $description->setRequired();
         $description->addFilter('StringTrim');
+        
+        $description_ar=new Zend_Form_Element_Textarea('description_ar');
+        $description_ar->setLabel('Product Description :');
+        $description_ar->setAttribs(['placeholder'=>'وصف المنتج',
+            'class'=>'form-control', "rows" => "10", "style" => "resize: none;"]);
+        $description_ar->addFilter('StringTrim');
         
         // product quantity:
         $quantity =new Zend_Form_Element_Text('quantity');
@@ -70,7 +82,7 @@ class Application_Form_ProductForm extends Zend_Form
         $reset =new Zend_Form_Element_Reset('reset');
         $reset->setAttrib('class', 'btn btn-danger');
         
-        $this->addElements([$name,$categoryId,$description,$price,$quantity,$photo,$submit,$reset]);
+        $this->addElements([$name,$categoryId,$description,$price,$quantity,$photo,$submit,$reset, $name_ar, $description_ar]);
     
         
     }

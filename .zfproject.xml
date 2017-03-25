@@ -10,6 +10,11 @@
         <controllerFile controllerName="Index">
           <actionMethod actionName="index"/>
           <actionMethod actionName="productDetails"/>
+          <actionMethod actionName="setArabicLanguage"/>
+          <actionMethod actionName="setEnglishLanguage"/>
+          <actionMethod actionName="toggleLanguage"/>
+          <actionMethod actionName="categories"/>
+          <actionMethod actionName="listProducts"/>
         </controllerFile>
         <controllerFile controllerName="Error"/>
         <controllerFile controllerName="Admin">
@@ -202,9 +207,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="editCategoryImage"/>
-          <viewControllerScriptsDirectory forControllerName="CustomerUser">
-            <viewScriptFile forActionName="incrementQuantity"/>
-          </viewControllerScriptsDirectory>
+            <viewControllerScriptsDirectory forControllerName="CustomerUser">
+              <viewScriptFile forActionName="incrementQuantity"/>
+            </viewControllerScriptsDirectory>
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="contactDevelopers"/>
@@ -227,6 +232,21 @@
           <viewControllerScriptsDirectory forControllerName="CustomerUser">
             <viewScriptFile forActionName="checkout"/>
             <viewScriptFile forActionName="viewWishList"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="setArabicLanguage"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="setEnglishLanguage"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="toggleLanguage"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="categories"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="listProducts"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

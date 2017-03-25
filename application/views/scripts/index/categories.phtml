@@ -1,0 +1,13 @@
+<div clas="container">
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="nav nav-stacked nav-pills">
+                <?php foreach($this->categories as $category): ?>
+                <li>
+                    <a href="/index/list-products/id/<?=$category['id']?>/"><?=$category['name']?></a>
+                </li>
+                <?php endforeach ?>
+            </ul>
+        </div>
+    </div>
+</div>

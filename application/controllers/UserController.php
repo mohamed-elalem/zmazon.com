@@ -46,7 +46,10 @@ class UserController extends Zend_Controller_Action
                 $email = $request->getParam("email");
                 $password = md5($request->getParam("password"));
                 $user_model = new Application_Model_Users();
-                $user_model->Register($request->getParams());
+                $error = $user_model->Register($request->getParams());
+                $this->view->error = $error;
+                
+                
                 
                 $db=zend_Db_Table::getDefaultAdapter();
 
@@ -60,11 +63,16 @@ class UserController extends Zend_Controller_Action
                 $result=$adapter->authenticate();
 
                 
-                if($result->isValid()) {
+                if(!$error && $result->isValid()) {
                     $sessionDataObj=$adapter->getResultRowObject(['id','email','password','userName', 'fname', 'lname', 'privilege', 'status']);
                     $auth=Zend_Auth::getInstance();
                     $storage=$auth->getStorage();
                     $storage->write($sessionDataObj);
+                    
+                    $userSession = new Zend_Session_Namespace("user");
+                    //$userSession->user->privilege = $sessionDataObj->privilege;
+                    $userSession->user = $sessionDataObj;
+                        
                 
                     if($request->getParam("privilege") == "shopUser") {
                         $this->redirect("/shop-user");
@@ -123,7 +131,7 @@ class UserController extends Zend_Controller_Action
                         if($sessionDataObj->privilege == "admin") {
                             $this->redirect("/admin/");
                         }
-                        else if($sessionDataObj->privilege == "shop") {
+                        else if($sessionDataObj->privilege == "shopUser") {
                             $this->redirect("/shop-user/");
                         }
                         else {
@@ -151,7 +159,9 @@ class UserController extends Zend_Controller_Action
     {
         $auth=Zend_Auth::getInstance();
         $auth->clearIdentity();
-        Zend_Session::destroy(true);
+        //Zend_Session::destroy(true);
+        $userSession = new Zend_Session_Namespace("user");
+        $userSession->unsetAll();
         // Zend_Session::namespaceUnset('facebook');
         return $this->redirect('/');
 
