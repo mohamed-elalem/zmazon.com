@@ -11,6 +11,12 @@ class AdminController extends Zend_Controller_Action
 
     private $shoppingCart = null;
 
+    private $wishList = null;
+
+    private $comment = null;
+
+    private $rates = null;
+
     private $db = null;
 
     private $privileges = null;
@@ -19,6 +25,7 @@ class AdminController extends Zend_Controller_Action
 
     public function init()
     {
+        $this->_helper->layout()->setLayout("adminLayout");
         $this->privileges = array(
             0 => 'admin',
             'admin' => 0,
@@ -31,7 +38,11 @@ class AdminController extends Zend_Controller_Action
         $this->coupon = new Application_Model_Coupon();
         $this->category = new Application_Model_Category();
         $this->shoppingCart = new Application_Model_ShoppingCart();
+        $this->wishList = new Application_Model_WishList();
+        $this->comments = new Application_Model_Comment();
+        $this->rates = new Application_Model_Rate();
         $this->db = Zend_Db_Table::getDefaultAdapter();
+        
         $metadata = $this->db->describeTable("users");
         $config = array(
             'ssl' => 'tls',
@@ -40,7 +51,7 @@ class AdminController extends Zend_Controller_Action
             'username' => 'faintingdetection@gmail.com',
             'password' => 'Tizen2016'
         );
-        $this->transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
+
         //Zend_Mail::setDefaultTransport($this->transport);
         //$cols = array_keys($metadata);
         
@@ -57,48 +68,10 @@ class AdminController extends Zend_Controller_Action
 
     public function manageUsersAction()
     {
-        $userList = $this->user->retrieveAllUsersWithCoupons();
-        $this->view->userList = $userList;
+        $users = $this->user->retrieveAllUsersWithCoupons();
         
-        $paginator = Zend_Paginator::factory($userList);
-        $paginator->setItemCountPerPage(5);
-        $paginator->setCurrentPageNumber(1);
-        $this->view->paginator = $paginator;
         
-        $newCouponForm = new Application_Form_NewCoupon();
-        
-        $request = $this->getRequest();
-        
-        if($request->isPost() && $newCouponForm->isValid($request->getParams())) {
-            $domain = "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
-            $len = strlen($domain);
-            $code = '';
-            for($i = 0; $i < 45; $i++) {
-                $code .= $domain[random_int(0, $len - 1)];
-            }
-            $uid = $request->getParam("uid");
-            $discount = $request->getParam("discount");
-            $reciever = $request->getParam("email");
-            $this->coupon->newCoupon($discount, $uid, $code);
-            
-            $mail = new Zend_Mail();
-            $mail_body = "You've been promoted with a coupon that gives you discount on an order you select.<br>";
-            $mail_body .= "coupon: ".$code."<br>";
-            $mail_body .= "Please note that this coupon is one time use only.";
-            $mail->setBodyHtml($mail_body);
-            $mail->setFrom('faintingdetection@gmail.com');
-            $mail->addTo($reciever, "site_admin");
-            $mail->setSubject("Coupon promotion");
-            //var_dump($this->transport);
-            //die();
-            
-            $mail->send($this->transport);
-            
-            
-            $this->redirect("/admin/manage-users");
-        }
-        
-        $this->view->newCouponForm = $newCouponForm;
+        $this->view->users = $users;
     }
 
     public function manageCategoriesAction()
@@ -106,42 +79,98 @@ class AdminController extends Zend_Controller_Action
         $categories = $this->category->retrieveAll();
         $this->view->categories = $categories;
         
-        $updateCategoryForm = new Application_Form_UpdateCategory();
-        
-        $request = $this->getRequest();
-        
-        if($request->isPost() && $updateCategoryForm->isValid($request->getParams())) {
-            $id = $request->getParam("id");
-            $this->category->edit($id, array("name" => $request->getParam("category")));
-            $this->redirect("/admin/manage-categories");
-        }
-        
-        $this->view->updateCategoryForm = $updateCategoryForm;
     }
 
     public function sendCouponAction()
     {
-        // action body
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+        $ajaxContext->addActionContext('addToWishList', 'json')
+            ->initContext();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout->disableLayout();
+        
+        $request = $this->getRequest();
+        if($request->isPost()) {
+            $domain = "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+            $len = strlen($domain);
+            $code = '';
+            for($i = 0; $i < 45; $i++) {
+                $code .= $domain[random_int(0, $len - 1)];
+            }
+            
+            $userId = $request->getParam("userId");
+            $discount = $request->getParam("discount");
+            $email = $request->getParam("email");
+            $this->coupon->newCoupon($discount, $userId, $code);
+            
+            $tr = new Zend_Mail_Transport_Smtp('smtp.gmail.com',
+                     array(
+                            'auth' => 'login',
+                            'port' => 587,
+                            'ssl' => 'tls',
+                            'username' => 'faintingdetection@gmail.com',
+                            'password' => 'Tizen2016'
+                         )
+                    );
+            Zend_Mail::setDefaultTransport($tr);
+
+            $mail = new Zend_Mail();
+            $mail->setFrom('faintingdetection@gmail.com');
+            $mail->setBodyHtml("You've been promoted with a coupon that gives you discount on an order you select.<br>Code: ".$code."<br>Discount: ".$discount." %<br>Please note that this coupon is one time use only.");
+            $mail->addTo($email, 'Dear customer');
+            $mail->setSubject('Coupon Promotion');
+            $mail->send($tr);
+            
+            echo '["success"]';
+        }
+        
     }
 
     public function changeStatusAction()
     {
-        $id = (int) $this->getParam("id");
-        $status = (int) $this->getParam("status");
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+        $ajaxContext->addActionContext('addToWishList', 'json')
+            ->initContext();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout->disableLayout();
         
-        $this->user->editRecord($id, array('status' => 1 - $status));
-        $this->redirect("/admin/manage-users");
+        $request = $this->getRequest();
+        
+         
+        if($request->isPost()) {
+            $id = (int) $request->getParam("id");
+            $status = (int) $request->getParam("status");
+            
+            
+            $this->user->editRecord($id, array('status' => $status));
+            echo '["Success"]';
+        }
+        else {
+            http_response_code(403);
+            die("<h1>Access Forbidden 403</h1>");
+        }
         
     }
 
     public function changePrivilegeAction()
     {
-        $id = (int) $this->getParam("id");
-        $privilege = $this->getParam("privilege");
-        $newPrivilege = $this->privileges[($this->privileges[$privilege] + 1) % 3];
-        
-        $this->user->editRecord($id, array('privilege' => $newPrivilege));
-        $this->redirect("/admin/manage-users");
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+        $ajaxContext->addActionContext('addToWishList', 'json')
+            ->initContext();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout->disableLayout();
+        $request = $this->getRequest();
+        if($request->isPost()) {
+            $id = (int) $this->getParam("id");
+            $privilege = $this->getParam("privilege");
+            
+            $newData = $this->user->editRecord($id, array('privilege' => $privilege));
+            echo json_encode($newData);
+        }
+        else {
+            http_response_code(403);
+            die("<h1>Access Forbidden 403</h1>");
+        }
     }
 
     /**
@@ -149,29 +178,72 @@ class AdminController extends Zend_Controller_Action
      */
     public function removeAction()
     {
-        $id = (int) $this->getParam("id");
-        $this->user->remove($id);
-        $this->redirect("/admin/manage-users");
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+        $ajaxContext->addActionContext('addToWishList', 'json')
+            ->initContext();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout->disableLayout();
+        $request = $this->getRequest();
+        if($request->isPost()) {
+            $id = (int) $this->getParam("id");
+            $this->coupon->deleteCoupon($id);
+            $this->shoppingCart->deleteUserCart($id);
+            $this->wishList->deleteUserWishList($id);
+            $this->rates->deleteUserRates($id);
+            $this->user->remove($id);
+            echo '["success"]';
+        }
+        else {
+            http_response_code(403);
+            die("<h1>Access Forbidden 403</h1>");
+        }
     }
 
     public function updateCategoryAction()
     {
-        
+       
     }
 
     public function deleteCategoryAction()
     {
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+        $ajaxContext->addActionContext('addToWishList', 'json')
+            ->initContext();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout->disableLayout();
+        
+        
         $request = $this->getRequest();
-        $id = $request->getParam("id");
-        $this->category->remove($id);
-        $this->redirect("/admin/manage-categories");
+        if($request->isPost()) {
+            $id = $request->getParam("id");
+            $this->category->remove($id);
+            echo '["success"]';
+        }
+        else {
+            http_response_code(403);
+            die("<h1>Access Forbidden 403</h1>");
+        }
     }
 
     public function deleteCouponAction()
     {
-        $id = $this->getParam("id");
-        $this->coupon->deleteCoupon($id);
-        $this->redirect("/admin/manage-users");
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+        $ajaxContext->addActionContext('addToWishList', 'json')
+            ->initContext();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout->disableLayout();
+        
+        $request = $this->getRequest();
+        if($request->isPost()) {
+            $id = $this->getParam("id");
+            $this->coupon->deleteCoupon($id);
+            echo json_encode($this->user->retrieveUser($id)); 
+            
+        }
+        else {
+            http_response_code(403);
+            die("<h1>Access Forbidden 403</h1>");
+        }
     }
 
     public function listOrdersAction()
@@ -188,8 +260,130 @@ class AdminController extends Zend_Controller_Action
         $this->view->cart = $order;
     }
 
+    public function addCategoryAction()
+    {
+        $categoryForm = new Application_Form_AddCategory();
+        
+        $request = $this->getRequest();
+        //var_dump($request->getParams());
+        //die();
+        
+        if($request->isPost()) {
+            if($categoryForm->isValid($request->getParams())) {
+                if($categoryForm->photo->isUploaded()) {
+                    $name = $request->getParam("name");
+                    $photo = $categoryForm->photo->getValue();
+                    $this->category->add(array(
+                        "name" => $name,
+                        "photo" => $photo
+                    ));
+                    $this->redirect("/admin/manage-categories");
+                }
+            }
+            
+        }
+        
+        $this->view->categoryForm = $categoryForm;
+    }
+
+    public function editCategoryNameAction()
+    {
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+        $ajaxContext->addActionContext('addToWishList', 'json')
+            ->initContext();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout->disableLayout();
+        
+        $request = $this->getRequest();
+        
+        if($request->isPost()) {
+            $id = $request->getParam("id");
+            $name = $request->getParam("name");
+            
+            $this->category->edit($id, array('name' => $name));
+        }
+        else {
+            http_response_code(403);
+            die("<h1>Access Forbidden 403</h1>");
+        }
+        
+        echo '["success"]';
+    }
+
+    public function editCategoryImageAction()
+    {
+        $categoryForm = new Application_Form_EditCategoryImage();
+        
+        $request = $this->getRequest();
+        
+        if($request->isPost()) {
+            if($categoryForm->isValid($request->getParams())) {
+                if($categoryForm->photo->isUploaded()) {
+                    $id = $this->getParam('id');
+                    $photo = $categoryForm->photo->getValue();
+                    $this->category->edit($id, array(
+                        "photo" => $photo
+                    ));
+                    $this->redirect("/admin/manage-categories");
+                }
+            }
+            
+        }
+        
+        $this->view->categoryForm = $categoryForm;
+        
+    }
+
+    public function contactDevelopersAction()
+    {
+        $contactForm = new Application_Form_ContactDevelopers();
+        
+        $request = $this->getRequest();
+        
+        if($request->isPost()) {
+            if($contactForm->isValid($request->getParams())) {
+                $userSession = new Zend_Session_Namespace("user");
+                $first_name = $userSession->user->fname;
+                $last_name = $userSession->user->lname;
+                $subject = $request->getParam("subject");
+                $content = $request->getParam("content");
+                
+                $tr = new Zend_Mail_Transport_Smtp('smtp.gmail.com',
+                     array(
+                            'auth' => 'login',
+                            'port' => 587,
+                            'ssl' => 'tls',
+                            'username' => 'faintingdetection@gmail.com',
+                            'password' => 'Tizen2016'
+                         )
+                    );
+                Zend_Mail::setDefaultTransport($tr);
+
+                $mail = new Zend_Mail();
+                $mail->setFrom('faintingdetection@gmail.com');
+                $mail->setBodyHtml("First name: ".$first_name."<br>Last name: ".$last_name."<br><br><strong>Problem Description</strong><br><br>".$content);
+                $mail->addTo("mohamed.el.alem.2017@gmail.com", 'Site issue');
+                $mail->setSubject($subject);
+                $mail->send($tr);
+                
+                $this->redirect("/admin");
+            }
+        }
+        
+        $this->view->contactForm = $contactForm;
+        
+    }
+
 
 }
+
+
+
+
+
+
+
+
 
 
 

@@ -5,19 +5,36 @@
     	<meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/node_modules/bootstrap/dist/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/node_modules/bootstrap/dist/css/bootstrap-theme.min.css" />
-        <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/node_modules/admin-lte/dist/css/AdminLTE.min.css" />
-        <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/node_modules/admin-lte/dist/css/skins/skin-blue.css" />
         <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/node_modules/font-awesome/css/font-awesome.min.css" />
         <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/css/style.css" />
-        <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/css/ecommerce.css" /> 
-        <script src="<?= $this->baseUrl()?>/node_modules/tether/dist/js/tether.min.js"></script>
-	<script src="<?= $this->baseUrl()?>/node_modules/jquery/dist/jquery.min.js"></script>
-	<script src="<?= $this->baseUrl()?>/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="<?= $this->baseUrl()?>/node_modules/admin-lte/dist/js/app.min.js"></script>
-         <script src="<?= $this->baseUrl()?>/js/app.js"></script>
+        <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/node_modules/jquery-ui-dist/jquery-ui.min.css" />
+        <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/node_modules/jquery-ui-dist/jquery-ui.theme.min.css" />
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,300,400italic,500,700,100" />
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,800,300,600,700" />
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Abel" />
+
+        <link href="<?= $this->baseUrl()?>/css/template/prettyPhoto.css" rel="stylesheet">
+        <link href="<?= $this->baseUrl()?>/css/template/price-range.css" rel="stylesheet">
+        <link href="<?= $this->baseUrl()?>/css/template/animate.css" rel="stylesheet">
+        <link href="<?= $this->baseUrl()?>/css/template/main.css" rel="stylesheet">
+	<link href="<?= $this->baseUrl()?>/css/template/responsive.css" rel="stylesheet">
+        
+        <script src="<?= $this->baseUrl()?>/node_modules/tether/dist/js/tether.min.js">             </script>
+	<script src="<?= $this->baseUrl()?>/node_modules/jquery/dist/jquery.min.js">                </script>
+	<script src="<?= $this->baseUrl()?>/node_modules/bootstrap/dist/js/bootstrap.min.js">       </script>
+        <script src="<?= $this->baseUrl()?>/js/template/jquery.scrollUp.min.js">                    </script>
+	<script src="<?= $this->baseUrl()?>/js/template/price-range.js">                            </script>
+        <script src="<?= $this->baseUrl()?>/js/template/jquery.prettyPhoto.js">                     </script>
+        <script src="<?= $this->baseUrl()?>/js/template/main.js">                                   </script>
+        <script src="<?= $this->baseUrl()?>/js/app.js">                                             </script>
+        <script src="<?= $this->baseUrl()?>/node_modules/jquery/external/jquery.redirect.js">       </script>
+        <script src="<?= $this->baseUrl()?>/node_modules/jquery-ui-dist/jquery-ui.min.js">          </script>
+
+
     </head>
     <body>
         <?php
+           
             $controllerName = Zend_Controller_Front::getInstance()->getRequest()->getControllerName();
             $actionName = Zend_Controller_Front::getInstance()->getRequest()->getActionName();
             
@@ -31,7 +48,7 @@
 
             ?>
             <a href="<?php echo $this->baseUrl()
-            ?>/User/logout"> Logout </a>
+            ?>/user/logout"> Logout </a>
         <?php
 
 
@@ -52,5 +69,6 @@
 	
 
         <?php echo $this->layout()->content; ?> 
+           
     </body>
 </html>

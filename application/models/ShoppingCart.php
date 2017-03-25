@@ -6,22 +6,38 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
     
     public function selectUsersOrders() {
         $sql = $this->select()
-                ->from(array('sc' => "shoppingCart"), array('userId', 'count(*) as orders'))
+                ->from(array('sc' => "shoppingCart"), array('userId', 'count(*) as orders', 'sum(total) as paidCash'))
                 ->joinInner(array("u" => "users"), "sc.userId = u.Id", array("userName"))
                 ->group("sc.userId")
+                ->where("purchasedFlag = 1")
                 ->setIntegrityCheck(false);
+           
         $query = $sql->query();
         $result = $query->fetchAll();
         return $result;
     }
     
     public function selectSpecificOrder($userId) {
-        $sql = $this->select()
+        /*$sql = $this->select()
                 ->from(array('sc' => "shoppingCart"))
+                ->joinInner(array("cp" => "cart_products"), "cartId = sc.id")
                 ->joinLeft(array("s" => "sale"), "sc.productId = s.productId", array("percentage as discount"))
-                ->joinInner(array("p" => "product"), "p.id = sc.productId", array("name as product_name", "price", "rate", "quantity as product_quantity"))
+                ->joinInner(array("p" => "product"), "cp.id = sc.productId", array("name as product_name", "price", "rate", "quantity as product_quantity"))
                 ->joinInner(array("c" => "category"), "p.categoryId = c.id", array("name as category_name"))
                 ->where("sc.userId = ".$userId)
+                ->setIntegrityCheck(false);
+        $query = $sql->query();
+        $result = $query->fetchAll();
+         * 
+         */
+        
+        $sql = $this->select()
+                ->from(array("sc" => "shoppingCart"), array("userId"))
+                ->joinInner(array("cp" => "cart_products"), "cp.cartId = sc.id", array("productId", "quantity"))
+                ->joinInner(array("p" => "product"), "p.id = cp.productId", array("name as product_name", "price", "rate", "quantity as product_quantity"))
+                ->joinLeft(array("s" => "sale"), "s.productId = p.id", array("percentage as discount"))
+                ->joinInner(array("c" => "category"), "p.categoryId = c.id", array("name as category_name"))
+                ->where("sc.userId = 4 and sc.purchasedFlag = 1")
                 ->setIntegrityCheck(false);
         $query = $sql->query();
         $result = $query->fetchAll();
@@ -40,8 +56,40 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
             return false;
         }
     }
-    
+    public function checkProductAvailability($user_id, $product_id){
+       $sql = $this->select()
+                ->from ( array('p' => 'product'),array( 'quantity as storage_product_quantity', 'id') )
+                ->joinLeft(array('cp' => 'cart_products'), "cp.productId = p.id", array('productId', 'quantity as cart_product_quantity'))
+                ->joinLeft(array("sc" => "shoppingCart"), "sc.id = cp.cartId")
+                ->where("p.id= $product_id and (isnull(sc.userId) or sc.userId = $user_id) and (isnull(sc.purchasedFlag) or sc.purchasedFlag = 0)")
+                ->setIntegrityCheck(false);
+
+//      echo json_encode([$sql->__toString()]);
+      $query = $sql->query();
+      $result = $query->fetchAll()[0];
+      
+      if ($result['storage_product_quantity'] > 0) {
+          if (!is_null($result['cart_product_quantity']) && $result['cart_product_quantity'] >= $result['storage_product_quantity']){
+              return false;
+              
+          }
+          else {
+              return true;
+             
+            
+          }
+      }
+      else {
+          return false;
+        
+      }
+    }
     public function add($user_id, $product_id, $cartProductsModel){
+       if ( ! $this->checkProductAvailability( $user_id, $product_id) ){
+            echo  json_encode(['success' => 'fail']);
+            die();
+       }
+     
        $sql = $this->select()
                 ->from(array('sc' => "shoppingCart") )
                 ->where("sc.userId= $user_id")
@@ -58,6 +106,8 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
             $cart_id = $row->id;
        }
        $cartProductsModel->add($cart_id, $product_id);
+               echo '{"success":"done"}';
+
         
     }
     
@@ -66,6 +116,10 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
     }
     
     public function incrementQuantity($user_id, $product_id, $cartProductsModel) {
+       if ( ! $this->checkProductAvailability($user_id, $product_id) ){
+            echo  json_encode(['success' => 'fail']);
+            die();
+       }
         $sql = $this->select()
                 ->from(array('sc' => "shoppingCart"), array('id'))
                 ->where("userId = $user_id")
@@ -123,5 +177,10 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
         }
     }
            
+    
+    public function deleteUserCart($uid) {
+        $this->delete("userId = ".$uid);
+    }
+    
 }
 

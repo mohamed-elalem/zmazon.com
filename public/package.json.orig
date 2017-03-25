@@ -1,0 +1,31 @@
+{
+  "name": "zmazon.com",
+  "version": "1.0.0",
+  "description": "A simple E-commerce website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "admin-lte": "^2.3.11",
+    "blueimp-canvas-to-blob": "^3.7.0",
+    "blueimp-load-image": "^2.12.2",
+    "bootstrap": "^3.3.7",
+    "canvas-to-blob": "0.0.0",
+    "ionicons": "^3.0.0",
+    "jquery": "^3.1.1",
+<<<<<<< HEAD
+    "jquery-file-upload": "^4.0.5",
+    "moment": "^2.18.1",
+    "raphael": "^2.2.7",
+=======
+    "jquery-ui-dist": "^1.12.1",
+>>>>>>> master
+    "tether": "^1.4.0"
+  },
+  "dependencies": {
+    "font-awesome": "^4.7.0"
+  }
+}

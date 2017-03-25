@@ -59,6 +59,7 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         $product->photo=$productData['photo'];
         $product->addDate=new Zend_Db_Expr('NOW()');
         $product->categoryId=(int)$productData['categoryId'];
+        $product->userId = 4; // Will be in session
 //        var_dump($product);
 //        exit();
         $product->save();
@@ -105,7 +106,7 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
     public function statisticsForProduct() 
     {
         $sql = $this->select()
-                ->from(array('p' => "product"), array('name', 'numOfSale','price'))
+                ->from(array('p' => "product"), array('name', 'numOfSale','price', 'moneyGained'))
                 ->setIntegrityCheck(false);
 
         $result = $sql->query()->fetchAll();

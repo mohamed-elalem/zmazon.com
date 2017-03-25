@@ -27,15 +27,21 @@
            
             });
            $(document).on('click', ".remove-from-wishlist", function(e) {
+               var editing = $(e.target).attr("data-editing");
+               
                $.ajax({
-                    url: "customer-user/remove-from-wish-list",
+                    url: "/customer-user/remove-from-wish-list",
                     type: "POST",
                     dataType:'json',
                     context: this,
                     data: {'product_id': $(this).attr("data-product_id"), 'user_id': $(this).attr("data-user_id")},
                     success: function(json){
                         $(this).text('add to wish list').addClass('add-to-wishlist btn-primary').removeClass('remove-from-wishlist btn-danger');
-
+                        if(editing) {
+                            $($(e.target).parent().parent()).hide("drop", 750, function() {
+                                $(this).remove();
+                            });
+                        }
                     },
                     error:function (xhr, ajaxOptions, thrownError){
                         console.log(xhr);
@@ -48,6 +54,12 @@
 
                  
             });
+            
+            /*$(".delete-from-wishlisl-redirect").click(function() {
+                $.redirect("/customer-user/remove-from-wish-list",
+                    )
+            });*/
+            
             $(document).on('click', ".add-to-cart", function(e) {
                 $.ajax({
                     url: "/customer-user/add-to-cart",
@@ -55,16 +67,23 @@
                     dataType:'json',
                     context: this,
                     data: {product_id: $(this).attr("data-product_id"), user_id : $(this).attr("data-user_id")},
-                    success: function(){
-                        console.log(1);
-                        $('.x-cart-notification').addClass('bring-forward appear loading');
-                        setTimeout(function(){
-                            $('.x-cart-notification').addClass('added');
-                        }, 1400)
-                        setTimeout(function(){
-                            $('.x-cart-notification').removeClass('bring-forward appear loading added');
-                        }, 2800)
-                        $(this).removeClass('add-to-cart').addClass('increment-quantity')
+                    success: function(data){
+                        //data=JSON.parse(data);
+                        console.log(data)
+                        if (data['success'] =='fail') {
+                            alert("out of stock")
+                        }
+                        else {
+                            console.log(1);
+                            $('.x-cart-notification').addClass('bring-forward appear loading');
+                            setTimeout(function(){
+                                $('.x-cart-notification').addClass('added');
+                            }, 1400)
+                            setTimeout(function(){
+                                $('.x-cart-notification').removeClass('bring-forward appear loading added');
+                            }, 2800)
+                            $(this).removeClass('add-to-cart').addClass('increment-quantity')
+                        }
 
                     },
                     error:function (xhr, ajaxOptions, thrownError){
@@ -83,15 +102,21 @@
                     dataType:'json',
                     context: this,
                     data: {product_id: $(this).attr("data-product_id"), user_id : $(this).attr("data-user_id")},
-                    success: function(){
-                        console.log(1);
-                        $('.x-cart-notification').addClass('bring-forward appear loading');
-                        setTimeout(function(){
-                            $('.x-cart-notification').addClass('added');
-                        }, 1400)
-                        setTimeout(function(){
-                            $('.x-cart-notification').removeClass('bring-forward appear loading added');
-                        }, 2800)
+                    success: function(data){
+                        console.log(data)
+                        if (data['success'] =='fail') {
+                            alert("out of stock")
+                        }
+                        else {
+                            console.log(1);
+                            $('.x-cart-notification').addClass('bring-forward appear loading');
+                            setTimeout(function(){
+                                $('.x-cart-notification').addClass('added');
+                            }, 1400)
+                            setTimeout(function(){
+                                $('.x-cart-notification').removeClass('bring-forward appear loading added');
+                            }, 2800)
+                        }
 
                     },
                     error:function (xhr, ajaxOptions, thrownError){

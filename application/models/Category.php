@@ -15,6 +15,10 @@ class Application_Model_Category extends Zend_Db_Table_Abstract
     public function remove($id) {
         $this->delete('id = '.$id);
     }
+    
+    public function add($data) {
+        $this->createRow($data)->save();
+    }
 
 }
 

@@ -2,12 +2,20 @@
 
 class CustomerUserController extends Zend_Controller_Action
 {
+    private $wishList;
+    private $shoppingCart;
+    private $rating;
+    private $product;
+    private $comment;
+    private $cartProducts;
+    private $coupon;
 
     public function init()
     {
         
         $actionName=$this->_request->getActionName();
-        if ($actionName != 'view-cart' && $actionName != 'view-wishlist') {
+        if ($actionName != 'view-cart' && $actionName != 'view-wish-list') {
+            
             $ajaxContext = $this->_helper->getHelper('AjaxContext');
             $ajaxContext->addActionContext('addToWishList', 'json')
                 ->initContext();
@@ -21,6 +29,7 @@ class CustomerUserController extends Zend_Controller_Action
         $this->comment = new Application_Model_Comment();
         $this->cartProducts = new Application_Model_CartProducts();
         $this->coupon =  new Application_Model_Coupon();
+        
     }
 
     public function indexAction()
@@ -41,6 +50,7 @@ class CustomerUserController extends Zend_Controller_Action
 
     public function addToWishListAction()
     {
+        
         $user_id  = $this->_request->getParam('user_id');
         $product_id  = $this->_request->getParam('product_id');
         $this->wishList->add($user_id, $product_id);
@@ -65,7 +75,6 @@ class CustomerUserController extends Zend_Controller_Action
         $cartProducts = $this->cartProducts;
         $this->shoppingCart->add($user_id, $product_id, $cartProducts); 
         // The next line is for returning json object response to ajax
-        echo '{"success":"done"}';
     }
 
     public function updateCartAction()
@@ -128,6 +137,14 @@ class CustomerUserController extends Zend_Controller_Action
 
         
                 
+    }
+
+    public function viewWishListAction()
+    {
+        $userId = 4; // Stored in session
+        $this->view->userWishList = $this->wishList->retrieveUserWishList($userId);
+        // = $customerWishList;
+        
     }
 
 

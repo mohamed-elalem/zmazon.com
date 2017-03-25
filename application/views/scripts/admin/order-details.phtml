@@ -11,17 +11,19 @@
         <th class='text-center'>Total product price after discount</th> 
     </tr>
     <?php
+        
         $totalQuantity = 0;
         $totalPrice = 0.0;
         $totalPriceAfterDiscount = 0.0;
         foreach($this->cart as $product) {
-            $discount = (double) $product['price'] * (double) (is_null($product['discount']) ? 0 : $product['discount']) / 100.0;
-            $priceAfterDiscount = (double) $product['price'] - $discount;
-            $totalPrice += (double) $product['price'];
-            $totalPriceAfterDiscount += $priceAfterDiscount;
             $totalQuantity += (int) $product['quantity'];
-            $totalProductPrice = (double) $product['price'] * $product['quantity'];
+            $totalProductPrice = (double) $product['price'] * (int) $product['quantity'];
+            $totalPrice += $totalProductPrice;
+            $discount = $totalProductPrice *  (is_null($product['discount']) ? 0 : $product['discount']) / 100.0;
+            $priceAfterDiscount = $totalProductPrice - $discount;
             $totalProductPriceAfterDiscount = $priceAfterDiscount * (double) $product['quantity'];
+            $totalPriceAfterDiscount += $priceAfterDiscount;
+            
             echo "<tr>";
             echo "<td class='text-center'>".$product['category_name']."</td>";
             echo "<td class='text-center'>".$product['product_name']."</td>";

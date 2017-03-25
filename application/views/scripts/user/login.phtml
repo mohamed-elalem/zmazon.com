@@ -1,20 +1,44 @@
-
-<head>
- <meta charset="UTF-8">
-
-</head>
-
-
 <div class="container">
-<div class="panel panel-primary">
-  <div class="panel-heading"> <h1><center>  Add User </center></h1></div>
-
-
-<div class="panel-body" border="1">
-<?php
-
-echo $this->login_form;
-
- ?> 
+    <div class="row">
+        <div class="col-md-4">
+            
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3>Login</h3>
+                </div>
+                <div class="panel-body">
+                    <form action="" method="post">
+                        <div class="form-group">
+                            <?=$this->login_form->email?>
+                        </div>
+                        <div class="form-group">
+                            <?=$this->login_form->password?>
+                        </div>
+                        <div class="error panel panel-danger" style="display: none;">
+                            <div class="panel-heading">
+                                <h4><?=$this->message?></h4>
+                            </div>
+                        </div>
+                        <div class="btn-group-justified">
+                            <div class="btn-group">
+                                <input type="submit" class="btn btn-default" />
+                            </div>
+                            <div class="btn-group">
+                                <a href="/" class="btn btn-danger">Cancel</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
+<?php if($this->error):?>
+<script>
+    $(document).ready(function() {
+        $(".error").show("bounce", 500);
+    });
+</script>
+<?php endif ?>

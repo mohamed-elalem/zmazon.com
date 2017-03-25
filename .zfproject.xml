@@ -25,6 +25,10 @@
           <actionMethod actionName="deleteCoupon"/>
           <actionMethod actionName="listOrders"/>
           <actionMethod actionName="orderDetails"/>
+          <actionMethod actionName="addCategory"/>
+          <actionMethod actionName="editCategoryName"/>
+          <actionMethod actionName="editCategoryImage"/>
+          <actionMethod actionName="contactDevelopers"/>
         </controllerFile>
         <controllerFile controllerName="CustomerUser">
           <actionMethod actionName="index"/>
@@ -39,6 +43,7 @@
           <actionMethod actionName="incrementQuantity"/>
           <actionMethod actionName="viewCart"/>
           <actionMethod actionName="checkout"/>
+          <actionMethod actionName="viewWishList"/>
         </controllerFile>
         <controllerFile controllerName="ShopUser">
           <actionMethod actionName="index"/>
@@ -65,6 +70,9 @@
         <formFile formName="ProductForm"/>
         <formFile formName="NewCoupon"/>
         <formFile formName="SaleForm"/>
+        <formFile formName="AddCategory"/>
+        <formFile formName="EditCategoryImage"/>
+        <formFile formName="ContactDevelopers"/>
       </formsDirectory>
       <layoutsDirectory>
         <layoutScriptsDirectory>
@@ -180,14 +188,26 @@
           <viewControllerScriptsDirectory forControllerName="CustomerUser">
             <viewScriptFile forActionName="removeFromCart"/>
           </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="addCategory"/>
+          </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="CustomerUser">
             <viewScriptFile forActionName="addComment"/>
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="ShopUser">
             <viewScriptFile forActionName="statistics"/>
           </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="editCategoryName"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="editCategoryImage"/>
           <viewControllerScriptsDirectory forControllerName="CustomerUser">
             <viewScriptFile forActionName="incrementQuantity"/>
+          </viewControllerScriptsDirectory>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="contactDevelopers"/>
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="CustomerUser">
             <viewScriptFile forActionName="viewCart"/>
@@ -206,6 +226,7 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="CustomerUser">
             <viewScriptFile forActionName="checkout"/>
+            <viewScriptFile forActionName="viewWishList"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
