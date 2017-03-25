@@ -69,6 +69,10 @@
           <actionMethod actionName="add"/>
           <actionMethod actionName="login"/>
           <actionMethod actionName="logout"/>
+          <actionMethod actionName="fblogin"/>
+          <actionMethod actionName="fbcallback"/>
+          <actionMethod actionName="googleLogin"/>
+          <actionMethod actionName="googleCallback"/>
         </controllerFile>
       </controllersDirectory>
       <formsDirectory>
@@ -250,6 +254,18 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Index">
             <viewScriptFile forActionName="listProducts"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="fblogin"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="fbcallback"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="googleLogin"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="googleCallback"/>
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Index">
             <viewScriptFile forActionName="topproduct"/>

@@ -57,7 +57,7 @@ class Application_Form_ProductForm extends Zend_Form
         $photo->addValidator('Extension', false, 'jpg,png,gif');
         $photo->setAttrib('enctype', 'multipart/form-data');
         
-        $photo->setDestination(APPLICATION_PATH.'/../public/images');
+        $photo->setDestination("images");
         
 
         

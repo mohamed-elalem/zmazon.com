@@ -15,6 +15,8 @@ set_include_path(implode(PATH_SEPARATOR, array(
 )));
 
 /** Zend_Application */
+require_once 'Facebook/autoload.php';
+require_once 'Google/vendor/autoload.php';
 require_once 'Zend/Application.php';
 
 // Create application, bootstrap, and run
