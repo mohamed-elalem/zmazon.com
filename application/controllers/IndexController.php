@@ -27,6 +27,14 @@ class IndexController extends Zend_Controller_Action
         $this->view->user = $auth->getStorage();
         $this->view->wishList = $this->wishList;
         $this->view->shoppingCart = $this->shoppingCart;
+        $this->view->categories = $this->categories->retrieveAll();
+        $top_products = new Application_Model_Product();
+        $this->view->topProducts = $top_products->topProducts(); 
+        $top_sales = new Application_Model_Product();
+        $this->view->topSales = $top_sales->topSales(); 
+        $top_offers = new Application_Model_Product();
+        $this->view->topOffers = $top_offers->topOffers();
+
 
     }
 
@@ -41,6 +49,7 @@ class IndexController extends Zend_Controller_Action
         $this->view->user = $auth->getStorage();
         $this->view->comments_form = $this->commentsForm;
         $this->view->all_comments = $this->comment->listAll();
+       
    
     }
 

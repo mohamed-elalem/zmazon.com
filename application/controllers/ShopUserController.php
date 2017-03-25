@@ -97,20 +97,20 @@ class ShopUserController extends Zend_Controller_Action
             if($this->productForm->isValid($request->getPost()))
             {
                 //$productModel =new Application_Model_Product();
-                $productData['name']= $this->productForm->name->getValue();
+                /*$productData['name']= $this->productForm->name->getValue();
                 $productData['description']= $this->productForm->description->getValue();
                 $productData['quantity']= $this->productForm->quantity->getValue();
-                $productData['price']= $this->productForm->price->getValue();
+                $productData['price']= $this->productForm->price->getValue();*/
                 if($this->productForm->photo->isUploaded())
                 {
                     //$productData['photo']=$productForm->photo->getFileName();
                     $productData['photo']= $this->productForm->photo->getValue();
                 }
                 else {
-                    $productData['photo']='Null';
+                    $productData['photo']='NULL';
                 }
-                $productData['categoryId']= $this->productForm->categoryId->getValue();
-                $this->productModel->addProduct($productData);
+                //$productData['categoryId']= $this->productForm->categoryId->getValue();
+                $this->productModel->addProduct(array_merge($request->getParams(), $productData));
                 $this->redirect('/shop-user/list-all-products');
                 
             }
