@@ -15,6 +15,7 @@ class CustomerUserController extends Zend_Controller_Action
         
         $actionName=$this->_request->getActionName();
         if ($actionName != 'view-cart' && $actionName != 'view-wish-list') {
+            
             $ajaxContext = $this->_helper->getHelper('AjaxContext');
             $ajaxContext->addActionContext('addToWishList', 'json')
                 ->initContext();
@@ -49,6 +50,7 @@ class CustomerUserController extends Zend_Controller_Action
 
     public function addToWishListAction()
     {
+        
         $user_id  = $this->_request->getParam('user_id');
         $product_id  = $this->_request->getParam('product_id');
         $this->wishList->add($user_id, $product_id);
@@ -73,12 +75,14 @@ class CustomerUserController extends Zend_Controller_Action
         $cartProducts = $this->cartProducts;
         $this->shoppingCart->add($user_id, $product_id, $cartProducts); 
         // The next line is for returning json object response to ajax
-        echo '{"success":"done"}';
     }
 
     public function updateCartAction()
     {
-
+        $productArr =$this->_request->getParam('productArr');
+        $cart_id = $this->_request->getParam('cart_id');
+        $this->cartProducts->updateCart($productArr, $cart_id);
+        echo '{"success":"done"}';
 
         
     }
@@ -118,10 +122,21 @@ class CustomerUserController extends Zend_Controller_Action
         $user_id = $auth->getStorage()->read()->id;
         $this->view->cart = $this->shoppingCart->getCartDetails($user_id);
         $this->view->coupon = $this->coupon->getCouponCode($user_id);
+        $this->view->user_id = $user_id;
+        
+    }
 
+    public function checkoutAction()
+    {
+        $cart_id = $this->_request->getParam('cart_id');
+        $total_amount = $this->_request->getParam('totalAmount');
+        $subtotal = $this->_request->getParam('subtotal');
+        $user_id =  $this->_request->getParam('user_id');
+        $this->shoppingCart->purchased($user_id, $cart_id, $total_amount, $subtotal);
+        echo '{"success":"done"}';
 
         
-        
+                
     }
 
     public function viewWishListAction()

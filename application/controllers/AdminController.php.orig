@@ -117,14 +117,12 @@ class AdminController extends Zend_Controller_Action
 
             $mail = new Zend_Mail();
             $mail->setFrom('faintingdetection@gmail.com');
-<<<<<<< HEAD
             $mail->setBodyHtml("You've been promoted with a coupon that gives you discount on an order you select.<br>Code: ".$code."<br>Discount: ".$discount." %<br>Please note that this coupon is one time use only.");
             $mail->addTo($email, 'Dear customer');
             $mail->setSubject('Coupon Promotion');
             $mail->send($tr);
             
             echo '["success"]';
-=======
             $mail->addTo($reciever, "site_admin");
             $mail->setSubject("Coupon promotion");
             //var_dump($this->transport);
@@ -134,7 +132,6 @@ class AdminController extends Zend_Controller_Action
             
             
             $this->redirect("/admin/manage-users");
->>>>>>> master
         }
         
     }

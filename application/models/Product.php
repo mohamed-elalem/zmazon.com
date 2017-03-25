@@ -15,12 +15,13 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
     public function allProductDetails($id)
     {
         $sql = $this->select()
-                ->from(array('p' => "product"), array('id', 'name' , 'description', 'price' , 'quantity', 'rate', 'photo', 'addDate', 'categoryId', 'moneyGained'))
+                ->from(array('p' => "product"))
                 ->where("p.id = $id")
-                ->joinLeft(array("s" => "sale"), "p.id = s.productId", array("percentage", "startDate", "endDate"))
+                ->joinLeft(array("s" => "sale"), "p.id = s.productId", array("percentage", "startDate", "endDate" , "(s.endDate > CURRENT_DATE and s.startDate <= CURRENT_DATE) AS saleflag"))
                 ->joinLeft(array("w" => "wishList"),  "w.productId = p.id", array("userId as wishlist_user_id"))
                 ->joinLeft(array("cp" => "cart_products"), "cp.productId = p.id", array("productId as cart_product_id"))
                 ->joinLeft(array("sc" => "shoppingCart" ), "sc.id = cp.cartId" , array("id as cart_id", "userId as shopping_cart_user_id"))
+                ->where("s.endDate > CURRENT_DATE and s.startDate <= CURRENT_DATE ")
                 ->setIntegrityCheck(false);        
         $query = $sql->query();
         $result= $query->fetchAll()[0];
@@ -34,14 +35,15 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
     public function allProductsDetails()
     {
         $sql = $this->select()
-                ->from(array('p' => "product"), array('id', 'name' , 'description', 'price' , 'quantity', 'rate', 'photo', 'addDate', 'categoryId', 'moneyGained'))
-                ->joinLeft(array("s" => "sale"), "p.id = s.productId", array("percentage", "startDate", "endDate"))
+                ->from(array('p' => "product"))
+                ->joinLeft(array("s" => "sale"), "p.id = s.productId", array("percentage", "startDate", "endDate", "(s.endDate > CURRENT_DATE and s.startDate <= CURRENT_DATE) AS saleflag"))
                 ->joinLeft(array("w" => "wishList"),  "w.productId = p.id", array("userId as wishlist_user_id"))
                 ->joinLeft(array("cp" => "cart_products"), "cp.productId = p.id", array("productId as cart_product_id"))
                 ->joinLeft(array("sc" => "shoppingCart" ), "sc.id = cp.cartId" , array("id as cart_id", "userId as shopping_cart_user_id"))
                 ->setIntegrityCheck(false);
         
-        
+//        echo $sql->__toString();
+//        die();
         $query = $sql->query();
         $result= $query->fetchAll();
         return $result;
@@ -50,7 +52,9 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
     {
         $product=$this->createRow();
         $product->name =$productData['name'];
+        $product->name_ar = $productData['name_ar'];
         $product->description=$productData['description'];
+        $product->description_ar = $productData['description_ar'];
         $product->quantity=(int)$productData['quantity'];
         $product->price=(float)$productData['price'];
         $product->rate=0;
@@ -192,7 +196,81 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         $result = $query->fetchAll();
         return $result;
     }
+
+    //-----------------------------------------------------------------------------------------------------
+
+
+    public function topProducts ()
+    {
+        $sql = $this->select()
+        ->from(array('p' => "product"), array('name','description','price','quantity','rate','photo','addDate','categoryId','moneyGained','numOfSale'))
+        ->order('addDate DESC')
+        ->limit(5);
+
+        return $this->fetchAll($sql)-> toArray();
+    }
     
+    //------------------------------fun2 -------------------------------------------------------------
+
+     public function topSales ()
+    {
+        $sql = $this->select()
+        ->from(array('p' => "product"))        
+        ->order('numOfSale DESC')
+        ->limit(5);
+        return $this->fetchAll($sql)-> toArray();
+    }   
+    //----------------------------fun3-----------------------------------------------------------------
+
+    public function topOffers()
+    {
+        // select p.name , s.percentage , s.startDate,s.endDate 
+        // from product p ,sale s where  p.id=s.productId and s.endDate>CURRENT_DATE
+        // order by(s.startDate) desc 
+        // limit 5;
+        $sql = $this->select()
+        ->from(array('p' => "product"), array('name'))
+        ->joinInner(array('s' => "sale"),"p.id = s.productId",array('percentage','startDate','endDate'))
+        ->where("s.endDate > CURRENT_DATE and s.startDate <= CURRENT_DATE ")
+        ->order('startDate DESC')
+        ->limit(5)
+        ->setIntegrityCheck(false);
+        return $this->fetchAll($sql)-> toArray();
+
+    }
+
+    //-function to get 3 related product -
+
+    public function relatedProdects($id)
+    {   
+        $sql=$this->select()
+        ->from(array('p' => "product"),array('categoryId'))
+        ->where("p.id =$id")
+        ->setIntegrityCheck(false);
+
+        $categoryIdArr =$this->fetchAll($sql)->toArray()[0];
+
+        $categoryId= $categoryIdArr["categoryId"];
+
+        // var_dump($categoryId);
+        // exit();
+
+        $sql = $this->select()
+        ->from(array('p' => "product"))
+
+        ->where("p.categoryId = $categoryId and p.id != $id")
+
+        ->setIntegrityCheck(false);
+
+
+        $result= $this->fetchAll($sql)-> toArray();
+
+        var_dump($result);
+        exit();
+    }
+    
+
+
 
 }
 

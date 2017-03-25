@@ -15,6 +15,9 @@
           <actionMethod actionName="toggleLanguage"/>
           <actionMethod actionName="categories"/>
           <actionMethod actionName="listProducts"/>
+          <actionMethod actionName="topproduct"/>
+          <actionMethod actionName="topsale"/>
+          <actionMethod actionName="topoffersAction"/>
         </controllerFile>
         <controllerFile controllerName="Error"/>
         <controllerFile controllerName="Admin">
@@ -47,6 +50,7 @@
           <actionMethod actionName="addComment"/>
           <actionMethod actionName="incrementQuantity"/>
           <actionMethod actionName="viewCart"/>
+          <actionMethod actionName="checkout"/>
           <actionMethod actionName="viewWishList"/>
         </controllerFile>
         <controllerFile controllerName="ShopUser">
@@ -233,6 +237,7 @@
             <viewScriptFile forActionName="logout"/>
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="CustomerUser">
+            <viewScriptFile forActionName="checkout"/>
             <viewScriptFile forActionName="viewWishList"/>
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Index">
@@ -261,6 +266,15 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="User">
             <viewScriptFile forActionName="googleCallback"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="topproduct"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="topsale"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="topoffersAction"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

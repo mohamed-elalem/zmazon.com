@@ -14,6 +14,8 @@ class ShopUserController extends Zend_Controller_Action
     public function init()
     {
         /* Initialize action controller here */
+        $this->_helper->layout()->setLayout("shopUserLayout");
+
         $this->productModel = new Application_Model_Product();
         $this->productForm =new Application_Form_ProductForm();
         
@@ -65,10 +67,10 @@ class ShopUserController extends Zend_Controller_Action
             {
 //                $this->productModel->editProduct($productId,$_POST);
 //                $this->redirect('/shop-user/list-all-products');
-                $productData['name']= $this->productForm->name->getValue();
+                /*$productData['name']= $this->productForm->name->getValue();
                 $productData['description']= $this->productForm->description->getValue();
                 $productData['quantity']= $this->productForm->quantity->getValue();
-                $productData['price']= $this->productForm->price->getValue();
+                $productData['price']= $this->productForm->price->getValue();*/
                 if($this->productForm->photo->isUploaded())
                 {
                     //$productData['photo']=$productForm->photo->getFileName();
@@ -77,8 +79,8 @@ class ShopUserController extends Zend_Controller_Action
                 else {
                     $productData['photo']='Null';
                 }
-                $productData['categoryId']= $this->productForm->categoryId->getValue();
-                $this->productModel->editProduct($productId,$productData);
+                //$productData['categoryId']= $this->productForm->categoryId->getValue();
+                $this->productModel->editProduct($productId, array_merge($productData, $request->getParams()));
                 $this->redirect('/shop-user/list-all-products');
                 
             }
@@ -95,20 +97,20 @@ class ShopUserController extends Zend_Controller_Action
             if($this->productForm->isValid($request->getPost()))
             {
                 //$productModel =new Application_Model_Product();
-                $productData['name']= $this->productForm->name->getValue();
+                /*$productData['name']= $this->productForm->name->getValue();
                 $productData['description']= $this->productForm->description->getValue();
                 $productData['quantity']= $this->productForm->quantity->getValue();
-                $productData['price']= $this->productForm->price->getValue();
+                $productData['price']= $this->productForm->price->getValue();*/
                 if($this->productForm->photo->isUploaded())
                 {
                     //$productData['photo']=$productForm->photo->getFileName();
                     $productData['photo']= $this->productForm->photo->getValue();
                 }
                 else {
-                    $productData['photo']='Null';
+                    $productData['photo']='NULL';
                 }
-                $productData['categoryId']= $this->productForm->categoryId->getValue();
-                $this->productModel->addProduct($productData);
+                //$productData['categoryId']= $this->productForm->categoryId->getValue();
+                $this->productModel->addProduct(array_merge($request->getParams(), $productData));
                 $this->redirect('/shop-user/list-all-products');
                 
             }

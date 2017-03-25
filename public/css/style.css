@@ -200,9 +200,6 @@ h1 {
 /*************************
 Styling the index page
 *********************/
-body{
-   background: #f3f3f3;
-}
 .product-list .onsale {
     position: absolute;
     top: 6px;
