@@ -320,4 +320,37 @@ Styling the index page
      color: #fff;
 }
 
-
+.addComment textarea , .addReply textarea {
+   height: 50px;
+   width: 70%;
+   padding-left: 10px;
+   margin-top: 10px
+}
+.addComment .btn , .addReply .btn{
+  display: block;
+  width: 100px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.user-profile {
+  margin-right: 20px;
+}
+.user-name {
+  font-weight:bold;
+   color: red;
+   text-transform: capitalize;
+}
+.comment-info , .reply-info {
+  color: #c34c21;
+  font-size: 12px;
+  font-style: italic;
+  font-weight:bold;
+}
+.reply {
+  margin-left: 60px;
+}
+.user-profile, .comment-container {
+  display: inline-block;
+  vertical-align: middle;
+  float:none;
+}
