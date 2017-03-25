@@ -132,9 +132,15 @@ class CustomerUserController extends Zend_Controller_Action
         $total_amount = $this->_request->getParam('totalAmount');
         $subtotal = $this->_request->getParam('subtotal');
         $user_id =  $this->_request->getParam('user_id');
-        $this->shoppingCart->purchased($user_id, $cart_id, $total_amount, $subtotal);
-        echo '{"success":"done"}';
-
+        
+        $error = $this->shoppingCart->purchased($user_id, $cart_id, $total_amount, $subtotal);
+        
+        if($error) {
+            echo '{"success": "failed"}';
+        }
+        else {
+            echo '{"success":"done"}';
+        }
         
                 
     }

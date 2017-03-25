@@ -47,11 +47,11 @@ $col_counter  = 0;
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
                                                                 <li><a href="<?= $this->baseUrl() ?>"><i class="fa fa-star"></i> Home </a></li>
-                                                            <?php if ($user->id && $user->privilege=="customerUser"): ?>
+                                                            <?php if ($user && $user->privilege=="customerUser"): ?>
 								<li><a href="<?= $this->baseUrl() ?>/customer-user/view-wishlist"><i class="fa fa-star"></i> Wishlist</a></li>
 								<li><a href="<?= $this->baseUrl() ?>/customer-user/view-cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                                             <?php endif; 
-                                                            if($user->id): ?>
+                                                            if($user): ?>
 								<li><a href="<?= $this->baseUrl() ?>/user/logout"><i class="fa fa-lock"></i> Logout</a></li>
                                                             <?php else : ?>
                                                                 <li><a href="<?= $this->baseUrl() ?>/user/login"><i class="fa fa-lock"></i> Login</a></li>
