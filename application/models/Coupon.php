@@ -1,7 +1,6 @@
 <?php
-
 class Application_Model_Coupon extends Zend_Db_Table_Abstract
-{
+{ 
     protected $_name = "coupon";
     
     public function newCoupon($discount, $userId, $code) {
@@ -14,7 +13,7 @@ class Application_Model_Coupon extends Zend_Db_Table_Abstract
     
     public function getCouponCode($user_id){
         $sql = $this->select()
-                ->from(array('coup' => "coupon"))
+                ->from(array('coup' => "coupon"),  array('code', 'discount'))
                 ->where("coup.userId = $user_id")
                 ->setIntegrityCheck(false);
         $query = $sql->query();

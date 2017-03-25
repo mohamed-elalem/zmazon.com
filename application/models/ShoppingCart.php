@@ -11,7 +11,7 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
                 ->group("sc.userId")
                 ->where("purchasedFlag = 1")
                 ->setIntegrityCheck(false);
-        
+           
         $query = $sql->query();
         $result = $query->fetchAll();
         return $result;
@@ -56,8 +56,40 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
             return false;
         }
     }
-    
+    public function checkProductAvailability($user_id, $product_id){
+       $sql = $this->select()
+                ->from ( array('p' => 'product'),array( 'quantity as storage_product_quantity', 'id') )
+                ->joinLeft(array('cp' => 'cart_products'), "cp.productId = p.id", array('productId', 'quantity as cart_product_quantity'))
+                ->joinLeft(array("sc" => "shoppingCart"), "sc.id = cp.cartId")
+                ->where("p.id= $product_id and (isnull(sc.userId) or sc.userId = $user_id) and (isnull(sc.purchasedFlag) or sc.purchasedFlag = 0)")
+                ->setIntegrityCheck(false);
+
+//      echo json_encode([$sql->__toString()]);
+      $query = $sql->query();
+      $result = $query->fetchAll()[0];
+      
+      if ($result['storage_product_quantity'] > 0) {
+          if (!is_null($result['cart_product_quantity']) && $result['cart_product_quantity'] >= $result['storage_product_quantity']){
+              return false;
+              
+          }
+          else {
+              return true;
+             
+            
+          }
+      }
+      else {
+          return false;
+        
+      }
+    }
     public function add($user_id, $product_id, $cartProductsModel){
+       if ( ! $this->checkProductAvailability( $user_id, $product_id) ){
+            echo  json_encode(['success' => 'fail']);
+            die();
+       }
+     
        $sql = $this->select()
                 ->from(array('sc' => "shoppingCart") )
                 ->where("sc.userId= $user_id")
@@ -74,6 +106,8 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
             $cart_id = $row->id;
        }
        $cartProductsModel->add($cart_id, $product_id);
+               echo '{"success":"done"}';
+
         
     }
     
@@ -82,6 +116,10 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
     }
     
     public function incrementQuantity($user_id, $product_id, $cartProductsModel) {
+       if ( ! $this->checkProductAvailability($user_id, $product_id) ){
+            echo  json_encode(['success' => 'fail']);
+            die();
+       }
         $sql = $this->select()
                 ->from(array('sc' => "shoppingCart"), array('id'))
                 ->where("userId = $user_id")
@@ -106,6 +144,39 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
         return $result;
         
     }
+    public function purchased($user_id, $cart_id, $total_amount, $subtotal) {
+       $cart_details = $this->getCartDetails($user_id);
+        foreach ($cart_details as $product){
+            if ($product['discount'] ) {
+                $product['price'] = ((100 - $product['discount']) * $product['price'])/100;
+            }
+            $data = array('numOfSale'   => new Zend_DB_Expr('numOfSale + 1'), 
+                          'moneyGained' =>  new Zend_DB_Expr("moneyGained +" . ($product['product_price'] * $product['quantity'])) ,
+                          'quantity'     => new Zend_DB_Expr("quantity - " .  $product['quantity'] ) 
+                );
+
+            $where = array(
+                'id = ?' => $product['product_id']
+            );
+            $productModel = new Application_Model_Product();
+            $productModel->update( $data, $where);
+        }
+       $where = array();
+       
+       $where[] = "id = $cart_id ";
+       $data = array(
+             'purchasedFlag'      =>  1 ,
+             'total'         => $total_amount
+        );
+       $coupon = new Application_Model_Coupon();
+        $this->update( $data, $where);
+        if ($subtotal != $total_amount) {
+            $coupon->delete( array(
+                'userId = ?' => $user_id
+            ));
+        }
+    }
+           
     
     public function deleteUserCart($uid) {
         $this->delete("userId = ".$uid);

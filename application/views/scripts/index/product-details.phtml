@@ -1,5 +1,9 @@
 <?php 
-     $user = $this->user->read();
+    $user = $this->user->read();
+    $languageSession = new Zend_Session_Namespace("language");
+    $language = "_ar";
+    if($languageSession->language == "Ar")
+        $language = "_ar";
     ?>
 <div class="container">
     <div class="product-details section">
@@ -9,7 +13,7 @@
             </div>
             <div class="col-md-4">
                 <h2> About the product </h2>
-                <p> Product Name:  <?= $this->product['name'] ?> </p>
+                <p> Product Name:  <?= ($language == "_ar" && ! empty($this->product['name'.$language]) ? $this->product['name'.$language] : $this->product['name']) ?> </p>
                 <p> <?= $this->product['description'] ?> </p>
                 <?php if ($this->product['percentage']): ?>
                                     <del>

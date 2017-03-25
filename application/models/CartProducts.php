@@ -10,6 +10,8 @@ class Application_Model_CartProducts extends Zend_Db_Table_Abstract
        $row->productId = $product_id;
        $row->quantity = 1;
        $row->save();
+       echo '{"success":"done"}';
+
     }
     
     public function incrementQuantity($cart_id, $product_id) {
@@ -21,6 +23,8 @@ class Application_Model_CartProducts extends Zend_Db_Table_Abstract
              'quantity'      =>  new Zend_DB_Expr('quantity + 1')
         );
         $this->update( $data, $where);
+        echo '{"success":"done"}';
+
 
     }
     public function listRelatedProducts($cart_id, $productModel) {
@@ -35,6 +39,20 @@ class Application_Model_CartProducts extends Zend_Db_Table_Abstract
     public function removeFromCart($cart_id , $product_id) {
         $this->delete("cartId=$cart_id and productId = $product_id");
     }
+    public function updateCart($productArr, $cart_id){        
+        
+       for ($i=0; $i < count($productArr) ; $i++){
+           
+            $where = array();
+            $where[] = "cartId = $cart_id ";
+            $where[] = "productId = ". (int) $productArr[$i]['product_id'];
+            $data = array(
+                  'quantity'      =>    (int) $productArr[$i]['product_quantity']
+             );
+             $this->update( $data, $where);
+        }
+    }
+
 
 }
 

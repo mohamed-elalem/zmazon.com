@@ -27,11 +27,12 @@
                 {
                     echo "<tr>".
                     "<td class='text-center' >".$value['id']."</td>".
+
                     "<td class='text-center'>".($language == "_ar" && ! empty($value['name'.$language]) ? $value['name'.$language] : $value['name'])."</td>".
                     "<td class='text-center'>".($language == "_ar" && ! empty($value['description'.$language]) ? $value['description'.$language] : $value['description'])."</td>".
-                    "<td class='text-center'> <a class='text-info' href='list-product-details/productId/".$value['id']."'role='button'><i class='fa fa-info-circle pull'></i></a> </td>".
-                    "<td class='text-center'> <a class='text-danger' href='delete-product/productId/".$value['id']."'role='button'><i class='fa fa-times'></i></a> </td>".
-                    "<td class='text-center'> <a class='text-primary' href='edit-product/productId/".$value['id']."'role='button'><i class='fa fa-edit'></i></a></td>". 
+                    "<td class='text-center'> <a class='text-info' href='/list-product-details/productId/".$value['id']."'role='button'><i class='fa fa-info-circle pull'></i></a> </td>".
+                    "<td class='text-center'> <a class='text-danger' href='/delete-product/productId/".$value['id']."'role='button'><i class='fa fa-times'></i></a> </td>".
+                    "<td class='text-center'> <a class='text-primary' href='/edit-product/productId/".$value['id']."'role='button'><i class='fa fa-edit'></i></a></td>". 
                     "</tr>";
                 }
 
@@ -40,13 +41,13 @@
             </table>
             <div class="btn-group-justified">
                 <div class="btn-group">
-                    <a class='btn btn-default' href='add-product'role='button'>Add Product<i class="fa fa-plus-circle pull-right"></i></a>
+                    <a class='btn btn-default' href='<?= $this->baseUrl() ?>/shop-user/add-product'role='button'>Add Product<i class="fa fa-plus-circle pull-right"></i></a>
                 </div>
                 <div class="btn-group">
-                    <a class='btn btn-info' href='list-current-sale'role='button'>List all sales<i class="fa fa-money pull-right" style="font-size: 16px;"></i></a>
+                    <a class='btn btn-info' href='<?= $this->baseUrl() ?>/shop-user/list-current-sale'role='button'>List all sales<i class="fa fa-money pull-right" style="font-size: 16px;"></i></a>
                 </div>
                 <div class="btn-group">
-                    <a class='btn btn-primary' href='statistics'role='button'>Statistics<i class="fa fa-bar-chart pull-right"></i></a>
+                    <a class='btn btn-primary' href='<?= $this->baseUrl() ?>/shop-user/statistics'role='button'>Statistics<i class="fa fa-bar-chart pull-right"></i></a>
                 </div>
             </div>
 

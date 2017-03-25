@@ -8,12 +8,9 @@
         <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/node_modules/admin-lte/dist/css/AdminLTE.min.css" />
         <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/node_modules/admin-lte/dist/css/skins/skin-blue.css" />
         <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/node_modules/font-awesome/css/font-awesome.min.css" />
-<<<<<<< HEAD
         <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/css/style.css" /> 
-=======
         <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/css/style.css" />
         <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/css/ecommerce.css" /> 
->>>>>>> master
         <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/node_modules/jquery-ui-dist/jquery-ui.min.css" />
         <link rel="stylesheet" type="text/css" href="<?= $this->baseUrl()?>/node_modules/jquery-ui-dist/jquery-ui.theme.min.css" />
         <script src="<?= $this->baseUrl()?>/node_modules/tether/dist/js/tether.min.js"></script>
@@ -26,24 +23,24 @@
     <body>
         <?php
            
-            $controllerName = Zend_Controller_Front::getInstance()->getRequest()->getControllerName();
-            $actionName = Zend_Controller_Front::getInstance()->getRequest()->getActionName();
-            
-            if($controllerName == "admin") {
-                include_once "html/admin-header.php";
-            }
-      
-            $auth = Zend_Auth::getInstance();
-            $identity = $auth->getIdentity();
-            if (!empty($identity)) {
+//            $controllerName = Zend_Controller_Front::getInstance()->getRequest()->getControllerName();
+//            $actionName = Zend_Controller_Front::getInstance()->getRequest()->getActionName();
+//            
+//            if($controllerName == "admin") {
+//                include_once "html/admin-header.php";
+//            }
+//      
+//            $auth = Zend_Auth::getInstance();
+//            $identity = $auth->getIdentity();
+//            if (!empty($identity)) {
 
             ?>
             <a href="<?php echo $this->baseUrl()
-            ?>/User/logout"> Logout </a>
+            ?>/user/logout"> Logout </a>
         <?php
 
 
-            }
+//            }
 
 
 ?>

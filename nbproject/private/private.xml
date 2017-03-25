@@ -3,6 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
+            <file>file:/var/www/html/zmazon.com/application/views/scripts/admin/index.phtml</file>
+            <file>file:/var/www/html/zmazon.com/application/layouts/scripts/layout.phtml</file>
+            <file>file:/var/www/html/zmazon.com/application/views/scripts/index/index.phtml</file>
+            <file>file:/var/www/html/zmazon.com/application/layouts/scripts/admin-layout.phtml</file>
+=======
             <file>file:/srv/http/zmazon.com/application/views/scripts/user/login.phtml</file>
             <file>file:/srv/http/zmazon.com/application/models/Product.php</file>
             <file>file:/srv/http/zmazon.com/library/My/Controller/Plugin/Acl.php</file>
@@ -54,6 +60,7 @@
             <file>file:/srv/http/zmazon.com/application/layouts/scripts/layout.phtml</file>
             <file>file:/srv/http/zmazon.com/application/forms/UpdateCategory.php</file>
             <file>file:/srv/http/zmazon.com/application/views/scripts/shop-user/edit-sale.phtml</file>
+>>>>>>> 058d15d965e89a0225c8e0657b70396971ee156e
         </group>
     </open-files>
 </project-private>
