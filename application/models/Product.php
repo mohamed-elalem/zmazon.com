@@ -26,7 +26,7 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
                 ->joinLeft(array("w" => "wishList"),  "w.productId = p.id", array("userId as wishlist_user_id"))
                 ->joinLeft(array("cp" => "cart_products"), "cp.productId = p.id", array("productId as cart_product_id"))
                 ->joinLeft(array("sc" => "shoppingCart" ), "sc.id = cp.cartId" , array("id as cart_id", "userId as shopping_cart_user_id"))
-                ->where("s.endDate > CURRENT_DATE and s.startDate <= CURRENT_DATE ")
+                ->joinInner(array("c" => "category"), "p.categoryId = c.id" , array("name as category_name"))
                 ->setIntegrityCheck(false);        
         $query = $sql->query();
         $result= $query->fetchAll()[0];
@@ -119,24 +119,31 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         $this->update($product, "id=$product_id");        
     }
     
-    public function statisticsForCategory()
+    public function statisticsForCategory($productId)
     {
         $sql = $this->select()
-                ->from(array('p' => "product"), array('name as pName', 'numOfSale as max'))
-                ->joinInner(array("c" => "category"), "c.id = p.categoryId", array("name as cName"))
-                ->where('numOfSale IN(?)', $this->select()
-                        ->from(array('p' => "product"), array('max(numOfSale)'))
-                        ->group('categoryId'))
-                ->setIntegrityCheck(false);
+                ->from(array('p' => "product"), array('categoryId'))
+                ->where("id=$productId");
+        $result = $sql->query()->fetchAll()[0];
+        $categoryId=(int)$result['categoryId'];
         
-        $result = $sql->query()->fetchAll();
+        $sql = $this->select()
+                ->from(array('p' => "product"), array('name as pName', 'max(numOfSale) as max'))
+                ->joinInner(array("c" => "category"), "c.id = p.categoryId", array("name as cName"))
+                ->group("p.id")
+                ->where("categoryId =$categoryId")
+                ->setIntegrityCheck(false);
+        $result = $sql->query()->fetchAll()[0];
+
+//        var_dump($result) ;
+//        die();
         return $result;
     }
     
     public function statisticsForProduct() 
     {
         $sql = $this->select()
-                ->from(array('p' => "product"), array('name', 'numOfSale','price', 'moneyGained'))
+                ->from(array('p' => "product"), array('name', 'numOfSale','price','moneyGained','rate'))
                 ->setIntegrityCheck(false);
 
         $result = $sql->query()->fetchAll();
@@ -222,14 +229,14 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
     public function topProducts ()
     {
         $sql = $this->select()
-        ->from(array('p' => "product"), array('name','description','price','quantity','rate','photo','addDate','categoryId','moneyGained','numOfSale'))
+        ->from(array('p' => "product"))
         ->order('addDate DESC')
         ->limit(5);
 
         return $this->fetchAll($sql)-> toArray();
     }
     
-    //------------------------------fun 2 -------------------------------------------------------------
+    //------------------------------fun2 -------------------------------------------------------------
 
      public function topSales ()
     {
@@ -257,7 +264,39 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         return $this->fetchAll($sql)-> toArray();
 
     }
+
+    //-function to get 3 related product -
+
+    public function relatedProdects($id)
+    {   
+        $sql=$this->select()
+        ->from(array('p' => "product"),array('categoryId'))
+        ->where("p.id =$id")
+        ->setIntegrityCheck(false);
+
+        $categoryIdArr =$this->fetchAll($sql)->toArray()[0];
+
+        $categoryId= $categoryIdArr["categoryId"];
+
+        // var_dump($categoryId);
+        // exit();
+
+        $sql = $this->select()
+        ->from(array('p' => "product"))
+
+        ->where("p.categoryId = $categoryId and p.id != $id")
+
+        ->setIntegrityCheck(false);
+
+
+        $result= $this->fetchAll($sql)-> toArray();
+
+        var_dump($result);
+        exit();
+    }
     
+
+
 
 }
 

@@ -104,7 +104,7 @@ class CustomerUserController extends Zend_Controller_Action
         $comment_body = $this->_request->getParam('comment_body');
         $this->comment->add($user_id, $product_id, $comment_body);
         // The next line is for returning json object response to ajax
-//        echo '{"success":"done"}';
+         echo '{"success":"done"}';
     }
 
     public function incrementQuantityAction()

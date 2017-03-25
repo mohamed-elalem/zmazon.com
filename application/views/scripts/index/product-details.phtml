@@ -4,17 +4,21 @@
     $language = "_ar";
     if($languageSession->language == "Ar")
         $language = "_ar";
+    include_once ('header.php');
     ?>
-<div class="container">
+<div style ="background : #f3f3f3; padding-top: 25px;">
+<div class="container" style="background: #fff; padding-top: 25px;">
     <div class="product-details section">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <img style="width: 100%"src ="/images/<?= $this->product['photo'] ?>" >
             </div>
-            <div class="col-md-4">
-                <h2> About the product </h2>
-                <p> Product Name:  <?= ($language == "_ar" && ! empty($this->product['name'.$language]) ? $this->product['name'.$language] : $this->product['name']) ?> </p>
-                <p> <?= $this->product['description'] ?> </p>
+            <div class="col-md-6">
+                <h1 style="text-transform: uppercase;font-family: 'Roboto', sans-serif;font-weight: 900;display:inline-block; border-bottom: 5px solid black;"> About the product </h1>
+                <p>
+                <span class="product-name-title" style="font-family: 'Roboto', sans-serif;font-weight: 900 " > Product Name:  </span> <span class="product-name"> <?= ($language == "_ar" && ! empty($this->product['name'.$language]) ? $this->product['name'.$language] : $this->product['name']) ?> </span>
+                </p>
+                <p class="product-desc"> <?= $this->product['description'] ?> </p>
                 <?php if ($this->product['percentage']): ?>
                                     <del>
                                         <span class="Price-amount amount">
@@ -38,7 +42,7 @@
             </div>
         </div>
         <?php  
-        if (!($this->user->isEmpty() )) :
+        if (!($this->user->isEmpty() ) && $user->privilege=="customerUser") :
             if (! $this->rate->hasBeenRated($this->product['id'], $user->id ) ): ?>
                 <div class="rating-form" style="height:150px; ">
                     <form>
@@ -65,12 +69,20 @@
         <?php
             endif;
         ?>  
-
         <div class="comments-list">
             <?php
-            foreach ($this->all_comments as $comment){
+             foreach ($this->all_comments as $comment){
             ?>
-            <div class="comment"><?= $user->userName.": ". $comment['comment'] ?> </div>
+            <div class="comment">
+                  <p class="user-profile">
+                      <img style="width: 50px" class= "profile-picture" src= "/img/user.png" > 
+                  </p>
+                   <div class="comment-container">
+                       <p class= "user-name"><?= $user->userName ?> : </p>
+                       <p> <?= $comment['comment'] ?> </p>
+                       <p class="comment-info" > said on <?= $comment['date'] ?> </p>
+                   </div>
+           </div>
             <?php }
             ?>
         </div>
@@ -81,4 +93,4 @@
             <input type="hidden" data-user_name = "<?= $user->userName ?>" data-product_id = "<?= $this->product['id'] ?>" data-user_id = "<?= $user->id ?>"  type="button" class="hidden-button">
 
         </div>
-<?php endif; ?>
+        <?php endif; ?>
