@@ -185,6 +185,48 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         $result = $query->fetchAll();
         return $result;
     }
+
+    //-----------------------------------------------------------------------------------------------------
+
+
+    public function topProducts ()
+    {
+        $sql = $this->select()
+        ->from(array('p' => "product"), array('name','description','price','quantity','rate','photo','addDate','categoryId','moneyGained','numOfSale'))
+        ->order('addDate DESC')
+        ->limit(5);
+
+        return $this->fetchAll($sql)-> toArray();
+    }
+    
+    //------------------------------fun 2 -------------------------------------------------------------
+
+     public function topSales ()
+    {
+        $sql = $this->select()
+        ->from(array('p' => "product"), array('name'))
+        ->order('numOfSale DESC')
+        ->limit(5);
+        return $this->fetchAll($sql)-> toArray();
+    }   
+    //----------------------------fun3-----------------------------------------------------------------
+
+    public function topOffers()
+    {
+        // select p.name , s.percentage , s.startDate,s.endDate 
+        // from product p ,sale s where  p.id=s.productId and s.endDate>CURRENT_DATE
+        // order by(s.startDate) desc 
+        // limit 5;
+        $sql = $this->select()
+        ->from(array('p' => "product"), array('name'))
+        ->joinInner(array('s' => "sale"),"p.id = s.productId",array('percentage','startDate','endDate'))
+        ->where("s.endDate > CURRENT_DATE")
+        ->order('startDate DESC')
+        ->limit(5)
+        ->setIntegrityCheck(false);
+        return $this->fetchAll($sql)-> toArray();
+
+    }
     
 
 }
