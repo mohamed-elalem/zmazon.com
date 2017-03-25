@@ -36,7 +36,7 @@
 							<ul class="nav navbar-nav">
                                                                 <li><a href="<?= $this->baseUrl() ?>"><i class="fa fa-star"></i> Home </a></li>
                                                             <?php if ($user && $user->privilege=="customerUser"): ?>
-								<li><a href="<?= $this->baseUrl() ?>/customer-user/view-wishlist"><i class="fa fa-star"></i> Wishlist</a></li>
+								<li><a href="<?= $this->baseUrl() ?>/customer-user/view-wish-list"><i class="fa fa-star"></i> Wishlist</a></li>
 								<li><a href="<?= $this->baseUrl() ?>/customer-user/view-cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                                             <?php endif; 
                                                             if($user): ?>

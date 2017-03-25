@@ -242,9 +242,11 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
      public function topSales ()
     {
         $sql = $this->select()
-        ->from(array('p' => "product"))        
+        ->from(array('p' => "product"))
+        ->joinLeft(array("s" => "sale"), "s.productId = p.id", array("percentage", "(s.endDate > CURRENT_DATE and s.startDate <= CURRENT_DATE) AS saleflag"))
         ->order('numOfSale DESC')
-        ->limit(5);
+        ->limit(5)
+        ->setIntegrityCheck(false);
         return $this->fetchAll($sql)-> toArray();
     }   
     //----------------------------fun3-----------------------------------------------------------------
@@ -256,8 +258,8 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         // order by(s.startDate) desc 
         // limit 5;
         $sql = $this->select()
-        ->from(array('p' => "product"), array('name'))
-        ->joinInner(array('s' => "sale"),"p.id = s.productId",array('percentage','startDate','endDate'))
+        ->from(array('p' => "product"))
+        ->joinInner(array('s' => "sale"),"p.id = s.productId",array('percentage','startDate','endDate', "(s.endDate > CURRENT_DATE and s.startDate <= CURRENT_DATE) AS saleflag"))
         ->where("s.endDate > CURRENT_DATE and s.startDate <= CURRENT_DATE ")
         ->order('startDate DESC')
         ->limit(5)
