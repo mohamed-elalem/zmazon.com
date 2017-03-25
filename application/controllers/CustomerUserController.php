@@ -168,6 +168,8 @@ class CustomerUserController extends Zend_Controller_Action
            $mail->addTo("mohamed.el.alem.2017@gmail.com", 'Bill information');
            $mail->setSubject("Bill information");
            $mail->send($tr);
+           
+           $this->shoppingCart->deleteUserCart($user_id);
                 
         }
         
