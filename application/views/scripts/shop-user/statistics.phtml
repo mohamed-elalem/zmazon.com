@@ -1,4 +1,4 @@
-<div class="container">
+<!--<div class="container">
     <div class="row">
         <div class="col-md-2">
             
@@ -14,19 +14,19 @@
                         <th class="text-center">Sold units</th> 
                         <th class="text-center">Price</th> 
                         <th class="text-center">Revenue</th>
-                        <?php
-                            foreach($this->productStatistics as $key => $value)
-                            {
-                                $moneys=$value['numOfSale']*$value['price'];
-                                echo "<tr>"
-                                . "<td class='text-center'>".$value['name']."</td>".
-                                "<td class='text-center'>".$value['numOfSale']."</td>".
-                                "<td class='text-center'>".$value['price']."</td>".
-                                "<td class='text-center'>".$moneys."</td>"
-                                        . "</tr>";
-                            }
-
-                         ?>
+                        //<?php
+//                            foreach($this->productStatistics as $key => $value)
+//                            {
+//                                $moneys=$value['numOfSale']*$value['price'];
+//                                echo "<tr>"
+//                                . "<td class='text-center'>".$value['name']."</td>".
+//                                "<td class='text-center'>".$value['numOfSale']."</td>".
+//                                "<td class='text-center'>".$value['price']."</td>".
+//                                "<td class='text-center'>".$moneys."</td>"
+//                                        . "</tr>";
+//                            }
+//
+//                         ?>
 
                     </table>
                 </div>
@@ -34,4 +34,71 @@
 
         </div>
     </div>
+</div>-->
+
+
+
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1><?=$this->productStatistics['name']?></h1>
+        </div>
+    <div class="panel-body">
+          <h3>
+          <?php
+                  echo "Number of sale :".$this->productStatistics['numOfSale'];
+
+           ?>
+          </h3>
+        <h3>
+          <?php
+                  echo "Money gained :".$this->productStatistics['moneyGained'];
+
+           ?>
+        </h3>
+          <h3>
+          <?php
+                  echo "Quantity :".$this->productStatistics['quantity'];
+
+           ?>
+          </h3>
+        <div class="star-rating-container aggregate">
+            <div style="position: static; background: black; display: block;" class="star-rating" title="Rated <?= $this->productStatistics['rate'] ?> out of 5">
+                <?php for ($i=0; $i< $this->productStatistics['rate'] ; $i++ ): ?>
+                    <span class="star filled"> </span>
+                <?php endfor; ?>
+                <?php  for ($i= $this->productStatistics['rate']; $i < 5; $i++): ?>
+                    <span class="star"> </span>
+                <?php endfor; ?>
+            </div>
+        </div>
+		
+  </div>
+</div>
+
+</div>
+ 
+<!--***********************-->
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1><?=$this->categoryStatistics['cName']?></h1>
+        </div>
+    <div class="panel-body">
+          <h3>
+          <?php
+                  echo "Top product in category :".$this->categoryStatistics['pName'];
+
+           ?>
+          </h3>
+        <h3>
+          <?php
+                  echo "Number of sale :".$this->categoryStatistics['max'];
+
+           ?>
+        </h3>
+		
+  </div>
+</div>
+
 </div>

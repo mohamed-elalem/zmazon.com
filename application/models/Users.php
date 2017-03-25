@@ -44,7 +44,9 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     {
 
         $row=$this->createRow();
-        $row->userName = $formData['username'];
+//        var_dump($formData);
+//        exit();
+        $row->userName = $formData['userName'];
         $row->email = $formData['email'];
         $row->password = md5($formData['password']);
         $row->fname = $formData['fname'];
@@ -62,6 +64,16 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
 
     public function checkUsernameExistence($username) {
         return $this->fetchRow("userName = ".$username);
+    }
+    
+    public function searchForUser($email){
+        $sql =$this->select()
+                ->where("email='$email'")
+                ->setIntegrityCheck(false);
+        $query = $sql->query();
+
+        $result = $query->fetchAll();
+        return $result;
     }
 
 

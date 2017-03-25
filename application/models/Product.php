@@ -89,24 +89,31 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         $this->update($product, "id=$product_id");        
     }
     
-    public function statisticsForCategory()
+    public function statisticsForCategory($productId)
     {
         $sql = $this->select()
-                ->from(array('p' => "product"), array('name as pName', 'numOfSale as max'))
-                ->joinInner(array("c" => "category"), "c.id = p.categoryId", array("name as cName"))
-                ->where('numOfSale IN(?)', $this->select()
-                        ->from(array('p' => "product"), array('max(numOfSale)'))
-                        ->group('categoryId'))
-                ->setIntegrityCheck(false);
+                ->from(array('p' => "product"), array('categoryId'))
+                ->where("id=$productId");
+        $result = $sql->query()->fetchAll()[0];
+        $categoryId=(int)$result['categoryId'];
         
-        $result = $sql->query()->fetchAll();
+        $sql = $this->select()
+                ->from(array('p' => "product"), array('name as pName', 'max(numOfSale) as max'))
+                ->joinInner(array("c" => "category"), "c.id = p.categoryId", array("name as cName"))
+                ->group("p.id")
+                ->where("categoryId =$categoryId")
+                ->setIntegrityCheck(false);
+        $result = $sql->query()->fetchAll()[0];
+
+//        var_dump($result) ;
+//        die();
         return $result;
     }
     
     public function statisticsForProduct() 
     {
         $sql = $this->select()
-                ->from(array('p' => "product"), array('name', 'numOfSale','price'))
+                ->from(array('p' => "product"), array('name', 'numOfSale','price','moneyGained','rate'))
                 ->setIntegrityCheck(false);
 
         $result = $sql->query()->fetchAll();

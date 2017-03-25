@@ -15,7 +15,7 @@ class Application_Form_SignUp extends Zend_Form
 
 
 // username
-        $userName = new Zend_Form_Element_Text('username');
+        $userName = new Zend_Form_Element_Text('userName');
         $userName->setLabel('Username');
         $userName->setAttribs(array('class'=>'form-control','placeholder'=>'e.g. username'));
         $userName->setRequired();
