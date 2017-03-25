@@ -146,8 +146,6 @@ class CustomerUserController extends Zend_Controller_Action
         $mail_body .= "<p>Total price: ".$totalPrice."</p>";
         
         $error = $this->shoppingCart->purchased($user_id, $cart_id, $total_amount, $subtotal);
-        var_dump($error);
-        die();
         if($error) {
             echo '{"success": "failed"}';
         }
