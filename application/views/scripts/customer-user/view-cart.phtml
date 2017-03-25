@@ -1,11 +1,15 @@
 <?php 
     $sub_total = 0;
-    $cart_arrLength = count ($this->cart);
+    $user = $this->user->read();
+
+    $cart_arrLength = count($this->cart);
+    include("header.php");
  ?>
 <div class="container">
     <div class="row">
         <div class="col-md-8">
-        <table class="table table-striped" cellspacing="0">
+         <?php if (count($this->cart) > 0): ?>
+        <table class="cart-table table table-condensed" cellspacing="0">
             <thead>
                 <tr>
 			<th class="product-remove">&nbsp;</th>
@@ -16,6 +20,7 @@
 			<th class="product-subtotal">Total</th>
 		</tr>
             </thead>
+            
             <tbody>
                 
             <?php foreach($this->cart as $product): ?>
@@ -62,7 +67,7 @@
 
                             </div>
                         <?php endif; ?>
-                        <input data-arr_length="<?= $cart_arrLength ?>" class="update-cart-button" name="update_cart" value="Update Cart" disabled="">
+                        <input data-arr_length="<?= $cart_arrLength ?>" class="btn btn-warning update-cart-button" name="update_cart" value="Update Cart" disabled="">
                     </td>
 		</tr>
 
@@ -92,6 +97,10 @@
                     </a>
             </div>
         </div>
+      <?php else: ?>
+            <div>  Your cart is empty </div>
+      <?php endif; ?>
+         
 
 
 </div>

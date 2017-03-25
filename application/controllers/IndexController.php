@@ -21,7 +21,7 @@ class IndexController extends Zend_Controller_Action
     public function indexAction()
     {
         
-        $all_products = $this->product-> allProductsDetails();
+        $all_products = $this->product->allProductsDetails();
         $this->view->all_products = $all_products;
         $auth=Zend_Auth::getInstance();
         $this->view->user = $auth->getStorage();

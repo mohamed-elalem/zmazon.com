@@ -200,6 +200,7 @@ h1 {
 /*************************
 Styling the index page
 *********************/
+
 .product-list .onsale {
     position: absolute;
     top: 6px;
@@ -255,21 +256,29 @@ Styling the index page
     text-align: center;
     padding: 0.45em 0.5em 0.575em;
     display: none;
-    font-size: 22px;
+    font-size: 15px;
     margin-bottom: 0.25em;
     border-radius: 0.25em;
     cursor: pointer;
 }
 .add-to-cart, .increment-quantity{
-    top: 150px;
+    top: 110px;
     color: #fff !important;
-    border-color: #ac1100;
-    background-color: #ff2a13;
-    text-shadow: 0 0.075em 0.075em rgba(0,0,0,0.5);
-    box-shadow: 0 0.25em 0 0 #a71000, 0 4px 9px rgba(0,0,0,0.75);
+    background: #FE980F !important;
+    
+
 }
 .add-to-wishlist, .remove-from-wishlist{
-    top: 220px;
+    top: 170px;
+    background: #FE980F !important;
+    border: 0 none;
+    border-radius: 0;
+    color: #696763;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    margin-bottom: 25px;
+    color: #fff;
+    
 }
 .remove-from-wish-lss
 .product-list del .amount {
@@ -353,4 +362,8 @@ Styling the index page
   display: inline-block;
   vertical-align: middle;
   float:none;
+}
+
+.cart-table td{
+    vertical-align: middle !important;
 }

@@ -124,6 +124,7 @@ class CustomerUserController extends Zend_Controller_Action
         $this->view->cart = $this->shoppingCart->getCartDetails($user_id);
         $this->view->coupon = $this->coupon->getCouponCode($user_id);
         $this->view->user_id = $user_id;
+        $this->view->user = $auth->getStorage();
         
     }
 
