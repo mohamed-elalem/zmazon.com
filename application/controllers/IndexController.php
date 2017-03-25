@@ -89,6 +89,8 @@ class IndexController extends Zend_Controller_Action
     {
         $categoryId = $this->getParam("id");
         $this->view->products = $this->product->allCategoryProductsDetails($categoryId);
+        //die(var_dump($this->view->products));
+        
         $auth=Zend_Auth::getInstance();
         $this->view->user = $auth->getStorage();
         

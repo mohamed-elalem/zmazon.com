@@ -60,6 +60,7 @@ class CustomerUserController extends Zend_Controller_Action
 
     public function removeFromWishListAction()
     {
+        //die(json_encode($this->getRequest()->getParams()));
         $user_id  = $this->_request->getParam('user_id');
         $product_id  = $this->_request->getParam('product_id');
         $this->wishList->remove($user_id, $product_id);
@@ -178,8 +179,11 @@ class CustomerUserController extends Zend_Controller_Action
 
     public function viewWishListAction()
     {
-        $userId = 4; // Stored in session
+        $userSession = new Zend_Session_Namespace("user");
+        
+        $userId = $userSession->user->id; // Stored in session
         $this->view->userWishList = $this->wishList->retrieveUserWishList($userId);
+        $this->view->userId = $userId;
         // = $customerWishList;
         
     }

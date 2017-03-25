@@ -36,6 +36,7 @@
                     context: this,
                     data: {'product_id': $(this).attr("data-product_id"), 'user_id': $(this).attr("data-user_id")},
                     success: function(json){
+                        console.log(json);
                         $(this).text('add to wish list').addClass('add-to-wishlist btn-primary').removeClass('remove-from-wishlist btn-danger');
                         if(editing) {
                             $($(e.target).parent().parent()).hide("drop", 750, function() {
