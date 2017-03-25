@@ -67,10 +67,10 @@ class ShopUserController extends Zend_Controller_Action
             {
 //                $this->productModel->editProduct($productId,$_POST);
 //                $this->redirect('/shop-user/list-all-products');
-                $productData['name']= $this->productForm->name->getValue();
+                /*$productData['name']= $this->productForm->name->getValue();
                 $productData['description']= $this->productForm->description->getValue();
                 $productData['quantity']= $this->productForm->quantity->getValue();
-                $productData['price']= $this->productForm->price->getValue();
+                $productData['price']= $this->productForm->price->getValue();*/
                 if($this->productForm->photo->isUploaded())
                 {
                     //$productData['photo']=$productForm->photo->getFileName();
@@ -79,8 +79,8 @@ class ShopUserController extends Zend_Controller_Action
                 else {
                     $productData['photo']='Null';
                 }
-                $productData['categoryId']= $this->productForm->categoryId->getValue();
-                $this->productModel->editProduct($productId,$productData);
+                //$productData['categoryId']= $this->productForm->categoryId->getValue();
+                $this->productModel->editProduct($productId, array_merge($productData, $request->getParams()));
                 $this->redirect('/shop-user/list-all-products');
                 
             }
