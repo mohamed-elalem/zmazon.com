@@ -17,10 +17,11 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         $sql = $this->select()
                 ->from(array('p' => "product"))
                 ->where("p.id = $id")
-                ->joinLeft(array("s" => "sale"), "p.id = s.productId", array("percentage", "startDate", "endDate"))
+                ->joinLeft(array("s" => "sale"), "p.id = s.productId", array("percentage", "startDate", "endDate" , "(s.endDate > CURRENT_DATE and s.startDate <= CURRENT_DATE) AS saleflag"))
                 ->joinLeft(array("w" => "wishList"),  "w.productId = p.id", array("userId as wishlist_user_id"))
                 ->joinLeft(array("cp" => "cart_products"), "cp.productId = p.id", array("productId as cart_product_id"))
                 ->joinLeft(array("sc" => "shoppingCart" ), "sc.id = cp.cartId" , array("id as cart_id", "userId as shopping_cart_user_id"))
+                ->where("s.endDate > CURRENT_DATE and s.startDate <= CURRENT_DATE ")
                 ->setIntegrityCheck(false);        
         $query = $sql->query();
         $result= $query->fetchAll()[0];
@@ -35,13 +36,14 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
     {
         $sql = $this->select()
                 ->from(array('p' => "product"))
-                ->joinLeft(array("s" => "sale"), "p.id = s.productId", array("percentage", "startDate", "endDate"))
+                ->joinLeft(array("s" => "sale"), "p.id = s.productId", array("percentage", "startDate", "endDate", "(s.endDate > CURRENT_DATE and s.startDate <= CURRENT_DATE) AS saleflag"))
                 ->joinLeft(array("w" => "wishList"),  "w.productId = p.id", array("userId as wishlist_user_id"))
                 ->joinLeft(array("cp" => "cart_products"), "cp.productId = p.id", array("productId as cart_product_id"))
                 ->joinLeft(array("sc" => "shoppingCart" ), "sc.id = cp.cartId" , array("id as cart_id", "userId as shopping_cart_user_id"))
                 ->setIntegrityCheck(false);
         
-        
+//        echo $sql->__toString();
+//        die();
         $query = $sql->query();
         $result= $query->fetchAll();
         return $result;
@@ -50,7 +52,9 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
     {
         $product=$this->createRow();
         $product->name =$productData['name'];
+        $product->name_ar = $productData['name_ar'];
         $product->description=$productData['description'];
+        $product->description_ar = $productData['description_ar'];
         $product->quantity=(int)$productData['quantity'];
         $product->price=(float)$productData['price'];
         $product->rate=0;
@@ -204,7 +208,7 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
      public function topSales ()
     {
         $sql = $this->select()
-        ->from(array('p' => "product"), array('name'))
+        ->from(array('p' => "product"))        
         ->order('numOfSale DESC')
         ->limit(5);
         return $this->fetchAll($sql)-> toArray();
@@ -220,7 +224,7 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
         $sql = $this->select()
         ->from(array('p' => "product"), array('name'))
         ->joinInner(array('s' => "sale"),"p.id = s.productId",array('percentage','startDate','endDate'))
-        ->where("s.endDate > CURRENT_DATE")
+        ->where("s.endDate > CURRENT_DATE and s.startDate <= CURRENT_DATE ")
         ->order('startDate DESC')
         ->limit(5)
         ->setIntegrityCheck(false);

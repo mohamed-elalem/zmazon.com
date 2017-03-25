@@ -84,7 +84,7 @@ $col_counter  = 0;
 			<div class="row">
 				<div class="col-sm-12">
 					<div id="slider-carousel" class="carousel slide" data-ride="carousel">
-                                                <?php  $arrayLength = count($this->all_products ); ?>
+                                                <?php  $arrayLength = count($this->topProducts ); ?>
 
 						<ol class="carousel-indicators">
                                                     <?php for($i=0;  $i<$arrayLength; $i++): ?>
@@ -99,7 +99,7 @@ $col_counter  = 0;
 						
 						<div class="carousel-inner">
                                                     
-                                                    <?php $counter =0;foreach ($this->all_products as $product): ?>
+                                                    <?php $counter =0;foreach ($this->topProducts as $product): ?>
 							<div class="item 
                                                             <?php if($counter ==0): ?>
                                                                 active">
@@ -108,7 +108,7 @@ $col_counter  = 0;
                                                             <?php endif; ?>
                                                                 
 								<div class="col-sm-6">
-									<h1><span>F</span>EATURED PRODUCT</h1>
+									<h1><span>R</span>ECENT PRODUCTS</h1>
 									<h2> <?= $product['name'] ?></h2>
 									<p> <?= $product['description'] ?> </p>
                                                                         <a href="<?= $this->baseUrl() ?>/index/product-details/product_id/<?= $product['id']?>"  class="btn btn-default get">View more details </a>
@@ -135,451 +135,416 @@ $col_counter  = 0;
 	
 	<section>
 		<div class="container">
-			<div class="row">
-				<div class="col-sm-3">
-					<div class="left-sidebar">
-						<h2>Category</h2>
-						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
-						
-							
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title"><a href="#">Kids</a></h4>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title"><a href="#">Fashion</a></h4>
-								</div>
-							</div>
-							
-						</div><!--/category-products-->				
-					
-					</div>
-				</div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="left-sidebar">
+                                    <h2>Category</h2>
+                                    <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+
+                                        <?php foreach($this->categories as $category): ?>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a href="/index/list-products/id/<?=$category['id']?>/"><?=$category['name']?></a>
+                                                    </h4>
+                                            </div>
+                                        </div>
+                                        <?php endforeach ?>
+                                    </div>
+                            </div>
+                        </div>
 				
-				<div class="col-sm-9 padding-right">
-					<div class="features_items"><!--features_items-->
-						<h2 class="title text-center">Features Items</h2>
-                                                 <div class="product-list">
-                                                    <?php foreach ($this->all_products as $product) { 
-                                                        $col_counter ++;
-                                                        if ($col_counter-1 % 3 == 0) : ?>
+                        <div class="col-sm-9 padding-right">
+                                <div class="features_items"><!--features_items-->
+                                        <h2 class="title text-center">Features Items</h2>
+                                         <div class="product-list">
+                                            <?php foreach ($this->all_products as $product) { 
+                                                $col_counter ++;
+                                                if ($col_counter-1 % 3 == 0) : ?>
 
-                                                            <div class="row">
-                                                        <?php endif; ?>
-                                                                <div class="col-sm-4">
-                                                                    <div class="entry-product">
-                                                                        <a href="/index/product-details/product_id/<?= $product['id'] ?>" class="Product-link">
-                                                                        <?php if ($product['percentage']): ?>
-                                                                            <span class="onsale">Sale!</span>
-                                                                        <?php endif; ?>
-                                                                        </a>
-                                                                        <div class="entry-featured">
-                                                                            <a  style="cursor: pointer" href="/index/product-details/product_id/<?= $product['id'] ?>">
-                                                                                <img style="width:100%" src="/images/<?= $product['photo'] ?>" >
-                                                                                <div class="star-rating-container aggregate">
-                                                                                    <div class="star-rating" title="Rated <?= $product['rate'] ?> out of 5">
-                                                                                        <?php for ($i=0; $i< $product['rate'] ; $i++ ): ?>
-                                                                                            <span class="star filled"> </span>
-                                                                                        <?php endfor; ?>
-                                                                                        <?php  for ($i= $product['rate']; $i < 5; $i++): ?>
-                                                                                            <span class="star"> </span>
-                                                                                        <?php endfor; ?>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
+                                                    <div class="row">
+                                                <?php endif; ?>
+                                                        <div class="col-sm-4">
+                                                            <div class="entry-product">
+                                                                <a href="/index/product-details/product_id/<?= $product['id'] ?>" class="Product-link">
+                                                                <?php if (($product['saleflag']== 1) && $product['percentage']): ?>
+                                                                    <span class="onsale">Sale!</span>
+                                                                <?php endif; ?>
+                                                                </a>
+                                                                <div class="entry-featured">
+                                                                    <a  style="cursor: pointer" href="/index/product-details/product_id/<?= $product['id'] ?>">
+                                                                        <img style="width:100%" src="/images/<?= $product['photo'] ?>" >
+                                                                        <div class="star-rating-container aggregate">
+                                                                            <div class="star-rating" title="Rated <?= $product['rate'] ?> out of 5">
+                                                                                <?php for ($i=0; $i< $product['rate'] ; $i++ ): ?>
+                                                                                    <span class="star filled"> </span>
+                                                                                <?php endfor; ?>
+                                                                                <?php  for ($i= $product['rate']; $i < 5; $i++): ?>
+                                                                                    <span class="star"> </span>
+                                                                                <?php endfor; ?>
+                                                                            </div>
+                                                                        </div>
+                                                                    </a>
+                                                                    <?php
+                                                                    if ($user && $user->privilege=="customerUser") : 
+                                                                        if($product['quantity'] > 0): 
+                                                                            if ($user->id == $product['shopping_cart_user_id'] ) : ?>
+                                                                                <a rel="nofollow"  data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" class="increment-quantity">
+                                                                                    Add to cart
+                                                                                </a>
                                                                             <?php
-                                                                            if (!($this->user->isEmpty() )) : 
-                                                                                if($product['quantity'] > 0): 
-                                                                                    if ($user->id == $product['shopping_cart_user_id'] ) : ?>
-                                                                                        <a rel="nofollow"  data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" class="increment-quantity">
-                                                                                            Add to cart
-                                                                                        </a>
-                                                                                    <?php
-                                                                                    else: ?>
-                                                                                        <a rel="nofollow"  data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" class="add-to-cart">
-                                                                                            Add to cart
-                                                                                        </a>
-                                                                                    <?php
-                                                                                    endif;
-                                                                                    if ( $user->id == $product['wishlist_user_id']  ) : ?>
-                                                                                            <a class="btn btn-danger remove-from-wishlist" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" > Remove From wish list </a>
-                                                                                    <?php
-                                                                                    else: ?>
-                                                                                            <a class="btn btn-primary add-to-wishlist" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" > Add to wish list </a>
-
-                                                                                    <?php    
-                                                                                    endif;
-                                                                                endif;
+                                                                            else: ?>
+                                                                                <a rel="nofollow"  data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" class="add-to-cart">
+                                                                                    Add to cart
+                                                                                </a>
+                                                                            <?php
                                                                             endif;
-                                                                                 ?>
-                                                                        </div>
-                                                                        <div class="entry-wrap">
-                                                                            <header class="entry-header">
-                                                                                <h3 style="text-align: left;">
-                                                                                    <a class="product-name"  href="/index/product-details/product_id/<?= $product['id'] ?>"><?=($language == "_ar" && ! empty($product['name'.$language]) ? $product['name'.$language] : $product['name']) ?></a>
-                                                                                </h3>
-                                                                                <div style="text-align: left;"class="price">
-                                                                                <?php if ($product['percentage']): ?>
-                                                                                    <del>
-                                                                                        <span class="Price-amount amount">
-                                                                                        <span class="Price-currencySymbol">$</span><?= $product['price'] ?></span>
-                                                                                    </del> 
-                                                                                    <ins>
-                                                                                        <span class="Price-amount amount">
-                                                                                        <span class="Price-amount amount">$</span><?= $product['price']* ((100-$product['percentage']) / 100) ?>
-                                                                                        </span>
-                                                                                    </ins>
-                                                                                </div>
-                                                                                <?php else : ?>
-                                                                                    <ins>
-                                                                                        <span class="Price-amount amount">
-                                                                                        <span class="Price-currencySymbol">$</span><?= $product['price'] ?>
-                                                                                        </span>
-                                                                                    </ins>
-                                                                                <?php
-                                                                                endif;
-                                                                                ?>
+                                                                            if ( $user->id == $product['wishlist_user_id']  ) : ?>
+                                                                                    <a class="btn btn-danger remove-from-wishlist" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" > Remove From wish list </a>
+                                                                            <?php
+                                                                            else: ?>
+                                                                                    <a class="btn btn-primary add-to-wishlist" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" > Add to wish list </a>
 
-
-                                                                            </header>
-                                                                        </div>
-                                                                    </div>
+                                                                            <?php    
+                                                                            endif;
+                                                                        endif;
+                                                                    endif;
+                                                                         ?>
                                                                 </div>
+                                                                <div class="entry-wrap">
+                                                                    <header class="entry-header">
+                                                                        <h3 style="text-align: left;">
+                                                                            <a class="product-name"  href="/index/product-details/product_id/<?= $product['id'] ?>">
+                                                                                 <?=($language == "_ar" && ! empty($product['name'.$language]) ? $product['name'.$language] : $product['name']) ?></a>
+                                                                        </h3>
+                                                                        <div style="text-align: left;"class="price">
+                                                                        <?php if (($product['saleflag']== 1) && $product['percentage']): ?>
+                                                                            <del>
+                                                                                <span class="Price-amount amount">
+                                                                                <span class="Price-currencySymbol">$</span><?= $product['price'] ?></span>
+                                                                            </del> 
+                                                                            <ins>
+                                                                                <span class="Price-amount amount">
+                                                                                <span class="Price-amount amount">$</span><?= $product['price']* ((100-$product['percentage']) / 100) ?>
+                                                                                </span>
+                                                                            </ins>
+                                                                        </div>
+                                                                        <?php else : ?>
+                                                                            <ins>
+                                                                                <span class="Price-amount amount">
+                                                                                <span class="Price-currencySymbol">$</span><?= $product['price'] ?>
+                                                                                </span>
+                                                                            </ins>
+                                                                        <?php
+                                                                        endif;
+                                                                        ?>
 
-                                                            <?php  if ($col_counter % 3 == 0) : ?> 
-                                                                    </div>
-                                                        <?php endif;
-                                                    } 
-                                                    ?>
-                                                             </div>
-												
-					</div><!--features_items-->
-					
-					<div class="category-tab"><!--category-tab-->
-						<div class="col-sm-12">
-							<ul class="nav nav-tabs">
-								<li class="active"><a href="#tshirt" data-toggle="tab">T-Shirt</a></li>
-								<li><a href="#blazers" data-toggle="tab">Blazers</a></li>
-								<li><a href="#sunglass" data-toggle="tab">Sunglass</a></li>
-								<li><a href="#kids" data-toggle="tab">Kids</a></li>
-								<li><a href="#poloshirt" data-toggle="tab">Polo shirt</a></li>
-							</ul>
-						</div>
-						<div class="tab-content">
-							<div class="tab-pane fade active in" id="tshirt" >
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="<?= $this->baseUrl() ?>/img/home/gallery1.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="<?= $this->baseUrl() ?>/img/home/gallery2.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="<?= $this->baseUrl() ?>/img/home/gallery3.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="<?= $this->baseUrl() ?>/img/home/gallery4.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-							</div>
-							
-							<div class="tab-pane fade" id="blazers" >
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="<?= $this->baseUrl() ?>/img/home/gallery4.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="<?= $this->baseUrl() ?>/img/home/gallery3.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="<?= $this->baseUrl() ?>/img/home/gallery2.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="<?= $this->baseUrl() ?>/img/home/gallery1.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-							</div>
-							
-							<div class="tab-pane fade" id="sunglass" >
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="<?= $this->baseUrl() ?>/img/home/gallery3.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="<?= $this->baseUrl() ?>/img/home/gallery4.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="<?= $this->baseUrl() ?>/img/home/gallery1.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="<?= $this->baseUrl() ?>/img/home/gallery2.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-							</div>
-							
-							<div class="tab-pane fade" id="kids" >
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="<?= $this->baseUrl() ?>/img/home/gallery1.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								
-							</div>
-							
-							<div class="tab-pane fade" id="poloshirt" >
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="<?= $this->baseUrl() ?>/img/home/gallery2.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="<?= $this->baseUrl() ?>/img/home/gallery4.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								
-							</div>
-						</div>
-					</div><!--/category-tab-->
-					
-					<div class="recommended_items"><!--recommended_items-->
-						<h2 class="title text-center">recommended items</h2>
-						
-						<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-							<div class="carousel-inner">
-								<div class="item active">	
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="<?= $this->baseUrl() ?>/img/home/recommend1.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-												
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="<?= $this->baseUrl() ?>/img/home/recommend2.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-												
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="<?= $this->baseUrl() ?>/img/home/recommend3.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-												
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="item">	
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="<?= $this->baseUrl() ?>/img/home/recommend1.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-												
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="<?= $this->baseUrl() ?>/img/home/recommend2.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-												
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="<?= $this->baseUrl() ?>/img/home/recommend3.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-												
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							 <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
-								<i class="fa fa-angle-left"></i>
-							  </a>
-							  <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
-								<i class="fa fa-angle-right"></i>
-							  </a>			
-						</div>
-					</div><!--/recommended_items-->
-					
-				</div>
+
+                                                                    </header>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    <?php  if ($col_counter % 3 == 0) : ?> 
+                                                            </div>
+                                                <?php endif;
+                                            } 
+                                            ?>
+                                                     </div>
+
+                                </div><!--features_items-->
+
+                                <div class="category-tab"><!--category-tab-->
+                                        <div class="col-sm-12">
+                                                <ul class="nav nav-tabs">
+                                                        <li class="active"><a href="#tshirt" data-toggle="tab">T-Shirt</a></li>
+                                                        <li><a href="#blazers" data-toggle="tab">Blazers</a></li>
+                                                        <li><a href="#sunglass" data-toggle="tab">Sunglass</a></li>
+                                                        <li><a href="#kids" data-toggle="tab">Kids</a></li>
+                                                        <li><a href="#poloshirt" data-toggle="tab">Polo shirt</a></li>
+                                                </ul>
+                                        </div>
+                                        <div class="tab-content">
+                                                <div class="tab-pane fade active in" id="tshirt" >
+                                                        <div class="col-sm-3">
+                                                                <div class="product-image-wrapper">
+                                                                        <div class="single-products">
+                                                                                <div class="productinfo text-center">
+                                                                                        <img src="<?= $this->baseUrl() ?>/img/home/gallery1.jpg" alt="" />
+                                                                                        <h2>$56</h2>
+                                                                                        <p>Easy Polo Black Edition</p>
+                                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                                </div>
+
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                                <div class="product-image-wrapper">
+                                                                        <div class="single-products">
+                                                                                <div class="productinfo text-center">
+                                                                                        <img src="<?= $this->baseUrl() ?>/img/home/gallery2.jpg" alt="" />
+                                                                                        <h2>$56</h2>
+                                                                                        <p>Easy Polo Black Edition</p>
+                                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                                </div>
+
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                                <div class="product-image-wrapper">
+                                                                        <div class="single-products">
+                                                                                <div class="productinfo text-center">
+                                                                                        <img src="<?= $this->baseUrl() ?>/img/home/gallery3.jpg" alt="" />
+                                                                                        <h2>$56</h2>
+                                                                                        <p>Easy Polo Black Edition</p>
+                                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                                </div>
+
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                                <div class="product-image-wrapper">
+                                                                        <div class="single-products">
+                                                                                <div class="productinfo text-center">
+                                                                                        <img src="<?= $this->baseUrl() ?>/img/home/gallery4.jpg" alt="" />
+                                                                                        <h2>$56</h2>
+                                                                                        <p>Easy Polo Black Edition</p>
+                                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                                </div>
+
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+
+                                                <div class="tab-pane fade" id="blazers" >
+                                                        <div class="col-sm-3">
+                                                                <div class="product-image-wrapper">
+                                                                        <div class="single-products">
+                                                                                <div class="productinfo text-center">
+                                                                                        <img src="<?= $this->baseUrl() ?>/img/home/gallery4.jpg" alt="" />
+                                                                                        <h2>$56</h2>
+                                                                                        <p>Easy Polo Black Edition</p>
+                                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                                </div>
+
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                                <div class="product-image-wrapper">
+                                                                        <div class="single-products">
+                                                                                <div class="productinfo text-center">
+                                                                                        <img src="<?= $this->baseUrl() ?>/img/home/gallery3.jpg" alt="" />
+                                                                                        <h2>$56</h2>
+                                                                                        <p>Easy Polo Black Edition</p>
+                                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                                </div>
+
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                                <div class="product-image-wrapper">
+                                                                        <div class="single-products">
+                                                                                <div class="productinfo text-center">
+                                                                                        <img src="<?= $this->baseUrl() ?>/img/home/gallery2.jpg" alt="" />
+                                                                                        <h2>$56</h2>
+                                                                                        <p>Easy Polo Black Edition</p>
+                                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                                </div>
+
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                                <div class="product-image-wrapper">
+                                                                        <div class="single-products">
+                                                                                <div class="productinfo text-center">
+                                                                                        <img src="<?= $this->baseUrl() ?>/img/home/gallery1.jpg" alt="" />
+                                                                                        <h2>$56</h2>
+                                                                                        <p>Easy Polo Black Edition</p>
+                                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                                </div>
+
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+
+                                                <div class="tab-pane fade" id="sunglass" >
+                                                        <div class="col-sm-3">
+                                                                <div class="product-image-wrapper">
+                                                                        <div class="single-products">
+                                                                                <div class="productinfo text-center">
+                                                                                        <img src="<?= $this->baseUrl() ?>/img/home/gallery3.jpg" alt="" />
+                                                                                        <h2>$56</h2>
+                                                                                        <p>Easy Polo Black Edition</p>
+                                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                                </div>
+
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                                <div class="product-image-wrapper">
+                                                                        <div class="single-products">
+                                                                                <div class="productinfo text-center">
+                                                                                        <img src="<?= $this->baseUrl() ?>/img/home/gallery4.jpg" alt="" />
+                                                                                        <h2>$56</h2>
+                                                                                        <p>Easy Polo Black Edition</p>
+                                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                                </div>
+
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                                <div class="product-image-wrapper">
+                                                                        <div class="single-products">
+                                                                                <div class="productinfo text-center">
+                                                                                        <img src="<?= $this->baseUrl() ?>/img/home/gallery1.jpg" alt="" />
+                                                                                        <h2>$56</h2>
+                                                                                        <p>Easy Polo Black Edition</p>
+                                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                                </div>
+
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                                <div class="product-image-wrapper">
+                                                                        <div class="single-products">
+                                                                                <div class="productinfo text-center">
+                                                                                        <img src="<?= $this->baseUrl() ?>/img/home/gallery2.jpg" alt="" />
+                                                                                        <h2>$56</h2>
+                                                                                        <p>Easy Polo Black Edition</p>
+                                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                                </div>
+
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+
+                                                <div class="tab-pane fade" id="kids" >
+                                                        <div class="col-sm-3">
+                                                                <div class="product-image-wrapper">
+                                                                        <div class="single-products">
+                                                                                <div class="productinfo text-center">
+                                                                                        <img src="<?= $this->baseUrl() ?>/img/home/gallery1.jpg" alt="" />
+                                                                                        <h2>$56</h2>
+                                                                                        <p>Easy Polo Black Edition</p>
+                                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                                </div>
+
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+
+                                                </div>
+
+                                                <div class="tab-pane fade" id="poloshirt" >
+                                                        <div class="col-sm-3">
+                                                                <div class="product-image-wrapper">
+                                                                        <div class="single-products">
+                                                                                <div class="productinfo text-center">
+                                                                                        <img src="<?= $this->baseUrl() ?>/img/home/gallery2.jpg" alt="" />
+                                                                                        <h2>$56</h2>
+                                                                                        <p>Easy Polo Black Edition</p>
+                                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                                </div>
+
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                                <div class="product-image-wrapper">
+                                                                        <div class="single-products">
+                                                                                <div class="productinfo text-center">
+                                                                                        <img src="<?= $this->baseUrl() ?>/img/home/gallery4.jpg" alt="" />
+                                                                                        <h2>$56</h2>
+                                                                                        <p>Easy Polo Black Edition</p>
+                                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                                </div>
+
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+
+                                                </div>
+                                        </div>
+                                </div><!--/category-tab-->
+
+                                <div class="recent_items"><!--recommended_items-->
+                                        <h2 class="title text-center">Recent Sales</h2>
+
+                                        <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+                                                <div class="carousel-inner">
+                                                    <?php  
+                                                        $arrLen = count($this->topSales);
+                                                        $topSales = $this->topSales;
+                                                        for ($i=0; $i < $arrLen;) :
+                                                            if ($i== 0): ?>
+                                                                <div class="item active">
+                                                            <?php else : ?>
+                                                                <div class="item">
+                                                            <?php endif; ?>
+                                                          <?php  for ($j=0; $j<3 && $i< $arrLen; $j++, $i++): ?>
+                                                            
+                                                                <div class="col-sm-4">
+                                                                        <div class="product-image-wrapper">
+                                                                                <div class="single-products">
+                                                                                        <div class="productinfo text-center">
+                                                                                                <img src="/images/<?= $topSales[$i]['photo'] ?>" alt="" />
+                                                                                                <?php if (($topSales[$i]['saleflag']== 1) && $topSales[$i]['percentage']): ?>
+                                                                                                    <del>
+                                                                                                        <span class="Price-amount amount">
+                                                                                                        <span class="Price-currencySymbol">$</span><?= $topSales[$i]['price'] ?></span>
+                                                                                                    </del> 
+                                                                                                    <ins>
+                                                                                                        <span class="Price-amount amount">
+                                                                                                        <span class="Price-amount amount">$</span><?= $topSales[$i]['price']* ((100-$topSales[$i]['percentage']) / 100) ?>
+                                                                                                        </span>
+                                                                                                    </ins>
+                                                                                                </div>
+                                                                                                <?php else : ?>
+                                                                                                    <ins>
+                                                                                                        <span class="Price-amount amount">
+                                                                                                        <span class="Price-currencySymbol">$</span><?= $topSales[$i]['price'] ?>
+                                                                                                        </span>
+                                                                                                    </ins>
+                                                                                                <?php
+                                                                                                endif;
+                                                                                                ?>
+                                                                                                <p> <?= ($language == "_ar" && ! empty($topSales[$i]['name'.$language]) ? $topSales[$i]['name'.$language] : $topSales[$i]['name'])  ?></p>
+<!--                                                                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>-->
+                                                                                        </div>
+
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+                                                               
+                                                               
+                                                       <?php endfor; ?>
+                                                          </div>
+                                                     <?php endfor; ?>
+                                                        
+
+                                                </div>
+                                                 <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+                                                        <i class="fa fa-angle-left"></i>
+                                                  </a>
+                                                  <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+                                                        <i class="fa fa-angle-right"></i>
+                                                  </a>			
+                                        </div>
+                                </div><!--/recommended_items-->
+
+                        </div>
 			</div>
 		</div>
 	</section>
