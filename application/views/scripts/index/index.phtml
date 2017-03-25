@@ -122,7 +122,7 @@ $col_counter  = 0;
                                                                     </a>
                                                                     <?php
                                                                     if ($user && $user->privilege=="customerUser") : 
-                                                                        if($product['quantity'] > 0): 
+                                                                        if($product['quantity'] > 0 && $product['purchasedFlag'] == 0): 
                                                                             if ($user->id == $product['shopping_cart_user_id'] ) : ?>
                                                                                 <a rel="nofollow"  data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" class="increment-quantity">
                                                                                     Add to cart

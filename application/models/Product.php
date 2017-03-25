@@ -38,8 +38,8 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
                 ->from(array('p' => "product"))
                 ->joinLeft(array("s" => "sale"), "p.id = s.productId", array("percentage", "startDate", "endDate", "(s.endDate > CURRENT_DATE and s.startDate <= CURRENT_DATE) AS saleflag"))
                 ->joinLeft(array("w" => "wishList"),  "w.productId = p.id", array("userId as wishlist_user_id"))
-                ->joinLeft(array("cp" => "cart_products"), "cp.productId = p.id", array("productId as cart_product_id"))
-                ->joinLeft(array("sc" => "shoppingCart" ), "sc.id = cp.cartId" , array("id as cart_id", "userId as shopping_cart_user_id"))
+                ->joinInner(array("cp" => "cart_products"), "cp.productId = p.id", array("productId as cart_product_id"))
+                ->joinInner(array("sc" => "shoppingCart" ), "sc.id = cp.cartId" , array("id as cart_id", "userId as shopping_cart_user_id", "purchasedFlag"))
                 ->setIntegrityCheck(false);
         
 //        echo $sql->__toString();
@@ -265,8 +265,7 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
 
         $result= $this->fetchAll($sql)-> toArray();
 
-        var_dump($result);
-        exit();
+      
     }
     
 

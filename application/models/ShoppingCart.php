@@ -57,14 +57,18 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
         }
     }
     public function checkProductAvailability($user_id, $product_id){
+       
+        
+        
+        
+        
        $sql = $this->select()
                 ->from ( array('p' => 'product'),array( 'quantity as storage_product_quantity', 'id') )
                 ->joinLeft(array('cp' => 'cart_products'), "cp.productId = p.id", array('productId', 'quantity as cart_product_quantity'))
                 ->joinLeft(array("sc" => "shoppingCart"), "sc.id = cp.cartId")
-                ->where("p.id= $product_id and (isnull(sc.userId) or sc.userId = $user_id) and (isnull(sc.purchasedFlag) or sc.purchasedFlag = 0)")
+                ->where(" sc.userId = $user_id and sc.purchasedFlag = 0 or sc.purchasedFlag is null")
                 ->setIntegrityCheck(false);
 
-//      echo json_encode([$sql->__toString()]);
       $query = $sql->query();
       $result = $query->fetchAll()[0];
       
@@ -72,6 +76,18 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
           if (!is_null($result['cart_product_quantity']) && $result['cart_product_quantity'] >= $result['storage_product_quantity']){
               return false;
               
+          }
+          else if(is_null($result['cart_product_quantity'])) {
+              $sql = $this->select()
+                      ->from("product")
+                      ->where("id = ".$product_id." and quantity > 0")
+                      ->setIntegrityCheck(false);
+              $query = $sql->query();
+              $result = $query->fetchAll();
+              if(empty($result))
+                  return false;
+              else
+                  return true;
           }
           else {
               return true;
@@ -85,16 +101,19 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
       }
     }
     public function add($user_id, $product_id, $cartProductsModel){
-       if ( ! $this->checkProductAvailability( $user_id, $product_id) ){
+        $bool  = $this->checkProductAvailability( $user_id, $product_id);
+       if ( $bool == false ){
             echo  json_encode(['success' => 'fail']);
             die();
        }
      
        $sql = $this->select()
                 ->from(array('sc' => "shoppingCart") )
-                ->where("sc.userId= $user_id")
+                ->where("sc.userId= $user_id and purchasedFlag = 0")
                 ->setIntegrityCheck(false);
        $query = $sql->query();
+       echo $sql->__toString();
+       die();
        
        $cart_id=  $query->fetchAll()[0];
        $cart_id = $cart_id['id'];
