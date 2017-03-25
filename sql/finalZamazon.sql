@@ -18,7 +18,8 @@
 --
 -- Table structure for table `cart_products`
 --
-
+CREATE Database Zamazon;
+use Zamazon;
 DROP TABLE IF EXISTS `cart_products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;

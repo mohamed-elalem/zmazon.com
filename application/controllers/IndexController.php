@@ -79,8 +79,33 @@ class IndexController extends Zend_Controller_Action
         $this->view->products = $this->product->retrieveCategoryProducts($categoryId);
     }
 
+    public function topproductAction()
+    {
+        $top_products = new Application_Model_Product();
+        $this->view->topProducts = $top_products->topProducts();   
+    }
+
+    public function topsaleAction()
+    {
+        $top_sales = new Application_Model_Product();
+        $this->view->topSales = $top_sales->topSales(); 
+    }
+
+    public function topoffersActionAction()
+    {
+        $top_offers = new Application_Model_Product();
+        $this->view->topOffers = $top_offers->topOffers(); 
+    }
+    
+
 
 }
+
+
+
+
+
+
 
 
 
