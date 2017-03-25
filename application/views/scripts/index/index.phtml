@@ -10,74 +10,9 @@ $col_counter  = 0;
 //die();
 
 ?>
-	<header id="header">
-		<div class="header-middle"><!--header-middle-->
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-4">
-						<div class="logo pull-left">
-							<a href="index.html"><img src="<?= $this->baseUrl() ?>/img/home/logo.png" alt="" /></a>
-						</div>
-						<div class="btn-group pull-right">
-							<div class="btn-group">
-								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-									<?php if($language == "_ar"): ?>
-                                                                                العربية
-                                                                        <?php else: ?>
-                                                                                English
-                                                                            
-                                                                        <?php endif; ?>
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu">
-                                                                    <li><a href="/index/toggle-language">
-                                                                        <?php if($language == "_ar"): ?>
-                                                                                English
-                                                                        <?php else: ?>
-                                                                                 العربية
-                                                                            
-                                                                        <?php endif; ?>
-                                                                        </a></li>
-								</ul>
-							</div>
-							
-						</div>
-					</div>
-					<div class="col-sm-8">
-						<div class="shop-menu pull-right">
-							<ul class="nav navbar-nav">
-                                                                <li><a href="<?= $this->baseUrl() ?>"><i class="fa fa-star"></i> Home </a></li>
-                                                            <?php if ($user && $user->privilege=="customerUser"): ?>
-								<li><a href="<?= $this->baseUrl() ?>/customer-user/view-wishlist"><i class="fa fa-star"></i> Wishlist</a></li>
-								<li><a href="<?= $this->baseUrl() ?>/customer-user/view-cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                                                            <?php endif; 
-                                                            if($user): ?>
-								<li><a href="<?= $this->baseUrl() ?>/user/logout"><i class="fa fa-lock"></i> Logout</a></li>
-                                                            <?php else : ?>
-                                                                <li><a href="<?= $this->baseUrl() ?>/user/login"><i class="fa fa-lock"></i> Login</a></li>
-                                                            <?php endif; ?>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div><!--/header-middle-->
-	
-		<div class="header-bottom"><!--header-bottom-->
-			<div class="container">
-				<div class="row">
-                                    <div class="col-sm-9">
-                                        
-                                    </div>
-					<div class="col-sm-3">
-						<div class="search_box pull-right">
-							<input type="text" placeholder="Search"/>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div><!--/header-bottom-->
-	</header><!--/header-->
+	<?php
+        include_once("header.php");
+        ?>
 	
 	<section id="slider"><!--slider-->
 		<div class="container">
@@ -111,7 +46,7 @@ $col_counter  = 0;
 									<h1><span>R</span>ECENT PRODUCTS</h1>
 									<h2> <?= $product['name'] ?></h2>
 									<p> <?= $product['description'] ?> </p>
-                                                                        <a href="<?= $this->baseUrl() ?>/index/product-details/product_id/<?= $product['id']?>"  class="btn btn-default get">View more details </a>
+                                                                        <a href="/index/product-details/product_id/<?= $product['id'] ?>"  class="btn btn-default get">View more details </a>
 								</div>
 								<div class="col-sm-6">
 									<img src="<?= $this->baseUrl() ?>/images/<?= $product['photo'] ?>" class="girl img-responsive" alt="" />
@@ -479,8 +414,8 @@ $col_counter  = 0;
                                         </div>
                                 </div><!--/category-tab-->
 
-                                <div class="recent_items"><!--recommended_items-->
-                                        <h2 class="title text-center">Recent Sales</h2>
+                                <div class="highest_product_sales_items"><!--recommended_items-->
+                                        <h2 class="title text-center">Highest Product Sales</h2>
 
                                         <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
                                                 <div class="carousel-inner">
@@ -542,7 +477,74 @@ $col_counter  = 0;
                                                         <i class="fa fa-angle-right"></i>
                                                   </a>			
                                         </div>
-                                </div><!--/recommended_items-->
+                                </div><!--/Highest_product_sales-->
+                                <div class="recent_offers"><!--recent_offers-->
+                                        <h2 class="title text-center">Recent Sales</h2>
+
+                                        <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+                                            <div class="carousel-inner">
+                                                <?php  
+                                                    $arrLen = count($this->topOffers);
+                                                    if($arrLen > 0){
+
+                                                        $topOffers = $this->topOffers;
+                                                        for ($i=0; $i < $arrLen;) :
+                                                            if ($i== 0): ?>
+                                                                <div class="item active">
+                                                            <?php else : ?>
+                                                                <div class="item">
+                                                            <?php endif; ?>
+                                                          <?php  for ($j=0; $j<3 && $i< $arrLen; $j++, $i++): ?>
+
+                                                                <div class="col-sm-4">
+                                                                        <div class="product-image-wrapper">
+                                                                                <div class="single-products">
+                                                                                        <div class="productinfo text-center">
+                                                                                                <img src="/images/<?= $topOffers[$i]['photo'] ?>" alt="" />
+                                                                                                <?php if (($topOffers[$i]['saleflag']== 1) && $topOffers[$i]['percentage']): ?>
+                                                                                                    <del>
+                                                                                                        <span class="Price-amount amount">
+                                                                                                        <span class="Price-currencySymbol">$</span><?= $topOffers[$i]['price'] ?></span>
+                                                                                                    </del> 
+                                                                                                    <ins>
+                                                                                                        <span class="Price-amount amount">
+                                                                                                        <span class="Price-amount amount">$</span><?= $topOffers[$i]['price']* ((100-$topOffers[$i]['percentage']) / 100) ?>
+                                                                                                        </span>
+                                                                                                    </ins>
+                                                                                                </div>
+                                                                                                <?php else : ?>
+                                                                                                    <ins>
+                                                                                                        <span class="Price-amount amount">
+                                                                                                        <span class="Price-currencySymbol">$</span><?= $topOffers[$i]['price'] ?>
+                                                                                                        </span>
+                                                                                                    </ins>
+                                                                                                <?php
+                                                                                                endif;
+                                                                                                ?>
+                                                                                                <p> <?= ($language == "_ar" && ! empty($topOffers[$i]['name'.$language]) ? $topOffers[$i]['name'.$language] : $topOffers[$i]['name'])  ?></p>
+    <!--                                                                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>-->
+                                                                                        </div>
+
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+
+
+                                                       <?php endfor; ?>
+                                                          </div>
+                                                     <?php endfor;
+                                                    } else{ ?>
+                                                <div> There are no offers at this moment </div>
+                                            </div>
+                                                    <?php } ?>
+                                                 <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+                                                        <i class="fa fa-angle-left"></i>
+                                                  </a>
+                                                  <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+                                                        <i class="fa fa-angle-right"></i>
+                                                  </a>			
+                                        </div>
+                                </div>
 
                         </div>
 			</div>

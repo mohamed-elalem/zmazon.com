@@ -21,7 +21,7 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
                 ->joinLeft(array("w" => "wishList"),  "w.productId = p.id", array("userId as wishlist_user_id"))
                 ->joinLeft(array("cp" => "cart_products"), "cp.productId = p.id", array("productId as cart_product_id"))
                 ->joinLeft(array("sc" => "shoppingCart" ), "sc.id = cp.cartId" , array("id as cart_id", "userId as shopping_cart_user_id"))
-                ->where("s.endDate > CURRENT_DATE and s.startDate <= CURRENT_DATE ")
+                ->joinInner(array("c" => "category"), "p.categoryId = c.id" , array("name as category_name"))
                 ->setIntegrityCheck(false);        
         $query = $sql->query();
         $result= $query->fetchAll()[0];
@@ -196,7 +196,7 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
     public function topProducts ()
     {
         $sql = $this->select()
-        ->from(array('p' => "product"), array('name','description','price','quantity','rate','photo','addDate','categoryId','moneyGained','numOfSale'))
+        ->from(array('p' => "product"))
         ->order('addDate DESC')
         ->limit(5);
 
