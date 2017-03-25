@@ -200,6 +200,7 @@ h1 {
 /*************************
 Styling the index page
 *********************/
+
 .product-list .onsale {
     position: absolute;
     top: 6px;
@@ -361,4 +362,8 @@ Styling the index page
   display: inline-block;
   vertical-align: middle;
   float:none;
+}
+
+.cart-table td{
+    vertical-align: middle !important;
 }

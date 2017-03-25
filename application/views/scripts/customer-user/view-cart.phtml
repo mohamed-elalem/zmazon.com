@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-8">
          <?php if (count($this->cart) > 0): ?>
-        <table class="table table-bordered" cellspacing="0">
+        <table class="cart-table table table-condensed" cellspacing="0">
             <thead>
                 <tr>
 			<th class="product-remove">&nbsp;</th>
@@ -67,7 +67,7 @@
 
                             </div>
                         <?php endif; ?>
-                        <input data-arr_length="<?= $cart_arrLength ?>" class="update-cart-button" name="update_cart" value="Update Cart" disabled="">
+                        <input data-arr_length="<?= $cart_arrLength ?>" class="btn btn-warning update-cart-button" name="update_cart" value="Update Cart" disabled="">
                     </td>
 		</tr>
 
