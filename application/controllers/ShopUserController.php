@@ -31,7 +31,8 @@ class ShopUserController extends Zend_Controller_Action
     public function listAllProductsAction()
     {
         //$productsModel = new Application_Model_Product();
-        $this->view->products = $this->productModel->listAllProducts();
+        $userSession = new Zend_Session_Namespace("user");
+        $this->view->products = $this->productModel->listAllProducts($userSession->user->id);
         //$this->view->saleForm = $this->addSaleAction();
     }
 
@@ -71,6 +72,7 @@ class ShopUserController extends Zend_Controller_Action
                 $productData['description']= $this->productForm->description->getValue();
                 $productData['quantity']= $this->productForm->quantity->getValue();
                 $productData['price']= $this->productForm->price->getValue();*/
+                $productData = array();
                 if($this->productForm->photo->isUploaded())
                 {
                     //$productData['photo']=$productForm->photo->getFileName();
@@ -101,6 +103,7 @@ class ShopUserController extends Zend_Controller_Action
                 $productData['description']= $this->productForm->description->getValue();
                 $productData['quantity']= $this->productForm->quantity->getValue();
                 $productData['price']= $this->productForm->price->getValue();*/
+                $productData = array();
                 if($this->productForm->photo->isUploaded())
                 {
                     //$productData['photo']=$productForm->photo->getFileName();
@@ -110,7 +113,10 @@ class ShopUserController extends Zend_Controller_Action
                     $productData['photo']='NULL';
                 }
                 //$productData['categoryId']= $this->productForm->categoryId->getValue();
-                $this->productModel->addProduct(array_merge($request->getParams(), $productData));
+                $userSession = new Zend_Session_Namespace("user");
+                $productData = array_merge($productData, $request->getParams());
+                $productData = array_merge($productData, array("userId" => $userSession->user->id));
+                $this->productModel->addProduct($productData);
                 $this->redirect('/shop-user/list-all-products');
                 
             }

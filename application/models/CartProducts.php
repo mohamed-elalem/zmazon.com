@@ -10,7 +10,7 @@ class Application_Model_CartProducts extends Zend_Db_Table_Abstract
        $row->productId = $product_id;
        $row->quantity = 1;
        $row->save();
-       echo '{"success":"done"}';
+       //echo '{"success":"done"}';
 
     }
     
@@ -23,7 +23,7 @@ class Application_Model_CartProducts extends Zend_Db_Table_Abstract
              'quantity'      =>  new Zend_DB_Expr('quantity + 1')
         );
         $this->update( $data, $where);
-        echo '{"success":"done"}';
+        //echo '{"success":"done"}';
 
 
     }
