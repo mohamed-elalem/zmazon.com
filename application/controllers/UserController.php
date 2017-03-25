@@ -5,8 +5,8 @@ class UserController extends Zend_Controller_Action
 
     public function init()
     {
-        $this->google =new Zend_Session_Namespace('google');
-        $this->facebook =new Zend_Session_Namespace('facebook');
+        $this->userSession =new Zend_Session_Namespace('user');
+       // $this->facebook =new Zend_Session_Namespace('facebook');
          $auth=Zend_Auth::getInstance();
          $request=$this->getRequest();
          $actionName=$request->getActionName();
@@ -249,12 +249,21 @@ class UserController extends Zend_Controller_Action
         }
         
         $data =$user->searchForUser($data['email']);
-        $this->facebook->userName = $data[0]['userName'];
-        $this->facebook->email =$data[0]['email'];
-        $this->facebook->privilege =  $data[0]['privilege']; 
-        $this->facebook->id = $data[0]['id'];
-        $this->facebook->status = $data[0]['status'];
-        $this->redirect('/index');
+        if($data[0]['status'] == "0"){
+            $this->redirect("/user/login");
+        }
+        else{
+            $this->userSession->user->userName = $data[0]['userName'];
+            $this->userSession->user->email =$data[0]['email'];
+            $this->userSession->user->privilege =  $data[0]['privilege']; 
+            $this->userSession->user->id = $data[0]['id'];
+            $this->userSession->user->status = $data[0]['status'];
+            $this->userSession->user->fname = $data[0]['fname'];
+            $this->userSession->user->lname = $data[0]['lname'];
+       
+            $this->redirect('/index');
+        }
+        
         
     }
 
@@ -331,16 +340,23 @@ class UserController extends Zend_Controller_Action
                     $user->Register($data);
                     //echo "data saved";
                 }
-                $data =$user->searchForUser($data['email']);
-                $this->google->userName = $data[0]['userName'];
-                $this->google->email =$data[0]['email'];
-                $this->google->privilege =  $data[0]['privilege']; 
-                $this->google->id = $data[0]['id'];
-                $this->google->status = $data[0]['status'];
-                $this->google->fname = $data[0]['fname'];
-                $this->google->lname = $data[0]['lname'];
                 
-                $this->redirect('/index');
+                
+                $data =$user->searchForUser($data['email']);
+                if($data[0]['status'] == "0"){
+                    $this->redirect("/user/login");
+                }
+                else{
+                    $this->userSession->user->userName = $data[0]['userName'];
+                    $this->userSession->user->email =$data[0]['email'];
+                    $this->userSession->user->privilege =  $data[0]['privilege']; 
+                    $this->userSession->user->id = $data[0]['id'];
+                    $this->userSession->user->status = $data[0]['status'];
+                    $this->userSession->user->fname = $data[0]['fname'];
+                    $this->userSession->user->lname = $data[0]['lname'];
+
+                    $this->redirect('/index');
+                }
                 
                 
             }
