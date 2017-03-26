@@ -18,7 +18,16 @@ class Application_Model_Comment extends Zend_Db_Table_Abstract
         //echo json_encode($this->listAll() );
     }
     public function listAll(){
-        return $this->fetchAll()->toArray();
+        $sql = $this->select()
+                ->from(array('c' => "comment"))
+                ->joinInner(array("u" => "users"), "c.userId = u.id", array("userName"))
+                ->setIntegrityCheck(false);
+        
+        //echo $sql->__toString();
+        //die();
+        $query = $sql->query();
+        $result= $query->fetchAll();
+        return $result;
     }
 }
 

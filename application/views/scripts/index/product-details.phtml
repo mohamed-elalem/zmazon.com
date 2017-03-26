@@ -80,6 +80,7 @@
                 </div>
         <?php
             endif;
+            endif;
         ?>  
         <div class="comments-list">
             <h2 class='special-heading'> Comments </h2>
@@ -91,7 +92,7 @@
                       <img style="width: 50px" class= "profile-picture" src= "/img/user.png" > 
                   </p>
                    <div class="comment-container">
-                       <p class= "user-name"><?= $user->userName ?> : </p>
+                       <p class= "user-name"><?= $comment['userName'] ?> : </p>
                        <p> <?= $comment['comment'] ?> </p>
                        <p class="comment-info" > said on <?= $comment['commentDate'] ?> </p>
                    </div>
@@ -99,6 +100,7 @@
             <?php }
             ?>
         </div>
+        <?php if (!($this->user->isEmpty() ) && $user->privilege=="customerUser") : ?>
         <div class="comments-form">
              <?php 
              echo $this->comments_form;
@@ -106,7 +108,8 @@
             <input type="hidden" data-user_name = "<?= $user->userName ?>" data-product_id = "<?= $this->product['id'] ?>" data-user_id = "<?= $user->id ?>"  type="button" class="hidden-button">
 
         </div>
-        <?php endif;?>
+        <?php endif; ?>
+        
     
     <h2 class='special-heading'> Related Products </h2>
 

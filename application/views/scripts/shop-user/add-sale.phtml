@@ -42,33 +42,33 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        var currentDate = new Date();
-        $(".datepicker").datepicker({
-            showOn: 'focus',
-            changeMonth: true,
-            changeYear: true,
-            dateFormat: 'yy-mm-dd',
-            minDate: currentDate
-        });
-        
-        $(".datepicker").change(function () {
-            $("#submit").attr("type", "submit");
-            var dates = $(".datepicker");
-            var startDateVal = $(dates[0]).val();
-            var endDateVal = $(dates[1]).val();
-            if(startDateVal != '' && endDateVal != '') {
-                var startDate = new Date($(dates[0]).val());
-                var endDate = new Date($(dates[1]).val());
-                if(startDate >= endDate || startDate < currentDate || endDate <= CurrentDate) {
-                    
-                    $("#date-error").show("shake", 500);
-                    $("#submit").attr("type", "button");
-                }
-                else {
-                    $("#date-error").hide("slide", 1000);
-                }
-            }
-        });
-    });
-</script>
+            $(document).ready(function() {
+                var currentDate = new Date();
+                $(".datepicker").datepicker({
+                    showOn: 'focus',
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat: 'yy-mm-dd',
+                    minDate: currentDate
+                });
+
+                $(".datepicker").change(function () {
+                    $("#submit").attr("type", "submit");
+                    var dates = $(".datepicker");
+                    var startDateVal = $(dates[0]).val();
+                    var endDateVal = $(dates[1]).val();
+                    if(startDateVal != '' && endDateVal != '') {
+                        var startDate = new Date($(dates[0]).val());
+                        var endDate = new Date($(dates[1]).val());
+                        if(startDate >= endDate) {
+
+                            $("#date-error").show("shake", 500);
+                            $("#submit").attr("type", "button");
+                        }
+                        else {
+                            $("#date-error").hide("slide", 1000);
+                        }
+                    }
+                });
+            });
+        </script>

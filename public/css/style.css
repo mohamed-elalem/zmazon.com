@@ -404,3 +404,13 @@ Styling the index page
 .wish-list-table td , .wish-list-table tr , .wish-list-table th , .wish-list-table td , .wish-list-table img {
     text-align: center;
 }
+.coupon {
+    text-align: right;
+    margin-top: 10px;
+}
+.coupon label {
+    display: none;
+}
+.coupon input {
+    padding-left: 10px
+}

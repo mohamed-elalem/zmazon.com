@@ -264,16 +264,17 @@
                     var discount = $('.coupon-code-hidden').attr('data-coupon_discount');
                     var subtotal = $('.coupon-code-hidden').attr('data-sub_total');
                      $('.coupon').empty();
-                        $('.coupon').append('<img style="width:60px;" src="/img/ajax-loader1.gif" >');
+                        $('.coupon').append('<div style="text-align:center" ><img style="width:25px;" src="/img/ajax-loader1.gif" ></div>');
                         setTimeout(function(){
                             $('.coupon').empty();
-                            $('.coupon').append('<p style="font-size: 20px" > Coupon code is correct ! You can enjoy now the discount </p>');
+                            $('.coupon').append('<div class="alert-success" style="padding:12px;text-align:center;" > Coupon code is correct ! You can enjoy now the discount </p>');
                             $('.total-amount').empty();
                             $('.total-amount').append(((100 - discount) * subtotal)/100);
                         }, 1800)
                 }
                 else {
-                    $('.coupon-err-msg').append("<p> Coupon code isn't correct </p>");
+                    $('.coupon-err-msg').empty();
+                    $('.coupon-err-msg').append("<div style='text-align:center' class='alert alert-danger'> Coupon code isn't correct </div>");
                 }
             })
             $(document).on('click', '.checkout-button', function(e){

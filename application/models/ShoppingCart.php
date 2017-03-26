@@ -158,7 +158,7 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
         $sql = $this->select()
                 ->from(array('sc' => "shoppingCart"))
                 ->joinInner(array("c" => "cart_products"), "c.cartId = sc.id", array("productId", "quantity"))
-                ->joinLeft(array("s" => "sale"), "c.productId = s.productId", array("percentage as discount"))
+                ->joinLeft(array("s" => "sale"), "c.productId = s.productId", array("percentage as discount", "(s.endDate > CURRENT_DATE and s.startDate <= CURRENT_DATE) AS saleflag"))
                 ->joinInner(array("p" => "product"), "p.id = c.productId", array("id as product_id" , "name as product_name", "price as product_price", "rate", "quantity as product_quantity", "photo as product_photo" ))
                 ->joinInner(array("u" => "users"), "u.id = sc.userId", "email")
                 ->where("sc.userId = $user_id and purchasedFlag = 0")

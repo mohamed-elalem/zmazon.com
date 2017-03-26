@@ -25,7 +25,7 @@
                 
             <?php foreach($this->cart as $product): ?>
                 
-                <?php if ($product['discount']):
+                <?php if ($product['discount'] && $product['saleflag'] ):
                     $product['product_price'] = $product['product_price'] * ((100 - $product['discount']) /100);
                 endif;  ?>
 		<tr class="cart_item">
@@ -67,16 +67,16 @@
 
                             </div>
                         <?php endif; ?>
-                        <input data-arr_length="<?= $cart_arrLength ?>" class="btn btn-warning update-cart-button" name="update_cart" value="Update Cart" disabled="">
+                        <input data-arr_length="<?= $cart_arrLength ?>" class="btn btn-warning update-cart-button" name="update_cart" value="Update Cart" style="margin-top: 20px;" disabled="">
                     </td>
 		</tr>
 
             </tbody>
-        </table>
+        </table >
         <div class="cart-collaterals">
             <div class="cart_totals">
                 <h2>Cart Totals</h2>
-                <table cellspacing="0" class="shop_table shop_table_responsive">
+                <table cellspacing="0" class="cart-table table table-condensed">
                     <tbody>
                         <tr class="cart-subtotal">
                             <th>Subtotal</th>
