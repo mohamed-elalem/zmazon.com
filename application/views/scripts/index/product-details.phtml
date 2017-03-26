@@ -11,34 +11,46 @@
     <div class="product-details section">
         <div class="row">
             <div class="col-md-6">
-                <img style="width: 100%"src ="/images/<?= $this->product['photo'] ?>" >
+                <img style="position: relative;padding:5px; border: 1px solid #ddd;width: 100%"src ="/images/<?= $this->product['photo'] ?>" >
+                <?php if (($this->product['saleflag']== 1) && $this->product['percentage']): ?>
+                    <span class="onsale">Sale!</span>
+                <?php endif; ?>
             </div>
             <div class="col-md-6">
-                <h1 style="text-transform: uppercase;font-family: 'Roboto', sans-serif;font-weight: 900;display:inline-block; border-bottom: 5px solid black;"> About the product </h1>
-                <p>
-                <span class="product-name-title" style="font-family: 'Roboto', sans-serif;font-weight: 900 " > Product Name:  </span> <span class="product-name"> <?= ($language == "_ar" && ! empty($this->product['name'.$language]) ? $this->product['name'.$language] : $this->product['name']) ?> </span>
-                </p>
-                <p class="product-desc"> <?= $this->product['description'] ?> </p>
-                <?php if ($this->product['percentage']): ?>
-                                    <del>
-                                        <span class="Price-amount amount">
-                                        <span class="Price-currencySymbol">$</span><?= $this->product['price'] ?></span>
-                                    </del> 
-                                    <ins>
-                                        <span class="Price-amount amount">
-                                        <span class="Price-amount amount">$</span><?= $this->product['price']* ((100-$this->product['percentage']) / 100) ?>
-                                        </span>
-                                    </ins>
-                                </div>
-                                <?php else : ?>
-                                    <ins>
-                                        <span class="Price-amount amount">
-                                        <span class="Price-currencySymbol">$</span><?= $this->product['price'] ?>
-                                        </span>
-                                    </ins>
-                                <?php
-                                endif;
-                                ?>
+                <h1 class='special-heading'>  <?= ($language == "_ar" && ! empty($this->product['name'.$language]) ? $this->product['name'.$language] : $this->product['name']) ?> </h1>
+                <?php if (($this->product['saleflag']== 1) && $this->product['percentage']): ?>
+                    <del>
+                        <p  style="font-family: 'Lato',sans-serif; color: #ff2a13;font-size: 22px;" class="Price-amount amount">
+                        <span class="Price-currencySymbol">$</span><?= $this->product['price'] ?>
+                        </p>
+                    </del> 
+                    <ins style="text-decoration: none;">
+                        <p style="font-family: 'Lato',sans-serif; color: #ff2a13;font-size: 22px;" class="Price-amount amount">
+                        <span  class="Price-amount amount">$</span><?= $this->product['price']* ((100-$this->product['percentage']) / 100) ?>
+                        </p>
+                    </ins>
+                </div>
+                <?php else : ?>
+            <ins style="text-decoration: none;">
+                        <p style="color: #ff2a13;font-size: 22px;" class="Price-amount amount">
+                        <span  class="Price-currencySymbol">$</span><?= $this->product['price'] ?>
+                        </p>
+                    </ins>
+                <?php
+                endif;
+                ?>
+                <p  class="product-desc"> <?= ($language == "_ar" && ! empty($this->product['description'.$language]) ? $this->product['description'.$language] : $this->product['description']) ?> </p>
+                <p style="font-weight: bold; font-family: 'Lato',sans-serif;color: #7a7a7a;" class="posted-in"> Category: <span style="color:#ff2a13;"><?= $this->product['category_name'] ?> </span></p>
+                <div class="star-rating special" title="Rated <?= $this->product['rate'] ?> out of 5">
+                    <h3> Product Rating </h3>
+                    <?php for ($i=0; $i< $this->product['rate'] ; $i++ ): ?>
+                        <span class="star filled"> </span>
+                    <?php endfor; ?>
+                    <?php  for ($i= $this->product['rate']; $i < 5; $i++): ?>
+                        <span class="star"> </span>
+                    <?php endfor; ?>
+                </div>
+                
             </div>
         </div>
         <?php  
@@ -70,6 +82,7 @@
             endif;
         ?>  
         <div class="comments-list">
+            <h2 class='special-heading'> Comments </h2>
             <?php
              foreach ($this->all_comments as $comment){
             ?>
@@ -93,4 +106,25 @@
             <input type="hidden" data-user_name = "<?= $user->userName ?>" data-product_id = "<?= $this->product['id'] ?>" data-user_id = "<?= $user->id ?>"  type="button" class="hidden-button">
 
         </div>
-        <?php endif; ?>
+        <?php endif;?>
+    
+    <h2 class='special-heading'> Related Products </h2>
+
+    <div class='related-products'>
+        <?php foreach($this->relatedProduct as $product): ?>
+        <div class='col-md-4'>
+            <a href="/index/product-details/product_id/<?= $product['id'] ?>">
+                 <img style="width: 100%"src="/images/<?= $product['photo'] ?>" />
+            </a>
+                <div class="product_name" style="font-size: 22px;text-align:center; color: red; font-weight: bold;">
+                <?= $product['name'] ?>
+            </div>
+            <div class="product-sales-num" style="text-align: center;color: blue;font-size: 20px"> Number of sales: <?= $product['numOfSale'] ?> </div>
+                
+            </div>
+        </div>
+        <?php   endforeach;  ?>
+                
+            
+        
+    </div>

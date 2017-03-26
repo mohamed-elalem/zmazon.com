@@ -30,10 +30,8 @@ class IndexController extends Zend_Controller_Action
         $this->view->categories = $this->categories->retrieveAll();
         $top_products = new Application_Model_Product();
         $this->view->topProducts = $top_products->topProducts(); 
-        $top_sales = new Application_Model_Product();
-        $this->view->topSales = $top_sales->topSales(); 
-        $top_offers = new Application_Model_Product();
-        $this->view->topOffers = $top_offers->topOffers();
+        $this->view->topSales = $this->product->topSales(); 
+        $this->view->topOffers = $this->product->topOffers();
 
 
     }
@@ -50,8 +48,7 @@ class IndexController extends Zend_Controller_Action
         $this->view->comments_form = $this->commentsForm;
         $this->view->all_comments = $this->comment->listAll();
 
-        $related_product = new Application_Model_Product();
-        $this->view->relatedProduct = $related_product->relatedProdects($product_id); 
+        $this->view->relatedProduct = $this->product->relatedProdects($product_id); 
     }
 
     public function setArabicLanguageAction()

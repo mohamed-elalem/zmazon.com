@@ -293,6 +293,7 @@ class Application_Model_Product extends Zend_Db_Table_Abstract
 
 
         $result= $this->fetchAll($sql)-> toArray();
+        return $result;
 
     }
     
