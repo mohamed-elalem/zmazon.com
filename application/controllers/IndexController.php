@@ -4,6 +4,7 @@ class IndexController extends Zend_Controller_Action
 {
 
     private $categories = null;
+    private $product = null;
 
     public function init()
     {
@@ -121,8 +122,28 @@ class IndexController extends Zend_Controller_Action
         // action body
     }
 
+    public function searchProductsAction()
+    {
+        $auth=Zend_Auth::getInstance();
+        $this->view->user = $auth->getStorage();
+        
+        
+        $request = $this->getRequest();
+        if($request->isPost()) {
+            $name = $request->getParam("search_product");
+            $products = $this->product->search($name);
+            $this->view->products = $products;
+        }
+        else {
+            http_response_code(403);
+            die();
+        }
+    }
+
 
 }
+
+
 
 
 
