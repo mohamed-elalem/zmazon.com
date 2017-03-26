@@ -80,7 +80,7 @@ $col_counter  = 0;
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
                                                     <h4 class="panel-title">
-                                                        <a href="/index/categories/id/<?=$category['id']?>"><?=$category['name']?></a>
+                                                        <a href="/index/list-products/id/<?=$category['id']?>"><?=$category['name']?></a>
                                                     </h4>
                                             </div>
                                         </div>
@@ -134,6 +134,8 @@ $col_counter  = 0;
                                                                                 </a>
                                                                             <?php
                                                                             endif;
+                                                                         endif;
+
                                                                             if ( $user->id == $product['wishlist_user_id']  ) : ?>
                                                                                     <a class=" remove-from-wishlist" data-product_id = "<?= $product['id'] ?>" data-user_id = "<?= $user->id ?>" > Remove From wish list </a>
                                                                             <?php
@@ -143,7 +145,6 @@ $col_counter  = 0;
                                                                             <?php    
                                                                             endif;
                                                                         endif;
-                                                                    endif;
                                                                          ?>
                                                                 </div>
                                                                 <div class="entry-wrap">

@@ -1,22 +1,36 @@
+<?php
+include_once("header.php");
+?>
 <div class="container">
     <?php foreach($this->userWishList as $product): ?>
     
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
-                <h4><?=$product['name']?></h4>
-            </div>
+            <table class="table table-condensed wish-list-table" style="width: 100%">
+                <tr>
+                    <th> Product Name  </th>
+                    <th> Product Thumbnail</th>
+                    <th> Product description </th>
+                    <th> Actions</th>
+                </tr>
+                <tr>
+                    <td>
+                        <h4><?=$product['name']?></h4>
+                    </td>
+
+                    <td>
+                        <h4><a  href="/index/product-details/product_id/<?=$product['id']?>/"><img style="width: 150px" src="<?= $this->baseUrl()?>/images/<?=$product['photo']?>" width="250" height="150"/></a></h4>
+                    </td>
+                    <td>
+                        <h5><?=$product['description']?></h5>
+                    </td>
+                    <td>
+                       <button data-editing="true" data-product_id="<?=$product['id']?>" data-user_id="<?=$this->userId?>"  class="btn btn-danger btn-block remove-from-wishlist" style="position: static;display:block">Remove from wish list</button>
+                    </td>
+                </tr>
+            </table>
             
-            <div class="col-md-3">
-                <h4><a  href="/index/product-details/product_id/<?=$product['id']?>/"><img class="img-responsive img-rounded" src="<?= $this->baseUrl()?>/images/<?=$product['photo']?>" width="250" height="150"/></a></h4>
-            </div>
-            
-            <div class="col-md-3">
-                <h5><?=$product['description']?></h5>
-            </div>
-            <div class="col-md-3">
-                <button data-editing="true" data-product_id="<?=$product['id']?>" data-user_id="<?=$this->userId?>"  class="btn btn-danger btn-block remove-from-wishlist" style="position: static;display:block">Remove from wish list</button>
-            </div>
+           
         </div>
     </div>
     

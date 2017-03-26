@@ -1,7 +1,7 @@
 <?php 
     $user = $this->user->read();
     $languageSession = new Zend_Session_Namespace("language");
-    $language = "_ar";
+    $language = "";
     if($languageSession->language == "Ar")
         $language = "_ar";
     include_once ('header.php');

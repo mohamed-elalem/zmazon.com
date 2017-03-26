@@ -39,82 +39,119 @@ class CustomerUserController extends Zend_Controller_Action
 
     public function putRateAction()
     {
-        $user_id  = $this->_request->getParam('user_id');
-        $product_id  = $this->_request->getParam('product_id');
-        $rating = $this->_request->getParam('rating');
-        $this->rating->addRate($user_id, $product_id, $rating);
-        $this->product->updateRating($product_id);
-        // The next line is for returning json object response to ajax
-        echo '{"success":"done"}';
+        if($this->_request->isPost()) {
+            $user_id  = $this->_request->getParam('user_id');
+            $product_id  = $this->_request->getParam('product_id');
+            $rating = $this->_request->getParam('rating');
+            $this->rating->addRate($user_id, $product_id, $rating);
+            $this->product->updateRating($product_id);
+            // The next line is for returning json object response to ajax
+            echo '{"success":"done"}';
+        }
+        else {
+            http_response_code(403);
+        }
     }
 
     public function addToWishListAction()
     {
-        
-        $user_id  = $this->_request->getParam('user_id');
-        $product_id  = $this->_request->getParam('product_id');
-        $this->wishList->add($user_id, $product_id);
-        // The next line is for returning json object response to ajax
-        echo '{"success":"done"}';
+        if($this->_request->isPost()) {
+            $user_id  = $this->_request->getParam('user_id');
+            $product_id  = $this->_request->getParam('product_id');
+            $this->wishList->add($user_id, $product_id);
+            // The next line is for returning json object response to ajax
+            echo '{"success":"done"}';
+        }
+        else {
+            http_response_code(403);
+        }
     }
 
     public function removeFromWishListAction()
     {
+        if($this->_request->isPost()) {
         //die(json_encode($this->getRequest()->getParams()));
-        $user_id  = $this->_request->getParam('user_id');
-        $product_id  = $this->_request->getParam('product_id');
-        $this->wishList->remove($user_id, $product_id);
-        // The next line is for returning json object response to ajax
-        echo '{"success":"done"}';
+            $user_id  = $this->_request->getParam('user_id');
+            $product_id  = $this->_request->getParam('product_id');
+            $this->wishList->remove($user_id, $product_id);
+            // The next line is for returning json object response to ajax
+            echo '{"success":"done"}';
+        }
+        else {
+            http_response_code(403);
+        }
     }
 
     public function addToCartAction()
     {
-
-        $user_id  = $this->_request->getParam('user_id');
-        $product_id  = $this->_request->getParam('product_id');
-        $cartProducts = $this->cartProducts;
-        $this->shoppingCart->add($user_id, $product_id, $cartProducts); 
-        // The next line is for returning json object response to ajax
+        if($this->_request->isPost()) {
+            $user_id  = $this->_request->getParam('user_id');
+            $product_id  = $this->_request->getParam('product_id');
+            $cartProducts = $this->cartProducts;
+            $this->shoppingCart->add($user_id, $product_id, $cartProducts); 
+            // The next line is for returning json object response to ajax
+        }
+        else{
+            http_response_code(403);
+        }
     }
 
     public function updateCartAction()
     {
-        $productArr =$this->_request->getParam('productArr');
-        $cart_id = $this->_request->getParam('cart_id');
-        $this->cartProducts->updateCart($productArr, $cart_id);
-        echo '{"success":"done"}';
+        if($this->_request->isPost()) {
+            $productArr =$this->_request->getParam('productArr');
+            $cart_id = $this->_request->getParam('cart_id');
+            $this->cartProducts->updateCart($productArr, $cart_id);
+            echo '{"success":"done"}';
+        }
+        else {
+            http_response_code(403);
+        }
 
         
     }
 
     public function removeFromCartAction()
     {
-
-        $cart_id  = $this->_request->getParam('cart_id');
-        $product_id  = $this->_request->getParam('product_id');
-        $this->cartProducts->removeFromCart($cart_id, $product_id);
-        // The next line is for returning json object response to ajax
-        echo '{"success":"done"}';
+        if($this->_request->isPost()) {
+            $cart_id  = $this->_request->getParam('cart_id');
+            $product_id  = $this->_request->getParam('product_id');
+            $this->cartProducts->removeFromCart($cart_id, $product_id);
+            // The next line is for returning json object response to ajax
+            echo '{"success":"done"}';
+        }
+        else {
+            http_response_code(403);
+        }
     }
 
     public function addCommentAction()
     {
-        $user_id  = $this->_request->getParam('user_id');
-        $product_id  = $this->_request->getParam('product_id');
-        $comment_body = $this->_request->getParam('comment_body');
-        $this->comment->add($user_id, $product_id, $comment_body);
-        // The next line is for returning json object response to ajax
-         echo '{"success":"done"}';
+        if($this->_request->isPost()) {
+            $user_id  = $this->_request->getParam('user_id');
+            $product_id  = $this->_request->getParam('product_id');
+            $comment_body = $this->_request->getParam('comment_body');
+            $this->comment->add($user_id, $product_id, $comment_body);
+            // The next line is for returning json object response to ajax
+             echo '{"success":"done"}';
+        }
+        else {
+             http_response_code(403);
+        }
     }
 
     public function incrementQuantityAction()
-    {
-        $user_id  = $this->_request->getParam('user_id');
-        $product_id  = $this->_request->getParam('product_id');
-        $this->shoppingCart->incrementQuantity($user_id, $product_id, $this->cartProducts);
-        // The next line is for returning json object response to ajax
-        echo '{"success":"done"}';
+    {   
+        if($this->_request->isPost()) {
+            $user_id  = $this->_request->getParam('user_id');
+            $product_id  = $this->_request->getParam('product_id');
+            $this->shoppingCart->incrementQuantity($user_id, $product_id, $this->cartProducts);
+            // The next line is for returning json object response to ajax
+            echo '{"success":"done"}';
+        }
+        else {
+             http_response_code(403);
+        }
     }
 
     public function viewCartAction()
@@ -130,49 +167,55 @@ class CustomerUserController extends Zend_Controller_Action
 
     public function checkoutAction()
     {
-        $cart_id = $this->_request->getParam('cart_id');
-        $total_amount = $this->_request->getParam('totalAmount');
-        $subtotal = $this->_request->getParam('subtotal');
-        $user_id =  $this->_request->getParam('user_id');
-        $cartDetails = $this->shoppingCart->getCartDetails($user_id);
-        $mail_body = "<strong>Checkout Details</strong><br>";
-        $totalPrice = 0;
-        foreach($cartDetails as $product) {
-            $productPrice = $product['product_price'] * (1 - (is_null($product['discount']) ? 0 : $product['discount'])) * $product['quantity'];
-            $mail_body .= "<p>Product name: ".$product['product_name']."</p>";
-            $mail_body .= "<p>Quantity purchaced: ".$product['quantity']."</p>";
-            $mail_body .= "<p>Price: ".$productPrice."</p>";
-            $mail_body .= "<hr>";
-            $totalPrice += $productPrice;
-        }
-        $mail_body .= "<p>Total price: ".$totalPrice."</p>";
-        
-        $error = $this->shoppingCart->purchased($user_id, $cart_id, $total_amount, $subtotal);
-        if($error) {
-            echo '{"success": "failed"}';
+        if($this->_request->isPost()) {
+            $cart_id = $this->_request->getParam('cart_id');
+            $total_amount = $this->_request->getParam('totalAmount');
+            $subtotal = $this->_request->getParam('subtotal');
+            $user_id =  $this->_request->getParam('user_id');
+            $cartDetails = $this->shoppingCart->getCartDetails($user_id);
+            $mail_body = "<strong>Checkout Details</strong><br>";
+            $totalPrice = 0;
+            foreach($cartDetails as $product) {
+                $productPrice = $product['product_price'] * (1 - (is_null($product['discount']) ? 0 : $product['discount'])) * $product['quantity'];
+                $mail_body .= "<p>Product name: ".$product['product_name']."</p>";
+                $mail_body .= "<p>Quantity purchaced: ".$product['quantity']."</p>";
+                $mail_body .= "<p>Price: ".$productPrice."</p>";
+                $mail_body .= "<hr>";
+    //            $totalPrice += $productPrice;
+            }
+            $mail_body .= "<p>Subtotal price: " . $subtotal . "</p>";
+            $mail_body .= "<p>Total price: ".$total_amount."</p>";
+
+            $error = $this->shoppingCart->purchased($user_id, $cart_id, $total_amount, $subtotal);
+            if($error) {
+                echo '{"success": "failed"}';
+            }
+            else {
+                echo '{"success":"done"}';
+                $tr = new Zend_Mail_Transport_Smtp('smtp.gmail.com',
+                    array(
+                           'auth' => 'login',
+                           'port' => 587,
+                           'ssl' => 'tls',
+                           'username' => 'faintingdetection@gmail.com',
+                           'password' => 'Tizen2016'
+                        )
+                   );
+               Zend_Mail::setDefaultTransport($tr);
+
+               $mail = new Zend_Mail();
+               $mail->setFrom('faintingdetection@gmail.com');
+               $mail->setBodyHtml($mail_body);
+               $mail->addTo("mohamed.el.alem.2017@gmail.com", 'Bill information');
+               $mail->setSubject("Bill information");
+               $mail->send($tr);
+
+               $this->shoppingCart->deleteUserCart($user_id);
+
+            }
         }
         else {
-            echo '{"success":"done"}';
-            $tr = new Zend_Mail_Transport_Smtp('smtp.gmail.com',
-                array(
-                       'auth' => 'login',
-                       'port' => 587,
-                       'ssl' => 'tls',
-                       'username' => 'faintingdetection@gmail.com',
-                       'password' => 'Tizen2016'
-                    )
-               );
-           Zend_Mail::setDefaultTransport($tr);
-
-           $mail = new Zend_Mail();
-           $mail->setFrom('faintingdetection@gmail.com');
-           $mail->setBodyHtml($mail_body);
-           $mail->addTo("mohamed.el.alem.2017@gmail.com", 'Bill information');
-           $mail->setSubject("Bill information");
-           $mail->send($tr);
-           
-           $this->shoppingCart->deleteUserCart($user_id);
-                
+             http_response_code(403);
         }
         
                 

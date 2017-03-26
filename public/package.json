@@ -23,6 +23,7 @@
     "tether": "^1.4.0"
   },
   "dependencies": {
+    "chart.js": "^2.5.0",
     "font-awesome": "^4.7.0"
   }
 }

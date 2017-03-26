@@ -63,7 +63,7 @@
               <li class="user-footer">
                
                 <div class="pull-right">
-                  <a href="<?= $this->baseUrl() ?> /user/signout" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="<?= $this->baseUrl() ?> /user/logout" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>

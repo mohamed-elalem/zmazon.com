@@ -25,7 +25,8 @@ class ShopUserController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        // action body
+        $userSession = new Zend_Session_Namespace("user");
+        $this->view->products = $this->productModel->listAllProducts($userSession->user->id);
     }
 
     public function listAllProductsAction()

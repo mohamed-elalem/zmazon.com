@@ -398,3 +398,9 @@ Styling the index page
 .comment:nth-child(even) {
      background: #eee
 }
+.wish-list-table td {
+    vertical-align: middle !important;
+}
+.wish-list-table td , .wish-list-table tr , .wish-list-table th , .wish-list-table td , .wish-list-table img {
+    text-align: center;
+}

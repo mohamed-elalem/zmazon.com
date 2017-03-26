@@ -169,6 +169,7 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
         
     }
     public function purchased($user_id, $cart_id, $total_amount, $subtotal) {
+        
         try {
             $cart_details = $this->getCartDetails($user_id);
             foreach ($cart_details as $product){
@@ -194,9 +195,13 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
                  'total'         => $total_amount
             );
            $coupon = new Application_Model_Coupon();
+          
             $this->update( $data, $where);
-            if ($subtotal != $total_amount) {
-                $coupon->delete( array(
+            $subtotal = (int) $subtotal;
+            $total_amount = (int) $total_amount;
+                if ($subtotal != $total_amount) { 
+                
+                    $coupon->delete( array(
                     'userId = ?' => $user_id
                 ));
             }

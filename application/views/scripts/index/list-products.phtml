@@ -14,7 +14,7 @@
                         <div class="row">
                                 <div class="col-sm-4">
                                         <div class="logo pull-left">
-                                                <a href="index.html"><img src="<?= $this->baseUrl() ?>/img/home/logo.png" alt="" /></a>
+                                                <a href="/"><img src="<?= $this->baseUrl() ?>/img/home/logo.png" alt="" /></a>
                                         </div>
                                         <div class="btn-group pull-right">
                                                 <div class="btn-group">
@@ -46,7 +46,7 @@
                                                 <ul class="nav navbar-nav">
                                                         <li><a href="<?= $this->baseUrl() ?>"><i class="fa fa-star"></i> Home </a></li>
                                                     <?php if ($user && $user->privilege=="customerUser"): ?>
-                                                        <li><a href="<?= $this->baseUrl() ?>/customer-user/view-wishlist"><i class="fa fa-star"></i> Wishlist</a></li>
+                                                        <li><a href="<?= $this->baseUrl() ?>/customer-user/view-wish-list"><i class="fa fa-star"></i> Wishlist</a></li>
                                                         <li><a href="<?= $this->baseUrl() ?>/customer-user/view-cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                                     <?php endif; 
                                                     if($user): ?>
@@ -83,7 +83,7 @@
         <div class="row">
             <div class="col-sm-12 padding-right">
                     <div class="features_items"><!--features_items-->
-                            <h2 class="title text-center">Features Items</h2>
+                            <h2 class="title text-center">Category Items</h2>
                              <div class="product-list">
                                 <?php foreach ($this->products as $product) { 
                                     $col_counter ++;
