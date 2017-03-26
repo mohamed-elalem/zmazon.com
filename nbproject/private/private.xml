@@ -3,14 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/var/www/html/zmazon.com/application/controllers/ErrorController.php</file>
+            <file>file:/var/www/html/zmazon.com/application/models/Rate.php</file>
+            <file>file:/var/www/html/zmazon.com/application/views/scripts/customer-user/view-cart.phtml</file>
             <file>file:/var/www/html/zmazon.com/application/controllers/IndexController.php</file>
-            <file>file:/var/www/html/zmazon.com/application/layouts/scripts/layout.phtml</file>
+            <file>file:/var/www/html/zmazon.com/application/views/scripts/customer-user/header.php</file>
             <file>file:/var/www/html/zmazon.com/application/views/scripts/index/index.phtml</file>
             <file>file:/var/www/html/zmazon.com/application/models/Product.php</file>
             <file>file:/var/www/html/zmazon.com/application/views/scripts/index/product-details.phtml</file>
-            <file>file:/var/www/html/zmazon.com/application/models/Comment.php.orig</file>
-            <file>file:/var/www/html/zmazon.com/application/layouts/scripts/shop-user-layout.phtml</file>
             <file>file:/var/www/html/zmazon.com/application/controllers/CustomerUserController.php</file>
         </group>
     </open-files>
