@@ -303,5 +303,9 @@
                      }
                 })
             })
+            
+            $(".search").change(function() {
+                $("form[name=search_form]").submit();
+            });
         }); 
     

@@ -59,8 +59,10 @@
                                     </div>
 					<div class="col-sm-3">
 						<div class="search_box pull-right">
-							<input type="text" placeholder="Search"/>
-						</div>
+                                                    <form method="post" action="/index/search-products" name="search_form">
+                                                        <input name="search_product" type="text" placeholder="Search"/>
+                                                    </form>
+                                                </div>
 					</div>
 				</div>
 			</div>

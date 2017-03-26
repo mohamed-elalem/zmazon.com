@@ -1,0 +1,35 @@
+
+<?php
+    $languageSession = new Zend_Session_Namespace("language");
+    $language = "";
+    if($languageSession->language == "Ar")
+        $language = "_ar";
+    $searchedProductsCount = count($this->products);
+    $user = $this->user->read();
+    require_once "header.php";
+    if($searchedProductsCount == 0):
+?>
+<h1 class="text-danger text-center">No result were found</h1>
+<?php else: ?>
+
+<div class="container">
+<?php for($i = 0; $i < $searchedProductsCount;): ?>
+    <div class="row">
+        <?php for($j = 0; $j < 3 && $i < $searchedProductsCount; $i++, $j++):?>
+        <div class="col-md-4">
+            <div>
+                <a href="/index/product-details/product_id/<?=$this->products[$i]['id']?>">
+                    <img src="/images/<?=$this->products[$i]['photo']?>" style="max-height: 100%; max-width: 100%"/>
+                </a>
+                <div class="text-center">
+                    <h4 class="text-primary"><?=($language == "_ar" && ! empty($this->products[$i]['name'.$language]) ? $this->products[$i]['name'.$language] : $this->products[$i]['name'])?></h4>
+                </div>
+            </div>
+            
+        </div>    
+        <?php endfor; ?>
+        
+    </div>
+<?php endfor; ?>
+</div>
+<?php endif ?>

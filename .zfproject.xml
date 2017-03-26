@@ -20,6 +20,7 @@
           <actionMethod actionName="topoffersAction"/>
           <actionMethod actionName="error404"/>
           <actionMethod actionName="error403"/>
+          <actionMethod actionName="searchProducts"/>
         </controllerFile>
         <controllerFile controllerName="Error"/>
         <controllerFile controllerName="Admin">
@@ -283,6 +284,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Index">
             <viewScriptFile forActionName="error403"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="searchProducts"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
