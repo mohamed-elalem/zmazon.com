@@ -11,7 +11,7 @@ class Application_Form_Comment extends Zend_Form
         $textarea->setAttribs(['rows' => 3 , 'class'=> 'comment-body']);
         
         $submit = new Zend_Form_Element_Button('Add Comment');
-        $submit->setAttrib('class', 'comment-submit-btn');
+        $submit->setAttrib('class', 'comment-submit-btn btn btn-primary');
         
         $this->addElements([$textarea , $submit]);
     }

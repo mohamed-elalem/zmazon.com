@@ -147,12 +147,14 @@
                     data: {product_id: $(this).attr("data-product_id"), user_id : $(this).attr("data-user_id"), rating : ratingValue},
                     success: function(){
                         $('.rating-form').empty();
-                        $('.rating-form').append('<img style="width:60px;" src="/img/ajax-loader1.gif" >');
+                        $('.rating-form').append('<div style="text-align:center;margin-top:20px;"><img style="width:25px;" src="/img/ajax-loader1.gif" ></div>');
                         setTimeout(function(){
                             $('.rating-form').empty();
-                            $('.rating-form').append('<p style="font-size: 20px" > Thanks for submitting your feedback</p>');
+                            $('.rating-form').append('<div style="margin-top: 20px;" class="alert alert-success"> Thanks for submitting your feedback</div>');
                         }, 1800)
-
+                        setTimeout(function(){
+                            location.reload();
+                        }, 2600)
                     },
                     error:function (xhr, ajaxOptions, thrownError){
                         console.log(xhr);
@@ -171,13 +173,13 @@
                     data: {product_id: $('.hidden-button').attr("data-product_id"), user_id : $('.hidden-button').attr("data-user_id"), comment_body : $('.comment-body').val() },
                     success: function(data){
                         console.log(data)
-                        $('.comments-list').append('<div class="new-comment"><img style="width:30px;" src="/img/ajax-loader1.gif"> </div>');
+                        $('.comments-list').append('<div style="text-align:center" class="new-comment"><img style="width:25px;" src="/img/ajax-loader1.gif"> </div>');
                         setTimeout(function(){
-                            $('.new-comment').empty();
-                            $('.new-comment').append( ($('.hidden-button').attr('data-user_name')) + ": " +  $('.comment-body').val());
-                        }, 1800)
-
-                    },
+                            location.reload()
+                        },2000) },
+//                            $('.new-comment').empty();
+//                            $('.new-comment').append( ($('.hidden-button').attr('data-user_name')) + ": " +  $('.comment-body').val());
+//                        }, 1800)
                     error:function (xhr, ajaxOptions, thrownError){
                         console.log(xhr);
                         console.log(ajaxOptions);

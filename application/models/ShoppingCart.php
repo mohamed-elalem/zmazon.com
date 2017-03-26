@@ -57,19 +57,17 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
         }
     }
     public function checkProductAvailability($user_id, $product_id){
-       
-        
-        
-        
+
         
        $sql = $this->select()
                 ->from ( array('p' => 'product'),array( 'quantity as storage_product_quantity', 'id') )
                 ->joinLeft(array('cp' => 'cart_products'), "cp.productId = p.id", array('productId', 'quantity as cart_product_quantity'))
                 ->joinLeft(array("sc" => "shoppingCart"), "sc.id = cp.cartId")
-                ->where(" sc.userId = $user_id and sc.purchasedFlag = 0 or sc.purchasedFlag is null")
+                ->where(" p.id = $product_id and (sc.userId is null or sc.userId = $user_id)")
                 ->setIntegrityCheck(false);
 
       $query = $sql->query();
+    
       $result = $query->fetchAll();
       if(!empty($result))
           $result = $result[0];
@@ -77,22 +75,25 @@ class Application_Model_ShoppingCart extends Zend_Db_Table_Abstract
           return false;
       
       if ($result['storage_product_quantity'] > 0) {
-          if (!is_null($result['cart_product_quantity']) && $result['cart_product_quantity'] >= $result['storage_product_quantity']){
+          if (is_null($result['cart_product_quantity'])){
+              return true;
+          }
+          else if (!is_null($result['cart_product_quantity']) && $result['cart_product_quantity'] >= $result['storage_product_quantity']){
               return false;
               
           }
-          else if(is_null($result['cart_product_quantity'])) {
-              $sql = $this->select()
-                      ->from("product")
-                      ->where("id = ".$product_id." and quantity > 0")
-                      ->setIntegrityCheck(false);
-              $query = $sql->query();
-              $result = $query->fetchAll();
-              if(empty($result))
-                  return false;
-              else
-                  return true;
-          }
+//          else if(is_null($result['cart_product_quantity'])) {
+//              $sql = $this->select()
+//                      ->from("product")
+//                      ->where("id = ".$product_id." and quantity > 0")
+//                      ->setIntegrityCheck(false);
+//              $query = $sql->query();
+//              $result = $query->fetchAll();
+//              if(empty($result))
+//                  return false;
+//              else
+//                  return true;
+//          }
           else {
               return true;
              
